@@ -1,0 +1,37 @@
+---
+const Content = {
+  title: 'Quiénes somos',
+  description1:
+    'Somos una empresa argentina dedicada a la limpieza y mantenimiento de lagos, lagunas y todo tipo de espejos de agua.',
+  description2: 'Tenemos más de 10 años de experiencia en el mercado.',
+  highlights: [
+    { text: 'Empresa argentina', icon: '🇦🇷' },
+    { text: 'Más de 10 años de experiencia', icon: '⭐' },
+    { text: 'Atendemos en todo el país', icon: '🗺️' },
+  ],
+};
+---
+
+<section class="bg-background py-16 md:py-24">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-primary mb-8 text-3xl font-bold md:text-4xl">
+      {Content.title}
+    </h2>
+    <div class="mx-auto max-w-3xl space-y-6 text-lg leading-relaxed text-slate-700">
+      <p>{Content.description1}</p>
+      <p>{Content.description2}</p>
+    </div>
+
+    <!-- Highlights Grid -->
+    <div class="mx-auto mt-12 grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-3 md:gap-8">
+      {
+        Content.highlights.map((item) => (
+          <div class="bg-card rounded-2xl border border-slate-100 p-6 shadow-sm transition-shadow hover:shadow-md">
+            <div class="mb-4 text-4xl">{item.icon}</div>
+            <h3 class="text-foreground text-lg font-semibold">{item.text}</h3>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

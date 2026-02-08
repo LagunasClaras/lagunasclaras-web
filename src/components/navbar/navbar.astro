@@ -78,7 +78,8 @@ const currentPath = Astro.url.pathname;
   const menuToggle = document.getElementById('menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
   const menuOverlay = document.getElementById('menu-overlay');
-  const isHomePage = window.location.pathname === '/';
+  const isTransparent =
+    window.location.pathname === '/' || window.location.pathname === '/quienes-somos';
 
   let isMenuOpen = false;
 
@@ -110,7 +111,7 @@ const currentPath = Astro.url.pathname;
   };
 
   const updateNavbarStyling = () => {
-    const isScrolled = window.scrollY > 0 || !isHomePage;
+    const isScrolled = window.scrollY > 0 || !isTransparent;
 
     if (!isScrolled) {
       navbarBg?.classList.remove('bg-background', 'backdrop-blur', 'shadow-md');

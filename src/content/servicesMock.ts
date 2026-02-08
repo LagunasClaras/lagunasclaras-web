@@ -28,7 +28,7 @@ export const servicesMock: Service[] = [
     description:
       'Implementamos técnicas de oxigenación y filtrado natural que respetan el ecosistema acuático y terrestre. Nuestro enfoque se basa en equilibrio de nutrientes para preservar el agua cristalina de forma permanente y natural.',
     features: ['Cero impacto en la fauna local', 'Sistemas de aireación de alta eficiencia'],
-    image: '',
+    image: 'src/assets/fondo2.jpg',
   },
   {
     id: '03',
@@ -37,7 +37,7 @@ export const servicesMock: Service[] = [
     description:
       'Implementamos técnicas de oxigenación y filtrado natural que respetan el ecosistema acuático y terrestre. Nuestro enfoque se basa en equilibrio de nutrientes para preservar el agua cristalina de forma permanente y natural.',
     features: ['Cero impacto en la fauna local', 'Sistemas de aireación de alta eficiencia'],
-    image: '',
+    image: 'src/assets/fondo3.jpg',
   },
   {
     id: '04',
@@ -46,7 +46,7 @@ export const servicesMock: Service[] = [
     description:
       'Implementamos técnicas de oxigenación y filtrado natural que respetan el ecosistema acuático y terrestre. Nuestro enfoque se basa en equilibrio de nutrientes para preservar el agua cristalina de forma permanente y natural.',
     features: ['Cero impacto en la fauna local', 'Sistemas de aireación de alta eficiencia'],
-    image: '',
+    image: 'src/assets/fondo4.jpg',
   },
   {
     id: '05',

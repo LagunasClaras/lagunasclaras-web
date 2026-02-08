@@ -1,0 +1,20 @@
+---
+import Button from '@/components/Button.astro';
+import { clientsMock } from '@/content/clientsMock';
+import ClientsSection from '@/sections/home/components/ClientsSection.astro';
+
+const Content = {
+  title: 'Clientes que confían en nuestro trabajo',
+  linkText: 'Ver todos nuestros clientes',
+  linkHref: '/clientes',
+};
+---
+
+<div class="bg-background py-16">
+  <ClientsSection sectionTitle={Content.title} clients={clientsMock} sectionDescription="" />
+  <div class="mt-8 flex justify-center">
+    <Button href={Content.linkHref} variant="outline">
+      {Content.linkText}
+    </Button>
+  </div>
+</div>

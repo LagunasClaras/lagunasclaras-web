@@ -48,12 +48,13 @@
   --radius: 0.625rem;
 
   /* ===== Layout layers ===== */
-  --background: hsl(210 25% 96%); /* white-smoke base */
+  --background: hsl(204, 24%, 96%); /* ghost-white base */
   --surface: hsl(210 25% 97.5%); /* section bands */
   --foreground: hsl(215 30% 15%); /* main text */
 
   /* ===== Surfaces ===== */
-  --card: hsl(0 0% 100%); /* pure white */
+  --alabaster: hsl(43, 21%, 94%);
+  --card: hsl(0, 0%, 100%); /* pure white */
   --card-foreground: hsl(215 30% 15%);
 
   --popover: hsl(0 0% 100%);

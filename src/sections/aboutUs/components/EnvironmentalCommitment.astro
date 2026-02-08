@@ -1,0 +1,53 @@
+---
+import { Leaf, ShieldCheck, Sprout } from '@/components/icons';
+
+const Content = {
+  title: 'Compromiso ambiental',
+  description:
+    'Somos respetuosos con el medio ambiente: no utilizamos productos químicos. Nuestro enfoque es 100% mecánico y natural.',
+  benefits: [
+    {
+      title: 'Intervención sin químicos',
+      description: 'Preservamos la calidad del agua evitando contaminantes.',
+      Icon: ShieldCheck,
+    },
+    {
+      title: 'Cuidado del ecosistema',
+      description: 'Respetamos la fauna y flora local durante el proceso.',
+      Icon: Sprout,
+    },
+    {
+      title: 'Trabajo eficiente y sustentable',
+      description: 'Maquinaria diseñada para minimizar el impacto ambiental.',
+      Icon: Leaf,
+    },
+  ],
+};
+---
+
+<section class="bg-linear-to-b from-emerald-50/50 to-white py-16 md:py-24">
+  <div class="container mx-auto px-4 text-center">
+    <div class="mx-auto mb-12 max-w-3xl">
+      <h2 class="text-primary mb-6 text-3xl font-bold md:text-4xl">
+        {Content.title}
+      </h2>
+      <p class="text-foreground/80 text-lg leading-relaxed">
+        {Content.description}
+      </p>
+    </div>
+
+    <div class="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-3 md:gap-12">
+      {
+        Content.benefits.map((benefit) => (
+          <div class="flex flex-col items-center">
+            <div class="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 shadow-sm">
+              <benefit.Icon className="h-10 w-10" />
+            </div>
+            <h3 class="text-foreground mb-3 text-xl font-bold">{benefit.title}</h3>
+            <p class="text-muted-foreground text-base">{benefit.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

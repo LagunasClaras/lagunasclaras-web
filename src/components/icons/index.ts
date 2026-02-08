@@ -10,3 +10,8 @@ export { default as Pin } from './Pin.astro';
 export { default as ShieldEngine } from './ShieldEngine.astro';
 export { default as WaterReclying } from './WaterReclying.astro';
 export { default as WhatsApp } from './WhatsApp.astro';
+export { default as Recycle } from './Recycle.astro';
+export { default as ShieldCheck } from './ShieldCheck.astro';
+export { default as Sprout } from './Sprout.astro';
+export { default as User } from './User.astro';
+export { default as Waves } from './Waves.astro';

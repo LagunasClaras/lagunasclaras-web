@@ -1,0 +1,84 @@
+---
+import Button from '@/components/Button.astro';
+import { Mail, Pin, User } from '@/components/icons';
+
+const Content = {
+  title: 'Presupuestos sin cargo',
+  description: 'Presupuestos sin cargo. Atendemos en todo el país.',
+  buttonText: 'Contactanos',
+  buttonHref: '/contacto',
+  contacts: [
+    { name: 'Gustavo Frumboli', phone: '+54 9 11 5045 1158', href: 'tel:+5491150451158' },
+    { name: 'Paula Serantes', phone: '+54 9 11 4425 9961', href: 'tel:+5491144259961' },
+  ],
+  email: 'lagunasclaras@gmail.com',
+  address: 'Aristóbulo del Valle 4591 — Tigre, Provincia de Buenos Aires, Argentina',
+};
+---
+
+<section class="bg-primary text-primary-foreground py-16 md:py-24">
+  <div class="container mx-auto px-4 text-center">
+    <!-- CTA Block -->
+    <div class="mx-auto mb-16 max-w-2xl">
+      <h2 class="text-primary-foreground mb-6 text-3xl font-bold md:text-5xl">
+        {Content.title}
+      </h2>
+      <p class="text-primary-foreground/90 mb-8 text-xl md:text-2xl">
+        {Content.description}
+      </p>
+      <Button href={Content.buttonHref} variant="outline_light" class="px-8 py-6 text-lg">
+        {Content.buttonText}
+      </Button>
+    </div>
+
+    <!-- Contact Details Grid -->
+    <div class="mx-auto grid max-w-4xl grid-cols-1 gap-8 text-left md:grid-cols-2 lg:grid-cols-3">
+      <!-- Contacts -->
+      <div class="bg-primary-foreground/10 flex flex-col gap-4 rounded-xl p-6 backdrop-blur-sm">
+        <h3 class="flex items-center gap-2 text-lg font-semibold">
+          <User className="h-5 w-5" /> Contactos
+        </h3>
+        <ul class="space-y-3">
+          {
+            Content.contacts.map((contact) => (
+              <li>
+                <div class="font-medium">{contact.name}</div>
+                <a
+                  href={contact.href}
+                  class="hover:text-accent-soft text-sm opacity-90 transition-colors"
+                >
+                  {contact.phone}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Email -->
+      <div class="bg-primary-foreground/10 flex flex-col gap-4 rounded-xl p-6 backdrop-blur-sm">
+        <h3 class="flex items-center gap-2 text-lg font-semibold">
+          <Mail className="h-5 w-5" /> Email
+        </h3>
+        <a
+          href={`mailto:${Content.email}`}
+          class="hover:text-accent-soft text-lg font-medium wrap-break-word transition-colors"
+        >
+          {Content.email}
+        </a>
+      </div>
+
+      <!-- Address -->
+      <div
+        class="bg-primary-foreground/10 flex flex-col gap-4 rounded-xl p-6 backdrop-blur-sm md:col-span-2 lg:col-span-1"
+      >
+        <h3 class="flex items-center gap-2 text-lg font-semibold">
+          <Pin className="h-5 w-5" /> Ubicación
+        </h3>
+        <p class="text-sm leading-relaxed opacity-90">
+          {Content.address}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,22 +1,30 @@
 ---
-import SeoHead from '../components/SeoHead.astro';
-import Layout from '../layouts/Layout.astro';
-
+import SeoHead from '@/components/SeoHead.astro';
+import Layout from '@/layouts/Layout.astro';
+import AboutHero from '@/sections/aboutUs/components/AboutHero.astro';
+import ClientsTeaser from '@/sections/aboutUs/components/ClientsTeaser.astro';
+import EnvironmentalCommitment from '@/sections/aboutUs/components/EnvironmentalCommitment.astro';
+import FinalCTA from '@/sections/aboutUs/components/FinalCTA.astro';
+import HowWeDoIt from '@/sections/aboutUs/components/HowWeDoIt.astro';
+import WhatWeDo from '@/sections/aboutUs/components/WhatWeDo.astro';
+import WhoWeAre from '@/sections/aboutUs/components/WhoWeAre.astro';
 const SeoContent = {
   title: 'Quienes Somos | Lagunas Claras',
   description:
-    'Más de 10 años dedicados al mantenimiento y recuperación de lagos y ecosistemas acuáticos, con soluciones eficientes y sin químicos.',
+    'Más de 10 años manteniendo y recuperando espejos de agua: lagos, lagunas, ríos y canales en todo el país. Soluciones sin químicos.',
 };
 ---
 
 <Layout>
   <SeoHead title={SeoContent.title} description={SeoContent.description} />
   <Fragment slot="main">
-    <main class="bg-primary min-h-[60vh] py-12">
-      <h1 class="text-primary mb-4 text-3xl font-bold">¿Quiénes Somos?</h1>
-      <p class="text-foreground/80 text-lg">
-        {SeoContent.description}
-      </p>
-    </main>
+    <AboutHero />
+    <WhoWeAre />
+    <WhatWeDo />
+    <HowWeDoIt />
+    <EnvironmentalCommitment />
+    <ClientsTeaser />
+    <FinalCTA />
   </Fragment>
-</Layout>
+</Layout>;
+
