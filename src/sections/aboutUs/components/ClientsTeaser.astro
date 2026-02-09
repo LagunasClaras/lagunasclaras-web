@@ -1,6 +1,6 @@
 ---
 import Button from '@/components/Button.astro';
-import { clientsMock } from '@/content/clientsMock';
+import { clientsContent } from '@/content/clients';
 import ClientsSection from '@/sections/home/components/ClientsSection.astro';
 
 const Content = {
@@ -10,10 +10,14 @@ const Content = {
 };
 ---
 
-<div class="bg-background py-16">
-  <ClientsSection sectionTitle={Content.title} clients={clientsMock} sectionDescription="" />
+<div class="from-primary-soft to-primary-light/20 bg-linear-to-b py-16">
+  <ClientsSection
+    sectionTitle={Content.title}
+    clients={clientsContent.clients}
+    sectionDescription=""
+  />
   <div class="mt-8 flex justify-center">
-    <Button href={Content.linkHref} variant="outline">
+    <Button href={Content.linkHref} variant="underline">
       {Content.linkText}
     </Button>
   </div>

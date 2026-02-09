@@ -46,98 +46,98 @@
 
 :root {
   --radius: 0.625rem;
-
+  --algo: #314158;
   /* ===== Layout layers ===== */
-  --background: hsl(204, 24%, 96%); /* ghost-white base */
-  --surface: hsl(210 25% 97.5%); /* section bands */
-  --foreground: hsl(215 30% 15%); /* main text */
+  --background: hsl(204, 24%, 96%); /* HEX: #F2F5F7 */ /* ghost-white base */
+  --surface: hsl(210 25% 97.5%); /* HEX: #F7F9FA */ /* section bands */
+  --foreground: hsl(215 30% 15%); /* HEX: #1B2432 */ /* main text */
 
   /* ===== Surfaces ===== */
-  --alabaster: hsl(43, 21%, 94%);
-  --card: hsl(0, 0%, 100%); /* pure white */
-  --card-foreground: hsl(215 30% 15%);
+  --alabaster: hsl(43, 21%, 94%); /* HEX: #F3F1EC */
+  --card: hsl(0, 0%, 100%); /* HEX: #FFFFFF */ /* pure white */
+  --card-foreground: hsl(215 30% 15%); /* HEX: #1B2432 */
 
-  --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(215 30% 15%);
+  --popover: hsl(0 0% 100%); /* HEX: #FFFFFF */
+  --popover-foreground: hsl(215 30% 15%); /* HEX: #1B2432 */
 
   /* ===== Brand ===== */
-  --primary: hsl(221, 43%, 47%);
-  --primary-light: hsl(206, 65%, 73%);
-  --primary-foreground: hsl(210 40% 98%);
-  --primary-soft: hsl(210 80% 95%);
+  --primary: hsl(221, 43%, 47%); /* HEX: #4465AB */
+  --primary-light: hsl(206, 65%, 73%); /* HEX: #8DC0E7 */
+  --primary-foreground: hsl(210 40% 98%); /* HEX: #F8FAFC */
+  --primary-soft: hsl(210 80% 95%); /* HEX: #E8F2FC */
 
-  --secondary: hsl(210 60% 90%);
-  --secondary-foreground: hsl(215 30% 20%);
+  --secondary: hsl(210 60% 90%); /* HEX: #D6E6F5 */
+  --secondary-foreground: hsl(215 30% 20%); /* HEX: #243042 */
 
-  --accent: hsl(145 55% 45%);
-  --accent-foreground: hsl(145 40% 96%);
-  --accent-soft: hsl(145 55% 94%);
+  --accent: hsl(145 55% 45%); /* HEX: #34B268 */
+  --accent-foreground: hsl(145 40% 96%); /* HEX: #F1F9F4 */
+  --accent-soft: hsl(145 55% 94%); /* HEX: #E7F8EE */
 
   /* ===== Muted & system ===== */
-  --muted: hsl(210 20% 92%);
-  --muted-foreground: hsl(215 15% 40%);
+  --muted: hsl(210, 20%, 92%); /* HEX: #E7EBEF */
+  --muted-foreground: hsl(216, 15%, 40%); /* HEX: #576375 */
 
-  --error: hsl(4 70% 50%);
-  --error-foreground: hsl(0 0% 100%);
-  --border: hsl(210 20% 85%);
-  --input: hsl(210 20% 92%);
-  --ring: hsl(210 80% 45%);
+  --error: hsl(4 70% 50%); /* HEX: #D93226 */
+  --error-foreground: hsl(0 0% 100%); /* HEX: #FFFFFF */
+  --border: hsl(210 20% 85%); /* HEX: #D1D9E0 */
+  --input: hsl(210 20% 92%); /* HEX: #E7EBEF */
+  --ring: hsl(210 80% 45%); /* HEX: #1773CF */
 
   /* ===== Sidebar ===== */
-  --sidebar: hsl(210 25% 96%);
-  --sidebar-foreground: hsl(215 30% 15%);
-  --sidebar-primary: hsl(210 80% 45%);
-  --sidebar-primary-foreground: hsl(210 40% 98%);
-  --sidebar-accent: hsl(210 25% 94%);
-  --sidebar-accent-foreground: hsl(215 30% 20%);
-  --sidebar-border: hsl(210 20% 85%);
-  --sidebar-ring: hsl(210 80% 45%);
+  --sidebar: hsl(210 25% 96%); /* HEX: #F2F5F7 */
+  --sidebar-foreground: hsl(215 30% 15%); /* HEX: #1B2432 */
+  --sidebar-primary: hsl(210 80% 45%); /* HEX: #1773CF */
+  --sidebar-primary-foreground: hsl(210 40% 98%); /* HEX: #F8FAFC */
+  --sidebar-accent: hsl(210 25% 94%); /* HEX: #ECF0F4 */
+  --sidebar-accent-foreground: hsl(215 30% 20%); /* HEX: #243042 */
+  --sidebar-border: hsl(210 20% 85%); /* HEX: #D1D9E0 */
+  --sidebar-ring: hsl(210 80% 45%); /* HEX: #1773CF */
 }
 
 .dark {
   /* ===== Layout layers ===== */
-  --background: hsl(215 30% 9%); /* page base */
-  --surface: hsl(215 30% 11%); /* section bands */
-  --foreground: hsl(210 40% 96%);
+  --background: hsl(215 30% 9%); /* HEX: #10161E */ /* page base */
+  --surface: hsl(215 30% 11%); /* HEX: #141B24 */ /* section bands */
+  --foreground: hsl(210 40% 96%); /* HEX: #F1F5F9 */
 
   /* ===== Surfaces ===== */
-  --card: hsl(215 30% 14%);
-  --card-foreground: hsl(210 40% 96%);
+  --card: hsl(215 30% 14%); /* HEX: #19222E */
+  --card-foreground: hsl(210 40% 96%); /* HEX: #F1F5F9 */
 
-  --popover: hsl(215 30% 13%);
-  --popover-foreground: hsl(210 40% 96%);
+  --popover: hsl(215 30% 13%); /* HEX: #171F2B */
+  --popover-foreground: hsl(210 40% 96%); /* HEX: #F1F5F9 */
 
   /* ===== Brand ===== */
-  --primary: hsl(210 80% 60%);
-  --primary-foreground: hsl(215 30% 10%);
-  --primary-soft: hsl(210 80% 18%);
+  --primary: hsl(210 80% 60%); /* HEX: #4799EB */
+  --primary-foreground: hsl(215 30% 10%); /* HEX: #121821 */
+  --primary-soft: hsl(210 80% 18%); /* HEX: #092E53 */
 
-  --secondary: hsl(210 40% 22%);
-  --secondary-foreground: hsl(210 40% 96%);
+  --secondary: hsl(210 40% 22%); /* HEX: #22384F */
+  --secondary-foreground: hsl(210 40% 96%); /* HEX: #F1F5F9 */
 
-  --accent: hsl(145 55% 55%);
-  --accent-foreground: hsl(215 30% 10%);
-  --accent-soft: hsl(145 55% 18%);
+  --accent: hsl(145 55% 55%); /* HEX: #4DCB82 */
+  --accent-foreground: hsl(215 30% 10%); /* HEX: #121821 */
+  --accent-soft: hsl(145 55% 18%); /* HEX: #15472A */
 
   /* ===== Muted & system ===== */
-  --muted: hsl(215 20% 22%);
-  --muted-foreground: hsl(210 20% 65%);
+  --muted: hsl(215 20% 22%); /* HEX: #2D3643 */
+  --muted-foreground: hsl(210 20% 65%); /* HEX: #94A6B8 */
 
-  --error: hsl(4 70% 45%);
-  --error-foreground: hsl(0 0% 100%);
-  --border: hsl(215 20% 28%);
-  --input: hsl(215 20% 20%);
-  --ring: hsl(210 80% 60%);
+  --error: hsl(4 70% 45%); /* HEX: #C32D22 */
+  --error-foreground: hsl(0 0% 100%); /* HEX: #FFFFFF */
+  --border: hsl(215 20% 28%); /* HEX: #394556 */
+  --input: hsl(215 20% 20%); /* HEX: #29313D */
+  --ring: hsl(210 80% 60%); /* HEX: #4799EB */
 
   /* ===== Sidebar ===== */
-  --sidebar: hsl(215 30% 11%);
-  --sidebar-foreground: hsl(210 40% 96%);
-  --sidebar-primary: hsl(210 80% 60%);
-  --sidebar-primary-foreground: hsl(215 30% 10%);
-  --sidebar-accent: hsl(215 30% 17%);
-  --sidebar-accent-foreground: hsl(210 40% 96%);
-  --sidebar-border: hsl(215 20% 28%);
-  --sidebar-ring: hsl(210 80% 60%);
+  --sidebar: hsl(215 30% 11%); /* HEX: #141B24 */
+  --sidebar-foreground: hsl(210 40% 96%); /* HEX: #F1F5F9 */
+  --sidebar-primary: hsl(210 80% 60%); /* HEX: #4799EB */
+  --sidebar-primary-foreground: hsl(215 30% 10%); /* HEX: #121821 */
+  --sidebar-accent: hsl(215 30% 17%); /* HEX: #1E2938 */
+  --sidebar-accent-foreground: hsl(210 40% 96%); /* HEX: #F1F5F9 */
+  --sidebar-border: hsl(215 20% 28%); /* HEX: #394556 */
+  --sidebar-ring: hsl(210 80% 60%); /* HEX: #4799EB */
 }
 
 @layer base {

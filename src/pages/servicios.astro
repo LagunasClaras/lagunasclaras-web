@@ -13,21 +13,25 @@ const SeoContent = {
 };
 
 const breadcrumbItems = [{ label: 'Servicios' }];
+const content = {
+  title: 'Nuestros Servicios',
+  description:
+    'Soluciones ecológicas y profesionales diseñadas para restaurar y mantener el equilibrio natural de sus cuerpos de agua.',
+};
 ---
 
 <Layout>
   <SeoHead title={SeoContent.title} description={SeoContent.description} />
   <Fragment slot="main">
-    <main class="bg-background mt-24 min-h-screen w-full pb-24">
+    <main class="bg-background mt-24 min-h-screen w-full">
       <div>
         <!-- Header Section -->
         <div class="mb-12 px-10">
           <!-- Breadcrumb -->
           <Breadcrumb items={breadcrumbItems} />
-          <h1 class="text-primary mb-4 text-4xl font-bold md:text-5xl">Nuestros Servicios</h1>
-          <p class="text-muted-foreground max-w-3xl text-lg leading-relaxed">
-            Soluciones ecológicas y profesionales diseñadas para restaurar y mantener el equilibrio
-            natural de sus cuerpos de agua.
+          <h1 class="text-primary mb-4 text-4xl font-bold md:text-5xl">{content.title}</h1>
+          <p class="text-foreground max-w-3xl text-lg leading-relaxed">
+            {content.description}
           </p>
         </div>
 

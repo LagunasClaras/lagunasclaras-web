@@ -38,7 +38,11 @@ const HeroContent = {
       <Button href={HeroContent.primaryCTA.href} variant="primary">
         {HeroContent.primaryCTA.text}
       </Button>
-      <Button href={HeroContent.secondaryCTA.href} variant="outline_light">
+      <Button
+        href={HeroContent.secondaryCTA.href}
+        variant="underline"
+        class="text-primary-foreground hover:text-white"
+      >
         {HeroContent.secondaryCTA.text}
       </Button>
     </div>
