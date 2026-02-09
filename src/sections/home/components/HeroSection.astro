@@ -24,10 +24,7 @@ const { HeroTitle, HeroSubtitle, CTA, Discover } = Astro.props as HeroProps;
     />
   </picture>
   <!-- Overlay -->
-  <div
-    class="to-black/00 to-black-20 absolute inset-0 bg-linear-to-b from-black/65 via-black/40 to-black/20"
-  >
-  </div>
+  <div class="absolute inset-0 bg-linear-to-b from-black/65 via-black/30 to-transparent"></div>
   <!-- Content -->
   <div
     class="relative z-10 container mx-auto flex h-full max-w-4xl flex-1 flex-col justify-center px-4 pt-20 text-left lg:px-8"
@@ -48,7 +45,12 @@ const { HeroTitle, HeroSubtitle, CTA, Discover } = Astro.props as HeroProps;
     >
       {
         CTA.map((cta: { text: string; href: string; style: string }) => (
-          <Button href={cta.href} icon variant={cta.style}>
+          <Button
+            href={cta.href}
+            icon
+            variant={cta.style}
+            class={cta.style === 'underline' ? 'text-primary-foreground hover:text-white' : ''}
+          >
             {cta.text}
           </Button>
         ))

@@ -174,7 +174,7 @@
   .nav-link.active::after {
     transform: scaleX(1);
   }
-  .group:hover .nav-link::after {
+  .group\/link:hover .nav-link::after {
     transform: scaleX(1);
   }
 

@@ -17,14 +17,21 @@ const content: NavbarContent = {
 
 const { brandTitle, links } = content;
 const currentPath = Astro.url.pathname;
+const isTransparentPage = currentPath === '/' || currentPath === '/quienes-somos';
 ---
 
 <nav
   id="navbar"
-  class="text-primary-foreground fixed top-0 left-0 z-100 w-full transition-all duration-300"
+  data-transparent-page={isTransparentPage.toString()}
+  data-scrolled="false"
+  data-menu-open="false"
+  class="group fixed top-0 left-0 z-100 w-full transition-all duration-300"
 >
   <!-- Background bar -->
-  <div id="navbar-bg" class="absolute inset-0 h-20 bg-transparent transition-all duration-300">
+  <div
+    id="navbar-bg"
+    class="group-data-[scrolled=true]:bg-background group-data-[transparent-page=false]:bg-background absolute inset-0 h-20 transition-all duration-300 group-data-[scrolled=true]:shadow-md group-data-[scrolled=true]:backdrop-blur group-data-[transparent-page=false]:shadow-md group-data-[transparent-page=false]:backdrop-blur group-data-[transparent-page=true]:group-data-[scrolled=false]:bg-transparent"
+  >
   </div>
 
   <div class="relative z-50 mx-auto flex h-20 max-w-7xl items-center justify-between px-4">
@@ -32,12 +39,12 @@ const currentPath = Astro.url.pathname;
     <a
       href="/"
       id="nav-logo"
-      class="text-primary relative z-10 flex items-center gap-2 text-lg font-bold transition-opacity duration-300"
+      class="relative z-10 flex items-center gap-2 text-lg font-bold transition-opacity duration-300 group-data-[menu-open=true]:pointer-events-none group-data-[menu-open=true]:opacity-0"
     >
       <img src="/logo.svg" alt="Lagunas Claras" class="h-12 w-12 min-w-6" />
       <span
         id="nav-title"
-        class="text-primary-foreground font-semibold transition-colors duration-300"
+        class="text-primary-foreground group-data-[scrolled=true]:text-primary group-data-[transparent-page=false]:text-primary font-semibold transition-colors duration-300"
         >{brandTitle}</span
       >
     </a>
@@ -49,10 +56,16 @@ const currentPath = Astro.url.pathname;
           const isActive =
             link.href === '/' ? currentPath === '/' : currentPath.includes(link.href);
           return (
-            <li class="group transition-all duration-300 hover:translate-y-2 hover:scale-110">
+            <li class="group/link transition-all duration-300 hover:translate-y-2 hover:scale-110">
               <a
                 href={link.href}
-                class={`nav-link ${isActive ? 'active' : ''} transition-colors duration-300`}
+                class:list={[
+                  'nav-link transition-colors duration-300',
+                  isActive ? 'active' : '',
+                  'text-primary-foreground',
+                  'group-data-[scrolled=true]:text-primary',
+                  'group-data-[transparent-page=false]:text-primary',
+                ]}
                 aria-current={isActive ? 'page' : undefined}
               >
                 {link.title}
@@ -64,94 +77,78 @@ const currentPath = Astro.url.pathname;
     </ul>
 
     <!-- Mobile Menu Button -->
-    <HamburgerButton id="menu-toggle" class="text-primary-foreground z-60 md:hidden" />
+    <HamburgerButton
+      id="menu-toggle"
+      class="text-primary-foreground group-data-[scrolled=true]:text-primary group-data-[transparent-page=false]:text-primary group-data-[menu-open=true]:!text-primary z-60 transition-colors duration-300 md:hidden"
+    />
   </div>
-
   <MobileMenu links={links} brandTitle={brandTitle} />
 </nav>
 
 <script>
-  const navbarBg = document.getElementById('navbar-bg');
-  const navLogo = document.getElementById('nav-logo');
-  const navLinks = document.querySelectorAll('.nav-link');
-  const navTitle = document.getElementById('nav-title');
-  const menuToggle = document.getElementById('menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const menuOverlay = document.getElementById('menu-overlay');
-  const isTransparent =
-    window.location.pathname === '/' || window.location.pathname === '/quienes-somos';
+  const initNavbar = () => {
+    const navbar = document.getElementById('navbar');
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
 
-  let isMenuOpen = false;
+    if (!navbar || !menuToggle || !mobileMenu || !menuOverlay) return;
 
-  const toggleMenu = () => {
-    isMenuOpen = !isMenuOpen;
+    let isMenuOpen = false;
 
-    menuToggle?.classList.toggle('open');
-    mobileMenu?.classList.toggle('translate-x-full');
-    mobileMenu?.classList.toggle('translate-x-0');
-    menuOverlay?.classList.toggle('opacity-0');
-    menuOverlay?.classList.toggle('opacity-100');
-    menuOverlay?.classList.toggle('pointer-events-none');
-    mobileMenu?.classList.toggle('active');
+    const toggleMenu = () => {
+      isMenuOpen = !isMenuOpen;
+      navbar.dataset.menuOpen = isMenuOpen.toString();
 
-    // Hide logo/title when menu is open
-    navLogo?.classList.toggle('opacity-0');
-    navLogo?.classList.toggle('pointer-events-none');
+      menuToggle.classList.toggle('open');
+      mobileMenu.classList.toggle('translate-x-full');
+      mobileMenu.classList.toggle('translate-x-0');
+      menuOverlay.classList.toggle('opacity-0');
+      menuOverlay.classList.toggle('opacity-100');
+      menuOverlay.classList.toggle('pointer-events-none');
+      mobileMenu.classList.toggle('active');
 
-    // Body scroll lock
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-      // Switch button to primary color to see it over the menu tray
-      menuToggle?.classList.remove('text-primary-foreground');
-      menuToggle?.classList.add('text-primary');
-    } else {
-      document.body.style.overflow = '';
-      updateNavbarStyling();
-    }
+      // Body scroll lock
+      if (isMenuOpen) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    };
+
+    const updateScrollState = () => {
+      const isScrolled = window.scrollY > 0;
+      navbar.dataset.scrolled = isScrolled.toString();
+    };
+
+    menuToggle.addEventListener('click', toggleMenu);
+    menuOverlay.addEventListener('click', toggleMenu);
+
+    // Initialize scroll state
+    updateScrollState();
+
+    // TODO: Refactor to usage of CSS scroll-driven animations when browser support is better
+    // See src/docs/features.md for more details
+    window.addEventListener('scroll', updateScrollState);
+
+    // Resize handler to close menu on desktop
+    const onResize = () => {
+      if (window.innerWidth >= 768 && isMenuOpen) {
+        toggleMenu();
+      }
+    };
+    window.addEventListener('resize', onResize);
+
+    // Cleanup
+    const cleanup = () => {
+      window.removeEventListener('scroll', updateScrollState);
+      window.removeEventListener('resize', onResize);
+      document.body.style.overflow = ''; // Reset scroll lock
+    };
+
+    document.addEventListener('astro:before-swap', cleanup, { once: true });
   };
 
-  const updateNavbarStyling = () => {
-    const isScrolled = window.scrollY > 0 || !isTransparent;
-
-    if (!isScrolled) {
-      navbarBg?.classList.remove('bg-background', 'backdrop-blur', 'shadow-md');
-      navbarBg?.classList.add('bg-transparent');
-      navLinks.forEach((link) => {
-        link?.classList.remove('text-primary');
-        link?.classList.add('text-primary-foreground');
-      });
-      navTitle?.classList.remove('text-primary');
-      navTitle?.classList.add('text-primary-foreground');
-      if (!isMenuOpen) {
-        menuToggle?.classList.remove('text-primary');
-        menuToggle?.classList.add('text-primary-foreground');
-      }
-    } else {
-      navbarBg?.classList.remove('bg-transparent');
-      navbarBg?.classList.add('bg-background', 'backdrop-blur', 'shadow-md');
-      navLinks.forEach((link) => {
-        link?.classList.remove('text-primary-foreground');
-        link?.classList.add('text-primary');
-      });
-      navTitle?.classList.remove('text-primary-foreground');
-      navTitle?.classList.add('text-primary');
-      if (!isMenuOpen) {
-        menuToggle?.classList.remove('text-primary-foreground');
-        menuToggle?.classList.add('text-primary');
-      }
-    }
-  };
-
-  menuToggle?.addEventListener('click', toggleMenu);
-  menuOverlay?.addEventListener('click', toggleMenu);
-
-  updateNavbarStyling();
-  window.addEventListener('scroll', updateNavbarStyling);
-
-  // Close menu on resize if window becomes large
-  window.addEventListener('resize', () => {
-    if (window.innerWidth >= 768 && isMenuOpen) {
-      toggleMenu();
-    }
-  });
+  // Run on initial load and subsequent navigations
+  document.addEventListener('astro:page-load', initNavbar);
 </script>
