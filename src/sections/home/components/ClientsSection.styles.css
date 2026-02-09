@@ -1,0 +1,51 @@
+.carousel-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 24px 0;
+  /* Add a subtle mask for smooth entry/exit */
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.carousel-track {
+  display: flex;
+  width: max-content;
+  /* Animate the track */
+  animation: scroll 40s linear infinite;
+}
+
+.carousel-slide {
+  display: flex;
+  align-items: center;
+  gap: 3rem; /* Spacing between logos */
+  padding-right: 3rem; /* Must match gap for seamless loop */
+}
+
+.client-card {
+  flex: 0 0 auto;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.client-img {
+  max-width: 100%;
+  max-height: 80px;
+  object-fit: contain;
+}
+
+/* Infinite Scroll Animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%); /* Move half the track width (one full slide) */
+  }
+}
+
+/* Pause on hover */
+.carousel-track:hover {
+  animation-play-state: paused;
+}

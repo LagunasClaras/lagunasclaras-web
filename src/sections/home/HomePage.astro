@@ -2,7 +2,6 @@
 import { clientsContent } from '@/content/clients';
 import { DropMagnifying, ShieldEngine, WaterReclying } from '@icons';
 import AboutUsSection from './components/AboutUsSection.astro';
-import ClientSection from './components/ClientSection.astro';
 import ClientsSection from './components/ClientsSection.astro';
 import HeroSection from './components/HeroSection.astro';
 import type { AboutUsProps } from './types/AboutUs.types';
@@ -66,7 +65,6 @@ const contactSectionContent: ContactSectionProps = {
 <HeroSection {...heroContent} />
 <div class="flex min-h-[calc(100vh-80px)] flex-col items-center justify-center gap-2 pt-16">
   <AboutUsSection {...aboutUsContent} serviceCards={serviceCards} />
-  <ClientSection {...clientsContent} />
   <ClientsSection {...clientsContent} />
   <ScrollIndicator
     href="#contact-us-section"

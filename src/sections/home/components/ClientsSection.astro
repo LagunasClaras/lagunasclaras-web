@@ -1,92 +1,38 @@
 ---
-import Chevron from 'src/components/Chevron.astro';
 import type { ClientsProps } from '../types/Clients.types';
-
+import './ClientsSection.styles.css';
 const { sectionTitle, clients, sectionDescription } = Astro.props as ClientsProps;
 ---
 
-<section class="relative mx-auto w-[80vw] rounded-2xl pb-4">
-  <h2 class="text-center text-3xl font-semibold text-slate-800">
-    {sectionTitle}
-  </h2>
-  <p class="mt-2 text-center text-slate-700">
-    {sectionDescription}
-  </p>
+<section class="relative mx-auto w-[80%] overflow-hidden py-12">
+  <div class="mx-auto max-w-6xl px-4">
+    <h3 class="text-muted-foreground mb-8 text-center text-lg font-semibold">
+      {sectionDescription}
+    </h3>
+  </div>
 
-  <div class="relative mt-10 w-full">
-    <!-- Flecha izquierda -->
-    <Chevron
-      id="clients-prev"
-      direction="left"
-      class="text-foreground hover:text-primary absolute top-1/2 left-0 z-10 h-10 w-10 -translate-y-1/2 animate-bounce cursor-pointer transition-all duration-300"
-    />
-
-    <!-- Track -->
-    <div
-      id="clients-track"
-      class="flex items-center gap-6 overflow-x-auto scroll-smooth px-8 sm:px-10 md:overflow-x-hidden md:px-12 lg:px-12"
-    >
-      {
-        clients.map((client) => (
-          <div class="group my-4 w-40 shrink-0 rounded-2xl transition group-hover:opacity-100 hover:-translate-y-1 hover:border-none">
-            <div class="flex aspect-4/3 items-center justify-center bg-none py-6">
-              <img
-                src={client.imageUrl}
-                alt={client.alt}
-                loading="lazy"
-                class="h-28 w-32 object-contain transition"
-              />
+  <div class="carousel-container">
+    <div class="carousel-track">
+      {/* First set of clients */}
+      <div class="carousel-slide">
+        {
+          clients.map((client) => (
+            <div class="client-card">
+              <img src={client.imageUrl} alt={client.alt} loading="lazy" class="client-img" />
             </div>
-          </div>
-        ))
-      }
+          ))
+        }
+      </div>
+      {/* Duplicate set for infinite loop */}
+      <div class="carousel-slide" aria-hidden="true">
+        {
+          clients.map((client) => (
+            <div class="client-card">
+              <img src={client.imageUrl} alt={client.alt} loading="lazy" class="client-img" />
+            </div>
+          ))
+        }
+      </div>
     </div>
-
-    <!-- Flecha derecha -->
-    <Chevron
-      id="clients-next"
-      direction="right"
-      class="text-foreground hover:text-primary absolute top-1/2 right-0 z-10 h-10 w-10 -translate-y-1/2 animate-bounce cursor-pointer transition-all duration-300"
-    />
   </div>
 </section>
-
-<script>
-  const track = document.getElementById('clients-track');
-  const prev = document.getElementById('clients-prev');
-  const next = document.getElementById('clients-next');
-
-  if (track && prev && next) {
-    const SCROLL_AMOUNT = 260;
-    const THRESHOLD = 5;
-
-    const updateArrows = () => {
-      const maxScrollLeft = track.scrollWidth - track.clientWidth;
-
-      if (track.scrollLeft <= THRESHOLD) {
-        prev.classList.add('opacity-0', 'pointer-events-none');
-      } else {
-        prev.classList.remove('opacity-0', 'pointer-events-none');
-      }
-
-      if (track.scrollLeft >= maxScrollLeft - THRESHOLD) {
-        next.classList.add('opacity-0', 'pointer-events-none');
-      } else {
-        next.classList.remove('opacity-0', 'pointer-events-none');
-      }
-    };
-
-    next.addEventListener('click', () => {
-      track.scrollBy({ left: SCROLL_AMOUNT, behavior: 'smooth' });
-    });
-
-    prev.addEventListener('click', () => {
-      track.scrollBy({ left: -SCROLL_AMOUNT, behavior: 'smooth' });
-    });
-
-    track.addEventListener('scroll', updateArrows);
-    window.addEventListener('resize', updateArrows);
-
-    updateArrows();
-  }
-</script>
