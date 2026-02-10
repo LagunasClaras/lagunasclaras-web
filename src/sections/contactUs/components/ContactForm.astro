@@ -1,119 +1,6 @@
 ---
 import FormField from '@/components/FormField.astro';
-import type { fieldProps } from '../types/Contact.types';
-
-const fields: fieldProps[] = [
-  {
-    name: 'name',
-    label: 'Nombre completo',
-    type: 'text',
-    required: true,
-    placeholder: 'Ej. Juan Pérez',
-  },
-  {
-    name: 'email',
-    label: 'Email',
-    type: 'email',
-    required: true,
-    placeholder: 'Ej. juan.perez@gmail.com',
-  },
-  {
-    name: 'phone',
-    label: 'Teléfono',
-    type: 'tel',
-    required: true,
-    placeholder: 'Ej. 11 1234 5467',
-  },
-  {
-    name: 'organization',
-    label: 'Organización',
-    type: 'text',
-    required: true,
-    placeholder: 'Ej. Empresa SRL / Barrio X',
-  },
-  {
-    name: 'location',
-    label: 'Ubicación',
-    type: 'text',
-    required: true,
-    placeholder: 'Ej. Tigre, Buenos Aires',
-  },
-  {
-    name: 'referralSource',
-    label: '¿Cómo te enteraste de nosotros?',
-    type: 'select',
-    options: [
-      {
-        value: 'google',
-        label: 'Google',
-      },
-      {
-        value: 'social_media',
-        label: 'Redes sociales',
-      },
-      {
-        value: 'known_person',
-        label: 'Conocidos',
-      },
-      {
-        value: 'other',
-        label: 'Otro',
-      },
-    ],
-    required: false,
-  },
-  {
-    name: 'services',
-    label: 'Selecciona los servicios que te interesan',
-    type: 'checkbox',
-    options: [
-      {
-        value: 'service1',
-        label: 'Servicio 1',
-      },
-      {
-        value: 'service2',
-        label: 'Servicio 2',
-      },
-      {
-        value: 'service3',
-        label: 'Servicio 3',
-      },
-      {
-        value: 'service4',
-        label: 'Servicio 4',
-      },
-      {
-        value: 'service5',
-        label: 'Servicio 5',
-      },
-    ],
-    required: false,
-  },
-  {
-    name: 'contactMethod',
-    label: '¿Por qué medio quieres que te contactemos?',
-    type: 'radio',
-    options: [
-      {
-        value: 'email',
-        label: 'Email',
-      },
-      {
-        value: 'phone',
-        label: 'Teléfono',
-      },
-    ],
-    required: false,
-  },
-  {
-    name: 'notes',
-    label: 'Notas',
-    type: 'textarea',
-    required: false,
-    placeholder: 'Ej. dimensiones, notas adicionales',
-  },
-];
+import { fields } from './contactForm.content';
 ---
 
 <!-- TODO: Add real services
@@ -157,8 +44,10 @@ const fields: fieldProps[] = [
 </form>
 
 <script>
+  import { FORM_POST_URL } from 'astro:env/client';
   import { ContactSchema } from '../schemas/contact.schema';
-  import type { ContactFormSchema } from '../types/Contact.types';
+  import type { ContactFormSchema, fieldOptionsProps, fieldProps } from '../types/Contact.types';
+  import { fields } from './contactForm.content';
 
   const form = document.getElementById('contact-form') as HTMLFormElement;
   const submitButton = document.getElementById('submit-button') as HTMLButtonElement;
@@ -231,15 +120,24 @@ const fields: fieldProps[] = [
       if (result.success) {
         // Set loading state
         setLoading(true);
-
+        const referredOption = fields
+          .find((field: fieldProps) => field.name === 'referralSource')
+          ?.options?.find(
+            (option: fieldOptionsProps) => option.value === result.data.referralSource
+          );
+        const body = {
+          ...result.data,
+          referralSource: referredOption,
+          timestamp: new Date().toISOString(),
+        };
         try {
           // Send the data to your backend
-          const response = await fetch('/api/contact', {
+          const response = await fetch(FORM_POST_URL, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(result.data),
+            body: JSON.stringify(body),
           });
 
           if (response.ok) {

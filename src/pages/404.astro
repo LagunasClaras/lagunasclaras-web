@@ -26,7 +26,7 @@ const Content404 = {
 <Layout>
   <SeoHead title={SeoContent.title} description={SeoContent.description} />
   <Fragment slot="main">
-    <div class="mt-36 flex min-h-[70vh] items-center justify-center px-4">
+    <div class="mt-36 flex min-h-[70vh] items-center justify-center px-4 lg:flex-col">
       <div class="text-center">
         <!-- Animated water drop illustration -->
         <div class="relative mx-auto mb-8 flex h-36 w-36 items-center justify-center">
@@ -79,7 +79,9 @@ const Content404 = {
 
       <!-- Helpful links -->
       <div class="m-12">
-        <p class="text-muted-foreground mb-4 text-sm font-medium">{Content404.usefulLinks}</p>
+        <p class="text-muted-foreground mb-4 text-center text-sm font-medium">
+          {Content404.usefulLinks}
+        </p>
         <div class="flex flex-wrap justify-center gap-4">
           {
             Content404.links.map((link, index) => (

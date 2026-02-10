@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nuevo Contacto - LagunasClaras</title>
+    <style>
+      /* Reset styles */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        background-color: #f2f5f7;
+        color: #1b2432;
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .card {
+        background-color: #deeffd;
+        border-radius: 16px;
+        padding: 32px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 24px;
+        border-bottom: 2px solid #f2f5f7;
+        padding-bottom: 16px;
+      }
+      .header h1 {
+        color: #4465ab;
+        margin: 0;
+        font-size: 28px;
+      }
+      .status-badge {
+        display: inline-block;
+        background-color: #34b268; /* Accent Green */
+        color: #ffffff;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 24px;
+        text-align: center;
+      }
+      .field-label {
+        font-weight: bold;
+        color: #4465ab; /* Primary Blue */
+        display: block;
+        margin-bottom: 4px;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .field-value {
+        color: #1b2432;
+        font-size: 16px;
+        word-break: break-word;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 24px;
+        font-size: 12px;
+        color: #576375;
+      }
+      /* Email client compatibility improvements */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      td {
+        vertical-align: top;
+        padding-bottom: 16px;
+      }
+      .col-left {
+        padding-right: 12px;
+        width: 50%;
+      }
+      .col-right {
+        padding-left: 12px;
+        width: 50%;
+      }
+      @media only screen and (max-width: 480px) {
+        .col-left,
+        .col-right {
+          display: block;
+          width: 100%;
+          padding: 0 0 16px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <div class="header">
+          <h1>LagunasClaras</h1>
+          <p style="margin-top: 8px; font-size: 16px; color: #576375">
+            Nueva Solicitud de Contacto
+          </p>
+        </div>
+
+        <div style="text-align: center">
+          <div class="status-badge">✅ Respuesta automática enviada</div>
+        </div>
+
+        <p style="margin-bottom: 24px, fontSize: 16px">
+          Hola, alguien ha completado el formulario de contacto con la siguiente información:
+        </p>
+
+        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+          <!-- Row 1: Timestamp & Name -->
+          <tr>
+            <td class="col-left">
+              <span class="field-label">👤 Nombre completo</span>
+              <span class="field-value">{{$json.Nombre}}</span>
+            </td>
+            <td class="col-right">
+              <span class="field-label">📅 Fecha de contacto</span>
+              <span class="field-value">{{$('LeadObj').item.json.date}}</span>
+            </td>
+          </tr>
+
+          <!-- Row 2: Email & Phone -->
+          <tr>
+            <td class="col-left">
+              <span class="field-label">📧 Email</span>
+              <span class="field-value">{{$json.email}}</span>
+            </td>
+            <td class="col-right">
+              <span class="field-label">📞 Teléfono</span>
+              <span class="field-value">{{$json.Telefono}}</span>
+            </td>
+          </tr>
+
+          <!-- Row 3: Organization & Location -->
+          <tr>
+            <td class="col-left">
+              <span class="field-label">🏢 Organización</span>
+              <span class="field-value">{{$json.Organizacion}}</span>
+            </td>
+            <td class="col-right">
+              <span class="field-label">📍 Ubicación</span>
+              <span class="field-value">{{$json.Ubicacion}}</span>
+            </td>
+          </tr>
+
+          <!-- Row 4: Referral Source & Contact Method -->
+          <tr>
+            <td class="col-left">
+              <span class="field-label">🗣️ ¿Cómo nos conoció?</span>
+              <span class="field-value">{{$json['Referido por']}}</span>
+            </td>
+            <td class="col-right">
+              <span class="field-label">� Prefiere contacto por</span>
+              <span class="field-value" style="text-transform: capitalize"
+                >{{$json['Metodo de contacto']}}</span
+              >
+            </td>
+          </tr>
+
+          <!-- Row 5: Services (Full Width) -->
+          <tr>
+            <td colspan="2" style="padding-bottom: 16px">
+              <span class="field-label">🛠️ Servicios de interés</span>
+              {{ $('LeadObj').item.json.services.map(s => `
+              <li
+                class="field-value"
+                style="margin: 4px 0 0 0; padding-left: 4px; list-style-type: disc"
+              >
+                ${s}
+              </li>
+              `).join('') }}
+            </td>
+          </tr>
+
+          <!-- Row 6: Notes (Full Width) -->
+          <tr>
+            <td colspan="2">
+              <span class="field-label">📝 Notas adicionales</span>
+              <div
+                class="field-value"
+                style="
+                  background-color: #f2f5f7;
+                  padding: 12px;
+                  border-radius: 8px;
+                  margin-top: 4px;
+                "
+              >
+                {{$json.notas}}
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        <div class="footer">
+          <p>Este es un mensaje automático del sistema de LagunasClaras.</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
