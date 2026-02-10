@@ -12,14 +12,14 @@ const Content = {
     { name: 'Paula Serantes', phone: '+54 9 11 4425 9961', href: 'tel:+5491144259961' },
   ],
   email: 'lagunasclaras@gmail.com',
-  address: 'Aristóbulo del Valle 4591 — Tigre, Provincia de Buenos Aires, Argentina',
+  address: 'Aristóbulo del Valle 4591 — Tigre',
 };
 ---
 
-<section class="from-primary-light/20 to-alabaster bg-linear-to-b pt-16 md:py-12">
+<section class="from-primary-light/20 to-alabaster bg-linear-to-b py-8">
   <div class="container mx-auto px-4 text-center">
     <!-- CTA Block -->
-    <div class="mx-auto mb-16 max-w-2xl">
+    <div class="mx-auto mb-10 max-w-2xl">
       <h2 class="text-primary mb-6 text-3xl font-bold md:text-5xl">
         {Content.title}
       </h2>
@@ -32,13 +32,13 @@ const Content = {
     </div>
 
     <!-- Contact Details Grid -->
-    <div class="mx-auto grid max-w-4xl grid-cols-1 gap-6 text-left md:grid-cols-2 lg:grid-cols-3">
+    <div class="mx-auto grid max-w-2xl grid-cols-1 gap-6 text-left md:grid-cols-2">
       <!-- Contacts -->
       <div
         class="group flex flex-col gap-4 rounded-xl bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
       >
         <h3 class="text-primary flex items-center gap-2 text-lg font-semibold">
-          <User className="h-5 w-5" /> Contactos
+          <User class="h-5 w-5" /> Contactos
         </h3>
         <ul class="space-y-3">
           {
@@ -57,31 +57,32 @@ const Content = {
         </ul>
       </div>
 
-      <!-- Email -->
+      <!-- Email & Location -->
       <div
-        class="group flex flex-col gap-4 rounded-xl bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
+        class="group flex flex-col justify-between gap-6 rounded-xl bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
       >
-        <h3 class="text-primary flex items-center gap-2 text-lg font-semibold">
-          <Mail className="h-5 w-5" /> Email
-        </h3>
-        <a
-          href={`mailto:${Content.email}`}
-          class="text-foreground hover:text-primary text-lg font-medium wrap-break-word transition-colors"
-        >
-          {Content.email}
-        </a>
-      </div>
+        <!-- Email -->
+        <div>
+          <h3 class="text-primary flex items-center gap-2 text-lg font-semibold">
+            <Mail class="h-5 w-5" /> Email
+          </h3>
+          <a
+            href={`mailto:${Content.email}`}
+            class="text-foreground hover:text-primary mt-1 block text-lg font-medium wrap-break-word transition-colors"
+          >
+            {Content.email}
+          </a>
+        </div>
 
-      <!-- Address -->
-      <div
-        class="group flex flex-col gap-4 rounded-xl bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md md:col-span-2 lg:col-span-1"
-      >
-        <h3 class="text-primary flex items-center gap-2 text-lg font-semibold">
-          <Pin className="h-5 w-5" /> Ubicación
-        </h3>
-        <p class="text-muted-foreground text-base leading-relaxed">
-          {Content.address}
-        </p>
+        <!-- Address -->
+        <div>
+          <h3 class="text-primary flex items-center gap-2 text-lg font-semibold">
+            <Pin class="h-5 w-5" /> Ubicación
+          </h3>
+          <p class="text-muted-foreground mt-1 text-base leading-relaxed">
+            {Content.address}
+          </p>
+        </div>
       </div>
     </div>
   </div>
