@@ -1,0 +1,59 @@
+---
+import Button from '@/components/Button.astro';
+import clsx from 'clsx';
+
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  buttonRoute: string;
+  reverse?: boolean;
+}
+
+const { title, description, image, reverse = false, buttonRoute } = Astro.props;
+const gradientClass = reverse
+  ? 'md:bg-linear-to-l rounded-r-full'
+  : 'md:bg-linear-to-r rounded-l-full';
+---
+
+<section
+  class={clsx('bg-linear-to-t from-primary-light/20 to-background px-8 py-8', gradientClass)}
+>
+  <div class={clsx('mx-auto max-w-6xl', 'grid items-center gap-12', 'md:grid-cols-2')}>
+    <!-- Imagen -->
+    <div
+      class={clsx(
+        'justify-self-center',
+        reverse ? 'md:order-2 md:justify-self-end' : 'md:justify-self-start'
+      )}
+    >
+      <div
+        class={clsx(
+          'aspect-square overflow-hidden bg-background shadow-md',
+          // Mobile shape
+          'rounded-2xl',
+          // Desktop blob
+          'md:rounded-[48%]',
+          // Tamaño controlado
+          'max-w-[280px] sm:max-w-sm lg:max-w-[420px]'
+        )}
+      >
+        <img src={image} alt={title} class="h-full w-full object-cover" />
+      </div>
+    </div>
+
+    <!-- Texto -->
+    <div class={clsx(reverse && 'md:order-1', 'flex flex-col gap-4')}>
+      <h3 class="text-primary mb-3 text-xl font-semibold">
+        {title}
+      </h3>
+
+      <p class="text-muted-foreground leading-relaxed">
+        {description}
+      </p>
+      <Button href={buttonRoute} variant="primary" class="mt-4 w-fit text-lg"
+        >Más información</Button
+      >
+    </div>
+  </div>
+</section>

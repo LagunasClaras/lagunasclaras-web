@@ -2,6 +2,7 @@
 import Breadcrumb from '@/components/Breadcrumb.astro';
 import ContactCardsList from '@/components/ContactCardsList.astro';
 import MapIframe from '@/components/MapIframe.astro';
+import PageHeader from '@/components/PageHeader.astro';
 import SeoHead from '@/components/SeoHead.astro';
 import Layout from '@/layouts/Layout.astro';
 import ContactForm from '@/sections/contactUs/components/ContactForm.astro';
@@ -22,18 +23,11 @@ const pathName = Astro.url.pathname;
 <Layout>
   <SeoHead title={SeoContent.title} description={SeoContent.description} />
   <Fragment slot="main">
-    <Breadcrumb items={[{ label: 'Contacto', href: pathName }]} className={'mt-24 pl-16'} />
+    <Breadcrumb items={[{ label: 'Contacto', href: pathName }]} className={'mt-24 ml-[10%]'} />
+    <PageHeader title={PageContent.title} subtitle={PageContent.description} />
     <div
       class="from-primary/10 mx-auto mb-16 max-w-7xl rounded-2xl border border-slate-200 bg-linear-to-br to-green-500/10 px-4 py-8 shadow-xl sm:px-6 lg:px-8"
     >
-      <!-- Header Section -->
-      <div class="mb-8 text-center">
-        <h1 class="text-primary mb-4 text-4xl font-bold md:text-5xl">{PageContent.title}</h1>
-        <p class="text-muted-background mx-auto max-w-2xl text-lg">
-          {PageContent.description}
-        </p>
-      </div>
-
       <!-- Main Content: Form + Contact Info -->
       <div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-6">
         <!-- Form Section (larger on desktop) -->

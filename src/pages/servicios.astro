@@ -1,64 +1,47 @@
 ---
 import Breadcrumb from '@/components/Breadcrumb.astro';
-import FullServiceCard from '@/components/FullServiceCard.astro';
+import PageHeader from '@/components/PageHeader.astro';
 import SeoHead from '@/components/SeoHead.astro';
-import VideoModal from '@/components/VideoModal.astro';
 import { servicesMock } from '@/content/servicesMock';
 import Layout from '@/layouts/Layout.astro';
+import ServiceBlock from '@/sections/services/ServiceBlock.astro';
 
 const SeoContent = {
-  title: 'Servicios de mantenimiento de lagos y lagunas | Lagunas Claras',
-  description:
-    'Servicios profesionales de mantenimiento, limpieza y recuperación de lagos, lagunas y espejos de agua, cuidando el ecosistema.',
+  title: 'Nuestros Servicios | Lagunas Claras',
+  description: 'Soluciones profesionales para el mantenimiento y recuperación de espejos de agua.',
 };
 
-const breadcrumbItems = [{ label: 'Servicios' }];
 const content = {
   title: 'Nuestros Servicios',
-  description:
-    'Soluciones ecológicas y profesionales diseñadas para restaurar y mantener el equilibrio natural de sus cuerpos de agua.',
+  subtitle:
+    'Ofrecemos soluciones integrales para el mantenimiento y recuperación de espejos de agua',
 };
 ---
 
 <Layout>
   <SeoHead title={SeoContent.title} description={SeoContent.description} />
   <Fragment slot="main">
-    <main class="bg-background mt-24 min-h-screen w-full">
-      <div>
-        <!-- Header Section -->
-        <div class="mb-12 px-10">
-          <!-- Breadcrumb -->
-          <Breadcrumb items={breadcrumbItems} />
-          <h1 class="text-primary mb-4 text-4xl font-bold md:text-5xl">{content.title}</h1>
-          <p class="text-foreground max-w-3xl text-lg leading-relaxed">
-            {content.description}
-          </p>
-        </div>
+    <main class="bg-background mx-auto mt-24 min-h-screen w-[80%] pb-20">
+      <Breadcrumb items={[{ label: 'Servicios', href: '/servicios' }]} />
+      <PageHeader title={content.title} subtitle={content.subtitle} />
 
-        <!-- Services Grid -->
-        <div class="flex flex-col">
-          {
-            servicesMock.map((service, index: number) => {
-              const isEven = index % 2 === 0;
-              return (
-                <FullServiceCard
-                  id={service.id}
-                  title={service.title}
-                  description={service.description}
-                  image={service.image}
-                  resumeVideo={service.resumeVideo}
-                  video={service.video}
-                  features={service.features}
-                  specialty={service.specialty}
-                  imagePosition={isEven ? 'left' : 'right'}
-                  variant={isEven ? 'default' : 'primary'}
-                />
-              );
-            })
-          }
-        </div>
+      <!-- Services List -->
+      <div class="mx-auto flex max-w-6xl flex-col gap-20 px-6">
+        {
+          servicesMock.map((service, index) => {
+            const isEven = index % 2 === 0;
+            return (
+              <ServiceBlock
+                title={service.title}
+                description={service.description}
+                image={service.image}
+                reverse={isEven}
+                buttonRoute={`/servicios/${service.title.toLowerCase().replace(/\s+/g, '-')}`}
+              />
+            );
+          })
+        }
       </div>
-      <VideoModal />
     </main>
   </Fragment>
 </Layout>

@@ -21,7 +21,8 @@ const {
   disabled = false,
   class: className = '',
   as,
-} = Astro.props as ButtonProps;
+  ...rest
+} = Astro.props;
 
 // Auto-detect element type if not specified
 const element = as || (href ? 'a' : 'button');
@@ -61,7 +62,7 @@ const arrowClasses =
 
 {
   element === 'a' ? (
-    <a href={href} role="button" class={buttonClasses}>
+    <a href={href} role="button" class={buttonClasses} {...rest}>
       <slot />
       {icon && variant !== 'underline' && (
         <svg
@@ -81,7 +82,7 @@ const arrowClasses =
       )}
     </a>
   ) : (
-    <button type={type} disabled={disabled} class={buttonClasses}>
+    <button type={type} disabled={disabled} class={buttonClasses} {...rest}>
       <slot />
       {icon && variant !== 'underline' && (
         <svg

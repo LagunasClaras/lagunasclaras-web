@@ -1,5 +1,6 @@
 ---
 import Breadcrumb from '@/components/Breadcrumb.astro';
+import PageHeader from '@/components/PageHeader.astro';
 import SeoHead from '@/components/SeoHead.astro';
 import { clientsMock } from '@/content/clientsMock';
 import Layout from '@/layouts/Layout.astro';
@@ -9,16 +10,20 @@ const SeoContent = {
   description:
     'Empresas, municipios e instituciones de todo el país que confían en nuestros servicios de mantenimiento de lagos y espejos de agua.',
 };
-const title = 'Clientes que confían en nosotros';
+const content = {
+  title: 'Clientes',
+  subtitle: 'Instituciones que confían en nuestros servicios',
+};
 ---
 
 <Layout>
   <SeoHead title={SeoContent.title} description={SeoContent.description} />
   <Fragment slot="main">
-    <Breadcrumb items={[{ label: 'Clientes' }]} className={'pt-24 pl-16'} />
-    <!-- Section Title -->
-    <h2 class="mb-16 pl-16 text-left text-3xl font-bold md:text-5xl">{title}</h2>
+    <main class="bg-background mx-auto mt-24 min-h-screen w-[80%] pb-20">
+      <Breadcrumb items={[{ label: 'Clientes' }]} />
+      <PageHeader title={content.title} subtitle={content.subtitle} />
 
-    <ClientsCards services={clientsMock} />
+      <ClientsCards services={clientsMock} />
+    </main>
   </Fragment>
 </Layout>
