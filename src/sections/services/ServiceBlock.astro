@@ -1,23 +1,27 @@
 ---
 import Button from '@/components/Button.astro';
+import { Image } from 'astro:assets';
 import clsx from 'clsx';
 
 interface Props {
   title: string;
   description: string;
-  image: string;
+  image: ImageMetadata;
   buttonRoute: string;
   reverse?: boolean;
 }
 
 const { title, description, image, reverse = false, buttonRoute } = Astro.props;
 const gradientClass = reverse
-  ? 'md:bg-linear-to-l rounded-r-full'
-  : 'md:bg-linear-to-r rounded-l-full';
+  ? 'md:bg-linear-to-l md:rounded-r-full md:rounded-tl-none'
+  : 'md:bg-linear-to-r md:rounded-l-full md:rounded-tr-none';
 ---
 
 <section
-  class={clsx('bg-linear-to-t from-primary-light/20 to-background px-8 py-8', gradientClass)}
+  class={clsx(
+    'bg-linear-to-b rounded-tr-4xl rounded-tl-4xl rounded-r-none rounded-l-none from-primary-light/20 to-background px-8 py-8 ',
+    gradientClass
+  )}
 >
   <div class={clsx('mx-auto max-w-6xl', 'grid items-center gap-12', 'md:grid-cols-2')}>
     <!-- Imagen -->
@@ -38,7 +42,7 @@ const gradientClass = reverse
           'max-w-[280px] sm:max-w-sm lg:max-w-[420px]'
         )}
       >
-        <img src={image} alt={title} class="h-full w-full object-cover" />
+        <Image src={image} alt={title} class="h-full max-h-72 w-full max-w-72 object-cover" />
       </div>
     </div>
 

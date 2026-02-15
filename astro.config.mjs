@@ -19,6 +19,9 @@ export default defineConfig({
         '@content': new URL('./src/content', import.meta.url).pathname,
       },
     },
+    ssr: {
+      noExternal: ['@lucide/astro'],
+    },
   },
   env: { schema: { FORM_POST_URL: envField.string({ context: 'client', access: 'public' }) } },
 });

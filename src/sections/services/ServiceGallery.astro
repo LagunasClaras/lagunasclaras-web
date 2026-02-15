@@ -1,0 +1,226 @@
+---
+import GalleryModal from '@/components/GalleryModal.astro';
+import { ArrowLeftRight, Play, Image as ImageIcon } from '@lucide/astro';
+import { Image } from 'astro:assets';
+
+type GalleryItem =
+  | { type: 'image'; src: ImageMetadata; poster?: never }
+  | { type: 'video'; src: string; poster?: ImageMetadata };
+
+interface BeforeAfter {
+  before: ImageMetadata; // Image path
+  after: ImageMetadata; // Image path
+}
+
+interface Props {
+  beforeAfter?: BeforeAfter;
+  gallery?: GalleryItem[];
+}
+
+const { beforeAfter, gallery = [] } = Astro.props;
+
+function getYouTubeId(url: string) {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+  return match && match[2].length === 11 ? match[2] : null;
+}
+---
+
+<section class="bg-background w-full py-12 md:py-16">
+  <div class="container mx-auto px-6 md:px-12">
+    <div class="mb-16 text-center">
+      <h2 class="text-navy-900 mb-4 text-3xl font-bold md:text-4xl">Resultados Visibles</h2>
+      <p class="mx-auto max-w-2xl text-gray-600">
+        Transformamos espejos de agua deteriorados en ecosistemas saludables y estéticamente
+        agradables.
+      </p>
+    </div>
+
+    {/* Before/After Slider */}
+    {
+      beforeAfter && (
+        <div
+          class="group relative mx-auto mb-20 aspect-[16/9] w-full max-w-5xl cursor-ew-resize overflow-hidden rounded-2xl shadow-2xl select-none"
+          id="before-after-slider"
+        >
+          {/* After Image (Background) */}
+          <div class="absolute inset-0 flex items-center justify-center bg-gray-100">
+            <Image
+              src={beforeAfter.after}
+              alt="Después"
+              class="absolute inset-0 h-full w-full object-cover"
+            />
+
+            <div class="absolute top-6 right-6 z-10 rounded-full bg-teal-500/80 px-4 py-1 text-sm font-medium text-white backdrop-blur-md">
+              Después
+            </div>
+          </div>
+
+          {/* Before Image (Foreground with Clip Path) */}
+          <div
+            class="slider-foreground absolute inset-0 flex items-center justify-center border-r-2 border-white bg-gray-200 will-change-[clip-path]"
+            style="clip-path: inset(0 50% 0 0);"
+          >
+            <Image
+              src={beforeAfter.before}
+              alt="Antes"
+              class="absolute inset-0 h-full w-full object-cover"
+            />
+
+            <div class="absolute top-6 left-6 z-10 rounded-full bg-black/50 px-4 py-1 text-sm font-medium text-white backdrop-blur-md">
+              Antes
+            </div>
+          </div>
+
+          {/* Slider Handle */}
+          <div
+            class="slider-handle absolute top-0 bottom-0 z-20 w-1 cursor-ew-resize bg-white shadow-lg will-change-transform"
+            style="left: 50%;"
+          >
+            <div class="absolute top-1/2 left-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white text-teal-600 shadow-xl transition-transform group-hover:scale-110">
+              <ArrowLeftRight class="h-5 w-5" />
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    {/* Gallery Grid */}
+    {
+      gallery.length > 0 && (
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" data-gallery-group>
+          {gallery.map((item, index) => {
+            const serializedItem = JSON.stringify({
+              type: item.type,
+              src: item.type === 'image' ? item.src.src : item.src,
+              poster: item.poster?.src,
+            });
+
+            return (
+              <div
+                class="group reveal-gallery-item relative aspect-video translate-y-4 cursor-pointer overflow-hidden rounded-xl bg-gray-200 opacity-0 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                style={`transition-delay: ${index * 100}ms`}
+                data-gallery-trigger
+                data-gallery-item={serializedItem}
+              >
+                {/* Image/Video Thumbnail */}
+                {item.type === 'video' ? (
+                  item.poster ? (
+                    <Image
+                      src={item.poster}
+                      alt={`Galería ${index + 1}`}
+                      class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  ) : getYouTubeId(item.src) ? (
+                    <img
+                      src={`https://i.ytimg.com/vi/${getYouTubeId(item.src)}/hqdefault.jpg`}
+                      alt={`Galería ${index + 1}`}
+                      class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div class="flex h-full w-full items-center justify-center bg-gray-200">
+                      <Play class="h-12 w-12 text-gray-400" />
+                    </div>
+                  )
+                ) : item.type === 'image' ? (
+                  <Image
+                    src={item.src}
+                    alt={`Galería ${index + 1}`}
+                    class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                ) : null}
+
+                <div class="from-navy-900/40 absolute inset-0 bg-gradient-to-br to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+
+                <div class="absolute inset-0 flex items-center justify-center">
+                  {item.type === 'video' ? (
+                    <div class="flex h-16 w-16 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm transition-transform group-hover:scale-110">
+                      <Play class="ml-1 h-8 w-8 fill-current text-white" />
+                    </div>
+                  ) : (
+                    <ImageIcon class="h-10 w-10 scale-50 transform text-white/0 transition-all duration-300 group-hover:scale-100 group-hover:text-white" />
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )
+    }
+
+    <GalleryModal />
+  </div>
+</section>
+
+<script>
+  function setupGallery() {
+    // Before/After Slider Logic
+    const slider = document.getElementById('before-after-slider');
+    if (slider) {
+      const foreground = slider.querySelector('.slider-foreground') as HTMLElement;
+      const handle = slider.querySelector('.slider-handle') as HTMLElement;
+      let isDragging = false;
+
+      const updateSlider = (x: number) => {
+        const rect = slider.getBoundingClientRect();
+        // Calculate percentage (0 to 100)
+        let percentage = ((x - rect.left) / rect.width) * 100;
+        percentage = Math.max(0, Math.min(100, percentage));
+
+        if (foreground) foreground.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
+        if (handle) handle.style.left = `${percentage}%`;
+      };
+
+      const startDrag = () => {
+        isDragging = true;
+      };
+      const stopDrag = () => {
+        isDragging = false;
+      };
+
+      const onMove = (e: MouseEvent | TouchEvent) => {
+        if (!isDragging) return;
+
+        let clientX;
+        if (window.TouchEvent && e instanceof TouchEvent) {
+          clientX = e.touches[0].clientX;
+        } else if (e instanceof MouseEvent) {
+          clientX = e.clientX;
+        }
+
+        if (clientX) {
+          // Ensure clientX is defined
+          updateSlider(clientX);
+        }
+      };
+
+      // Mouse events
+      slider.addEventListener('mousedown', startDrag);
+      window.addEventListener('mouseup', stopDrag);
+      window.addEventListener('mousemove', onMove);
+
+      // Touch events
+      slider.addEventListener('touchstart', startDrag, { passive: true });
+      window.addEventListener('touchend', stopDrag);
+      window.addEventListener('touchmove', onMove, { passive: true });
+    }
+
+    // Gallery Reveal Animation
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.remove('opacity-0', 'translate-y-4');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    document.querySelectorAll('.reveal-gallery-item').forEach((el) => observer.observe(el));
+  }
+
+  document.addEventListener('astro:page-load', setupGallery);
+</script>

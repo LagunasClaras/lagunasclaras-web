@@ -1,6 +1,6 @@
 ---
 import Button from '@/components/Button.astro';
-import { Mail, Pin, User } from '@/components/icons';
+import { Mail, MapPin, User } from '@lucide/astro';
 
 const Content = {
   title: 'Presupuestos sin cargo',
@@ -77,9 +77,9 @@ const Content = {
         <!-- Address -->
         <div>
           <h3 class="text-primary flex items-center gap-2 text-lg font-semibold">
-            <Pin class="h-5 w-5" /> Ubicación
+            <MapPin class="h-5 w-5" /> Ubicación
           </h3>
-          <p class="text-muted-foreground mt-1 text-base leading-relaxed">
+          <p class="text-foreground mt-1 text-base leading-relaxed">
             {Content.address}
           </p>
         </div>

@@ -1,0 +1,199 @@
+---
+import { X, ChevronLeft, ChevronRight } from '@lucide/astro';
+---
+
+<div
+  id="gallery-modal"
+  class="fixed inset-0 z-110 hidden items-center justify-center bg-black/60 opacity-0 backdrop-blur-xl transition-all duration-300"
+>
+  <button
+    id="gallery-close"
+    class="absolute top-6 right-6 z-120 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition-all hover:bg-white/20 hover:text-teal-400"
+    aria-label="Cerrar galería"
+  >
+    <X class="h-6 w-6 cursor-pointer" />
+  </button>
+
+  {/* Navigation Buttons */}
+  <button
+    id="gallery-prev"
+    class="absolute left-6 z-120 flex h-14 w-14 items-center justify-center rounded-full bg-white/5 text-white transition-all hover:bg-white/10 hover:text-teal-400"
+    aria-label="Anterior"
+  >
+    <ChevronLeft class="h-8 w-8 cursor-pointer" />
+  </button>
+  <button
+    id="gallery-next"
+    class="absolute right-6 z-120 flex h-14 w-14 items-center justify-center rounded-full bg-white/5 text-white transition-all hover:bg-white/10 hover:text-teal-400"
+    aria-label="Siguiente"
+  >
+    <ChevronRight class="h-8 w-8 cursor-pointer" />
+  </button>
+
+  <div class="relative flex h-full w-full items-center justify-center p-4 md:p-12">
+    <div
+      id="gallery-content"
+      class="flex h-full w-full items-center justify-center transition-all duration-500"
+    >
+      {/* Content will be injected here */}
+    </div>
+  </div>
+</div>
+
+<script>
+  interface GalleryTrigger extends HTMLElement {
+    dataset: {
+      galleryItem?: string; // JSON string of the item
+      galleryIndex?: string;
+    };
+  }
+
+  interface GalleryItem {
+    type: 'image' | 'video';
+    src: string;
+    poster?: string;
+  }
+
+  const modal = document.getElementById('gallery-modal') as HTMLDivElement | null;
+  const content = document.getElementById('gallery-content') as HTMLDivElement | null;
+  const closeBtn = document.getElementById('gallery-close') as HTMLButtonElement | null;
+  const prevBtn = document.getElementById('gallery-prev') as HTMLButtonElement | null;
+  const nextBtn = document.getElementById('gallery-next') as HTMLButtonElement | null;
+
+  let currentItems: GalleryItem[] = [];
+  let currentIndex = 0;
+
+  if (modal && content && closeBtn && prevBtn && nextBtn) {
+    function isYouTubeUrl(url: string): boolean {
+      return url.includes('youtube.com') || url.includes('youtu.be');
+    }
+
+    function getYouTubeEmbedUrl(url: string): string | null {
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+      const match = url.match(regExp);
+      if (match && match[2].length === 11) {
+        return `https://www.youtube.com/embed/${match[2]}?autoplay=1`;
+      }
+      return null;
+    }
+
+    function renderItem(index: number) {
+      if (!content) return;
+      const item = currentItems[index];
+      content.innerHTML = '';
+      content.style.opacity = '0';
+      content.style.transform = 'scale(0.95)';
+
+      setTimeout(() => {
+        if (item.type === 'image') {
+          const img = document.createElement('img');
+          img.src = item.src;
+          img.className = 'max-h-full max-w-full object-contain rounded-lg shadow-2xl';
+          content.appendChild(img);
+        } else if (item.type === 'video') {
+          if (isYouTubeUrl(item.src)) {
+            const embedUrl = getYouTubeEmbedUrl(item.src);
+            const iframe = document.createElement('iframe');
+            iframe.src = embedUrl || '';
+            iframe.className = 'aspect-video w-full max-w-4xl rounded-lg shadow-2xl';
+            iframe.setAttribute('allowfullscreen', '');
+            iframe.setAttribute('allow', 'autoplay; encrypted-media');
+            content.appendChild(iframe);
+          } else {
+            const video = document.createElement('video');
+            video.src = item.src;
+            video.className = 'max-h-full max-w-full rounded-lg shadow-2xl';
+            video.controls = true;
+            video.autoplay = true;
+            content.appendChild(video);
+          }
+        }
+        content.style.opacity = '1';
+        content.style.transform = 'scale(1)';
+      }, 50);
+
+      // Update nav buttons
+      prevBtn!.style.display = currentItems.length > 1 ? 'flex' : 'none';
+      nextBtn!.style.display = currentItems.length > 1 ? 'flex' : 'none';
+    }
+
+    function openModal(items: GalleryItem[], index: number) {
+      currentItems = items;
+      currentIndex = index;
+      renderItem(currentIndex);
+      modal!.classList.remove('hidden');
+      modal!.classList.add('flex');
+      setTimeout(() => {
+        modal!.style.opacity = '1';
+      }, 10);
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal!.style.opacity = '0';
+      setTimeout(() => {
+        modal!.classList.add('hidden');
+        modal!.classList.remove('flex');
+        content!.innerHTML = '';
+      }, 300);
+      document.body.style.overflow = '';
+    }
+
+    function nextItem() {
+      currentIndex = (currentIndex + 1) % currentItems.length;
+      renderItem(currentIndex);
+    }
+
+    function prevItem() {
+      currentIndex = (currentIndex - 1 + currentItems.length) % currentItems.length;
+      renderItem(currentIndex);
+    }
+
+    // Event Delegation
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      const trigger = target.closest('[data-gallery-trigger]') as GalleryTrigger;
+
+      if (trigger) {
+        e.preventDefault();
+        // Find all triggers in the same group or the whole page
+        const parent = trigger.closest('[data-gallery-group]') || document;
+        const allTriggers = Array.from(
+          parent.querySelectorAll('[data-gallery-trigger]')
+        ) as GalleryTrigger[];
+
+        const items: GalleryItem[] = allTriggers.map((t) => {
+          const data = JSON.parse(t.dataset.galleryItem || '{}');
+          return data;
+        });
+
+        const index = allTriggers.indexOf(trigger);
+        openModal(items, index);
+      }
+    });
+
+    closeBtn.addEventListener('click', closeModal);
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      nextItem();
+    });
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      prevItem();
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal || e.target === content) {
+        closeModal();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (modal && !modal.classList.contains('hidden')) {
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowRight') nextItem();
+        if (e.key === 'ArrowLeft') prevItem();
+      }
+    });
+  }
+</script>

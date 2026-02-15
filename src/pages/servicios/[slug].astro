@@ -1,0 +1,55 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import ServiceCTA from '@/sections/services/ServiceCTA.astro';
+import ServiceGallery from '@/sections/services/ServiceGallery.astro';
+import ServiceHero from '@/sections/services/ServiceHero.astro';
+import ServiceProblem from '@/sections/services/ServiceProblem.astro';
+import ServiceProcess from '@/sections/services/ServiceProcess.astro';
+import { getCollection } from 'astro:content';
+
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services.map((service) => ({
+    params: { slug: service.id },
+    props: { service },
+  }));
+}
+
+interface Props {
+  service: CollectionEntry<'services'>;
+}
+
+const { service } = Astro.props;
+const { data } = service;
+---
+
+<Layout title={`${data.title} | Lagunas Claras`} description={data.shortDescription}>
+  <div slot="main">
+    <ServiceHero
+      title={data.title}
+      subtitle={data.subtitle || data.shortDescription}
+      badge={data.badge || 'Servicio'}
+      heroImage={data.hero.src}
+      heroAlt={data.hero.alt}
+      ctaHref="/contacto"
+    />
+
+    <ServiceProblem
+      title={data.problem.title}
+      description={data.problem.description}
+      bullets={data.problem.bullets}
+    />
+
+    <ServiceProcess steps={data.process} />
+
+    {/* Gallery & Results */}
+    <ServiceGallery beforeAfter={data.beforeAfter} gallery={data.gallery} />
+
+    <ServiceCTA
+      title={data.cta ? data.cta.title : 'Solicitá tu cotización hoy mismo'}
+      buttonText={data.cta ? data.cta.buttonText : 'Contactar'}
+    />
+  </div>
+</Layout>
