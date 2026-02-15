@@ -23,5 +23,9 @@ export default defineConfig({
       noExternal: ['@lucide/astro'],
     },
   },
-  env: { schema: { FORM_POST_URL: envField.string({ context: 'client', access: 'public' }) } },
+  env: {
+    schema: {
+      FORM_POST_URL: envField.string({ context: 'client', access: 'public', optional: true }),
+    },
+  },
 });

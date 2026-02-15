@@ -131,6 +131,18 @@ import { fields } from './contactForm.content';
           timestamp: new Date().toISOString(),
         };
         try {
+          // If the URL is not defined (temporary case), just log it and simulate success
+          if (!FORM_POST_URL) {
+            console.log('Form data ready to send (FORM_POST_URL is missing):', body);
+            // Simulate success for testing UI
+            buttonText.textContent = '✓ Enviado (Simulado)';
+            setTimeout(() => {
+              form.reset();
+              setLoading(false);
+            }, 2000);
+            return;
+          }
+
           // Send the data to your backend
           const response = await fetch(FORM_POST_URL, {
             method: 'POST',
