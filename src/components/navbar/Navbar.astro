@@ -16,7 +16,7 @@ const content: NavbarContent = {
 };
 
 const { brandTitle, links } = content;
-const currentPath = Astro.url.pathname;
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isTransparentPage =
   currentPath === '/' || currentPath === '/quienes-somos' || currentPath.startsWith('/servicios/');
 ---

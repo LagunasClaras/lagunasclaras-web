@@ -13,6 +13,7 @@ export default defineConfig({
         '@componentes': new URL('./src/components', import.meta.url).pathname,
         '@layout': new URL('./src/layouts', import.meta.url).pathname,
         '@pages': new URL('./src/pages', import.meta.url).pathname,
+        '@assets': new URL('./src/assets', import.meta.url).pathname,
         '@lib': new URL('./src/lib', import.meta.url).pathname,
         '@icons': new URL('./src/components/icons', import.meta.url).pathname,
         '@sections': new URL('./src/sections', import.meta.url).pathname,
