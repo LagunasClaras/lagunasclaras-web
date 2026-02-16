@@ -1,152 +1,56 @@
 ---
-import type { ClientCardInfoProps } from '@/sections/home/types/ClientsGrid.types';
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
 
 interface Props {
-  service: ClientCardInfoProps;
-  index: number;
+  client: CollectionEntry<'clientes'>;
 }
 
-const { service, index } = Astro.props;
+const { client } = Astro.props;
+const { title, logo } = client.data;
+
+// Slug logic: based on title, lowercase, replace spaces with hyphens
+const slug = title.toLowerCase().replace(/\s+/g, '-');
+const href = `/clientes/${slug}`;
 ---
 
-<div
-  class="client-card group bg-card cursor-pointer overflow-hidden rounded-2xl border border-slate-700 p-6 transition-all duration-500 ease-in-out hover:border-slate-600"
-  data-service-id={service.id}
-  data-index={index}
-  role="listitem"
->
-  <!-- Header: Logo + Status Badge -->
-  <div class="mb-4 flex items-start justify-between">
-    <!-- Client Logo -->
+<a href={href} class="client-card group block w-full transition-all duration-300" role="listitem">
+  <!-- MOBILE LAYOUT (< md) -->
+  <div
+    class="active:bg-primary/5 flex items-center justify-between rounded-xl border border-slate-200 bg-white p-4 md:hidden"
+  >
+    <div class="flex flex-1 items-center gap-4">
+      <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-slate-50 p-2">
+        <Image src={logo} alt={`Logo de ${title}`} class="h-full w-full object-contain" />
+      </div>
+      <h3 class="line-clamp-2 text-base leading-tight font-bold text-slate-900">{title}</h3>
+    </div>
+    <span class="text-primary ml-4 shrink-0 text-sm font-semibold">Ver más →</span>
+  </div>
+
+  <!-- DESKTOP LAYOUT (>= md) -->
+  <div
+    class="hover:border-primary/50 relative hidden aspect-square items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white transition-all duration-500 ease-out md:flex"
+  >
+    <!-- Background Logo -->
     <div
-      class="flex items-center justify-center rounded-lg bg-white p-2 transition-transform duration-300 group-hover:scale-110"
-      aria-hidden="true"
+      class="flex h-full w-full items-center justify-center p-8 transition-transform duration-700 group-hover:scale-90 group-hover:blur-sm"
     >
-      {
-        service.image ? (
-          <img
-            src={service.image}
-            alt={`Logo de ${service.title}`}
-            class="h-24 w-24 object-contain"
-          />
-        ) : (
-          <div class="flex items-center justify-center bg-none py-6">
-            <img
-              src={service.image}
-              alt={service.title}
-              loading="lazy"
-              class="h-40 w-40 transition"
-            />
-          </div>
-        )
-      }
+      <Image src={logo} alt={`Logo de ${title}`} class="h-full w-full object-contain" />
     </div>
 
-    <!-- Status Badge: "EXPLORAR" / "DETALLE" -->
-    <span
-      class="card-status text-foreground text-xs font-bold tracking-wider uppercase transition-colors duration-300"
-      aria-live="polite"
+    <!-- Hover Overlay -->
+    <div
+      class="bg-primary/50 absolute inset-0 z-10 flex translate-x-full flex-col items-center justify-center backdrop-blur-2xl transition-transform duration-500 ease-out group-hover:translate-x-0"
     >
-    </span>
-  </div>
-
-  <!-- Title -->
-  <h3 class="text-foreground mb-2 text-xl font-bold transition-all duration-300">
-    {service.title}
-  </h3>
-
-  <!-- Short Description (visible when collapsed) -->
-  <p class="card-short-desc text-foreground text-sm transition-opacity duration-300">
-    {service.shortDesc}
-  </p>
-
-  <!-- Full Content (visible when expanded) -->
-  <div class="card-full-content mt-4 hidden space-y-4 opacity-0 transition-opacity duration-300">
-    <p class="text-foreground leading-relaxed">{service.fullDesc}</p>
-
-    <!-- Client Info Grid -->
-    <div class="mt-4 space-y-4 border-t border-slate-700/50 pt-4">
-      <div>
-        <span class="text-foreground mb-1 block text-xs uppercase">Servicio Prestado</span>
-        <p class="text=foreground text-sm font-medium">{service.serviceProvided}</p>
-      </div>
-      <div>
-        <span class="text-foreground mb-1 block text-xs uppercase">Testimonio</span>
-        <p class="text-foreground text-sm italic">{service.testimony}</p>
+      <div class="text-background p-6 text-center">
+        <h3 class="mb-4 text-xl font-bold tracking-tight drop-shadow-lg">{title}</h3>
+        <div
+          class="bg-accent inline-flex items-center justify-center rounded-full px-6 py-2 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
+        >
+          Ver Más
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-<style is:global>
-  /* ===== Card Base Styles ===== */
-  .client-card {
-    transition:
-      grid-column 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-      grid-row 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-      background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-      border-color 0.3s ease,
-      transform 0.3s ease-in-out;
-  }
-
-  /* ===== Expanded State ===== */
-  .client-card.expanded {
-    grid-column: span 2;
-    grid-row: span 2;
-    border: 2px solid hsl(210 80% 55%) !important;
-    color: white;
-  }
-
-  .client-card.expanded .card-status {
-    color: hsl(0, 0%, 0%);
-  }
-
-  /* ===== Height Constraints ===== */
-  .client-card {
-    min-height: 200px;
-  }
-
-  .client-card.expanded {
-    min-height: 400px;
-  }
-
-  /* ===== Content Visibility Transitions ===== */
-
-  /* Short description: visible when collapsed */
-  .client-card:not(.expanded) .card-short-desc {
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
-  }
-
-  .client-card.expanded .card-short-desc {
-    opacity: 0;
-    height: 0;
-    overflow: hidden;
-    transition: opacity 0.5s ease-in-out;
-  }
-
-  /* Full content: hidden when collapsed */
-  .client-card:not(.expanded) .card-full-content {
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-  }
-
-  .client-card.expanded .card-full-content {
-    display: block;
-    opacity: 1;
-    max-height: 1000px;
-    transition:
-      opacity 0.4s ease 0.1s,
-      max-height 0.5s ease;
-  }
-
-  /* ===== Status Badge Text ===== */
-  .client-card.expanded .card-status::before {
-    content: 'Detalle';
-  }
-
-  .client-card:not(.expanded) .card-status::before {
-    content: 'Explorar';
-  }
-</style>
+</a>

@@ -55,6 +55,40 @@ const services = defineCollection({
     }),
 });
 
+const clientes = defineCollection({
+  type: 'content',
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      logo: image(),
+      description: z.string().optional(),
+      type: z.string().optional(),
+      location: z.string().optional(),
+      status: z.string().optional(), // e.g. "Proyecto Activo"
+      // Ficha Técnica
+      stats: z
+        .object({
+          surface: z.string().optional(),
+          frequency: z.string().optional(),
+          team: z.string().optional(),
+          start: z.string().optional(),
+        })
+        .optional(),
+      // Servicios Realizados
+      services: z
+        .array(
+          z.object({
+            title: z.string(),
+            description: z.string(),
+          })
+        )
+        .optional(),
+      // Galería
+      gallery: z.array(image()).optional(),
+    }),
+});
+
 export const collections = {
   services,
+  clientes,
 };

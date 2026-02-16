@@ -1,122 +1,32 @@
 ---
 import ClientCard from '@/components/ClientCard.astro';
-import type { ClientCardInfoProps } from '../types/ClientsGrid.types';
+import type { CollectionEntry } from 'astro:content';
 
 interface Props {
-  services: ClientCardInfoProps[];
-  title?: string;
+  clients: CollectionEntry<'clientes'>[];
 }
 
-const { services } = Astro.props;
+const { clients } = Astro.props;
 ---
 
-<section class="bg-background">
-  <div class="mx-auto max-w-7xl">
-    <!-- Services Grid -->
-    <div id="clients-grid" class="clients-grid-container grid gap-6" role="list">
-      {services.map((service, index) => <ClientCard service={service} index={index} />)}
+<section class="bg-background py-12">
+  <div class="mx-auto max-w-7xl px-4 md:px-6">
+    <!-- Clients Grid Container -->
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8" role="list">
+      {
+        clients.map((client) => (
+          <div class="w-full">
+            <ClientCard client={client} />
+          </div>
+        ))
+      }
     </div>
   </div>
 </section>
 
 <style>
-  .clients-grid-container {
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-flow: dense; /* Allows cards to fill gaps when one expands */
-  }
-
-  @media (min-width: 768px) {
-    .clients-grid-container {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .clients-grid-container {
-      grid-template-columns: repeat(4, 1fr);
-    }
+  /* Ensure the grid feels balanced */
+  .grid {
+    grid-auto-rows: min-content;
   }
 </style>
-
-<script>
-  /**
-   * Inicializa la funcionalidad de expansión/colapso de las tarjetas de clientes
-   *
-   * Comportamiento:
-   * - Solo una tarjeta puede estar expandida a la vez
-   * - Click en tarjeta cerrada → se expande
-   * - Click en tarjeta abierta → se colapsa
-   * - Las demás tarjetas se reacomodan automáticamente vía CSS Grid
-   */
-  function initClientsGrid() {
-    const grid = document.getElementById('clients-grid');
-    if (!grid) return;
-
-    const cards = grid.querySelectorAll('.client-card');
-    let activeCard: HTMLElement | null = null;
-
-    cards.forEach((card) => {
-      card.addEventListener('click', function (this: HTMLElement) {
-        // Si se hace click en la tarjeta activa, colapsarla
-        if (activeCard === this) {
-          this.classList.remove('expanded');
-          activeCard = null;
-          return;
-        }
-
-        // Colapsar cualquier tarjeta previamente activa
-        if (activeCard) {
-          activeCard.classList.remove('expanded');
-        }
-
-        // Expandir la tarjeta clickeada
-        this.classList.add('expanded');
-        activeCard = this;
-
-        // Scroll suave para mantener la tarjeta visible
-        setTimeout(() => {
-          this.scrollIntoView({
-            behavior: 'smooth',
-            block: 'nearest',
-            inline: 'nearest',
-          });
-        }, 100);
-      });
-
-      // Accesibilidad: permitir activación con teclado
-      card.addEventListener('keydown', function (this: HTMLElement, e: Event) {
-        const keyEvent = e as KeyboardEvent;
-        if (keyEvent.key === 'Enter' || keyEvent.key === ' ') {
-          e.preventDefault();
-          this.click();
-        }
-      });
-
-      // Hacer las tarjetas focuseables para navegación por teclado
-      card.setAttribute('tabindex', '0');
-      card.setAttribute('role', 'button');
-      card.setAttribute('aria-expanded', 'false');
-    });
-
-    // Actualizar aria-expanded cuando cambia el estado
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-          const target = mutation.target as HTMLElement;
-          const isExpanded = target.classList.contains('expanded');
-          target.setAttribute('aria-expanded', isExpanded.toString());
-        }
-      });
-    });
-
-    cards.forEach((card) => {
-      observer.observe(card, { attributes: true });
-    });
-  }
-
-  // Inicializar en carga de página
-  document.addEventListener('DOMContentLoaded', initClientsGrid);
-
-  // Re-inicializar después de transiciones de vista de Astro (si están habilitadas)
-  document.addEventListener('astro:page-load', initClientsGrid);
-</script>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Individual Client Project Page - Lagunas Claras</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13b6ec",
+                        "primary-dark": "#0ea5d7", // Slightly darker for hover
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#101d22",
+                        "slate-dark": "#1e293b", // Custom dark slate for text
+                        "slate-body": "#475569", // Custom slate for body text
+                        "pale-blue": "#f0f9fd", // Custom very light blue for CTA
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Custom utility to hide scrollbar but keep functionality */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-dark dark:text-gray-100 min-h-screen flex flex-col">
+<!-- Sticky Navigation (Mobile/Desktop Hybrid) -->
+<nav class="sticky top-0 z-50 bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-gray-800">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+<div class="flex items-center gap-2">
+<div class="h-8 w-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-icons text-lg">water_drop</span>
+</div>
+<span class="font-bold text-lg tracking-tight text-slate-900 dark:text-white">Lagunas Claras</span>
+</div>
+<div class="hidden md:flex gap-8 text-sm font-medium text-slate-500">
+<a class="hover:text-primary transition-colors" href="#">Proyectos</a>
+<a class="hover:text-primary transition-colors" href="#">Servicios</a>
+<a class="hover:text-primary transition-colors" href="#">Empresa</a>
+</div>
+<button class="md:hidden text-slate-500">
+<span class="material-icons">menu</span>
+</button>
+<a class="hidden md:block px-5 py-2 text-sm font-medium text-primary border border-primary/30 rounded hover:bg-primary/5 transition-colors" href="#">
+                Área Clientes
+            </a>
+</div>
+</nav>
+<main class="flex-grow">
+<!-- Header Section -->
+<header class="bg-white dark:bg-background-dark pt-12 pb-12 md:pt-20 md:pb-16 border-b border-gray-100 dark:border-gray-800">
+<div class="max-w-7xl mx-auto px-6">
+<!-- Breadcrumb / Back Link -->
+<div class="mb-8">
+<a class="inline-flex items-center text-sm text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-icons text-sm mr-1">arrow_back</span>
+                        Volver a Proyectos
+                    </a>
+</div>
+<div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+<div class="max-w-3xl">
+<!-- Client Logo Placeholder -->
+<div class="mb-6 h-12 w-auto inline-flex items-center">
+<!-- Using a generic placeholder for the client logo -->
+<div class="flex items-center gap-3 opacity-80">
+<div class="w-10 h-10 rounded bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400">
+<span class="material-icons">apartment</span>
+</div>
+<span class="text-sm font-semibold uppercase tracking-wider text-slate-400">Nordelta S.A.</span>
+</div>
+</div>
+<h1 class="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">
+                            Barrio Privado Nordelta
+                        </h1>
+<p class="text-lg md:text-xl text-slate-500 dark:text-gray-400 font-light max-w-2xl">
+                            Mantenimiento Integral de Espejos de Agua <span class="mx-2 text-gray-300">|</span> Tigre, Buenos Aires
+                        </p>
+</div>
+<!-- Status Badge (Optional visual indicator) -->
+<div class="mt-2 md:mt-0">
+<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+<span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+                            Proyecto Activo
+                        </span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area: Description + Quick Stats -->
+<section class="bg-background-light dark:bg-background-dark py-12 md:py-20">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
+<!-- Left Column: Description (60% approx width on desktop) -->
+<div class="lg:col-span-7 space-y-8">
+<div class="prose prose-slate dark:prose-invert max-w-none">
+<h3 class="text-xl font-semibold text-slate-900 dark:text-white mb-4">Desafío Técnico</h3>
+<p class="text-slate-body dark:text-gray-300 leading-relaxed mb-6">
+                                El complejo de lagunas de Nordelta presenta un ecosistema único con desafíos específicos relacionados con la eutrofización estacional y el control de vegetación invasiva. Nuestro objetivo principal fue establecer un equilibrio biológico sostenible sin el uso excesivo de químicos agresivos, preservando la flora nativa y la fauna local.
+                            </p>
+<p class="text-slate-body dark:text-gray-300 leading-relaxed mb-6">
+                                Implementamos un sistema de monitoreo continuo de parámetros fisicoquímicos que nos permite anticiparnos a los blooms algales. Mediante la instalación de aireadores de fondo y la aplicación estratégica de bacterias benéficas, hemos logrado mejorar la transparencia del agua en un 40% durante el primer año de gestión.
+                            </p>
+<h3 class="text-xl font-semibold text-slate-900 dark:text-white mb-4 mt-10">Solución Implementada</h3>
+<p class="text-slate-body dark:text-gray-300 leading-relaxed">
+                                El plan de acción incluyó la zonificación de las 180 hectáreas de agua para aplicar tratamientos diferenciados. Se introdujeron especies de peces fitófagos para el control biológico y se estableció un cronograma de cosecha mecánica de macrófitas en las zonas de mayor densidad poblacional.
+                            </p>
+</div>
+</div>
+<!-- Right Column: Quick Stats & Details (40% approx width on desktop) -->
+<div class="lg:col-span-5">
+<div class="bg-white dark:bg-slate-800 rounded-xl p-8 sticky top-24 border border-gray-100 dark:border-gray-700">
+<h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-6 border-b border-gray-100 dark:border-gray-700 pb-4">
+                                Ficha Técnica
+                            </h3>
+<div class="space-y-6">
+<div class="flex justify-between items-start group">
+<div class="flex items-center gap-3 text-slate-500 dark:text-gray-400">
+<span class="material-icons text-primary/70">aspect_ratio</span>
+<span class="text-sm font-medium">Superficie Total</span>
+</div>
+<span class="text-slate-900 dark:text-white font-semibold">180 Hectáreas</span>
+</div>
+<div class="flex justify-between items-start group">
+<div class="flex items-center gap-3 text-slate-500 dark:text-gray-400">
+<span class="material-icons text-primary/70">schedule</span>
+<span class="text-sm font-medium">Frecuencia</span>
+</div>
+<span class="text-slate-900 dark:text-white font-semibold">Semanal</span>
+</div>
+<div class="flex justify-between items-start group">
+<div class="flex items-center gap-3 text-slate-500 dark:text-gray-400">
+<span class="material-icons text-primary/70">engineering</span>
+<span class="text-sm font-medium">Equipo Asignado</span>
+</div>
+<span class="text-slate-900 dark:text-white font-semibold text-right">3 Técnicos<br/>1 Biólogo</span>
+</div>
+<div class="flex justify-between items-start group">
+<div class="flex items-center gap-3 text-slate-500 dark:text-gray-400">
+<span class="material-icons text-primary/70">date_range</span>
+<span class="text-sm font-medium">Inicio Contrato</span>
+</div>
+<span class="text-slate-900 dark:text-white font-semibold">Marzo 2021</span>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-700">
+<p class="text-xs text-slate-400 leading-snug">
+                                    * Los datos de calidad de agua se actualizan mensualmente en el portal de clientes.
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Services Section -->
+<section class="bg-white dark:bg-background-dark py-12 md:py-20 border-t border-gray-100 dark:border-gray-800">
+<div class="max-w-7xl mx-auto px-6">
+<h2 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-10">Servicios Realizados</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-12">
+<!-- Service Item 1 -->
+<div class="flex items-start gap-4 p-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex-shrink-0 mt-1">
+<div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-icons text-primary text-sm font-bold">check</span>
+</div>
+</div>
+<div>
+<h4 class="font-semibold text-slate-900 dark:text-white text-lg">Control de Algas</h4>
+<p class="text-sm text-slate-500 mt-1">Tratamiento preventivo y correctivo de proliferaciones algales.</p>
+</div>
+</div>
+<!-- Service Item 2 -->
+<div class="flex items-start gap-4 p-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex-shrink-0 mt-1">
+<div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-icons text-primary text-sm font-bold">check</span>
+</div>
+</div>
+<div>
+<h4 class="font-semibold text-slate-900 dark:text-white text-lg">Calidad de Agua</h4>
+<p class="text-sm text-slate-500 mt-1">Análisis periódico de pH, oxígeno disuelto y turbidez.</p>
+</div>
+</div>
+<!-- Service Item 3 -->
+<div class="flex items-start gap-4 p-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex-shrink-0 mt-1">
+<div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-icons text-primary text-sm font-bold">check</span>
+</div>
+</div>
+<div>
+<h4 class="font-semibold text-slate-900 dark:text-white text-lg">Mantenimiento de Costas</h4>
+<p class="text-sm text-slate-500 mt-1">Perfilado y control de erosión en bordes de laguna.</p>
+</div>
+</div>
+<!-- Service Item 4 -->
+<div class="flex items-start gap-4 p-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex-shrink-0 mt-1">
+<div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-icons text-primary text-sm font-bold">check</span>
+</div>
+</div>
+<div>
+<h4 class="font-semibold text-slate-900 dark:text-white text-lg">Bio-manipulación</h4>
+<p class="text-sm text-slate-500 mt-1">Gestión de poblaciones de peces para equilibrio ecológico.</p>
+</div>
+</div>
+<!-- Service Item 5 -->
+<div class="flex items-start gap-4 p-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex-shrink-0 mt-1">
+<div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-icons text-primary text-sm font-bold">check</span>
+</div>
+</div>
+<div>
+<h4 class="font-semibold text-slate-900 dark:text-white text-lg">Oxigenación</h4>
+<p class="text-sm text-slate-500 mt-1">Instalación y mantenimiento de sistemas de aireación.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Gallery Section -->
+<section class="bg-background-light dark:bg-background-dark py-12 md:py-20">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex justify-between items-end mb-8">
+<h2 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Galería del Proyecto</h2>
+<span class="text-sm text-slate-500 hidden md:block">6 imágenes seleccionadas</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+<!-- Image 1 -->
+<div class="aspect-[4/3] rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-700 group relative cursor-pointer">
+<img alt="Vista aérea de laguna con vegetación verde" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Wide aerial view of green lagoon landscape" data-location="Nordelta" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4n7pEbZDBL7x4-5TF5qIg9wVl_9gmUJRihcP7GzO5fILKcMyV17vskl9dfsqINs2nzP3L2pNJ6aK8fh96bgQt6_xFFPT2-4Z5rfhhTGxd_c1_oDabqlL4VPoZzb-wpq7zjlmqhdvSTR7JVTQ3Y8gkKpqgJjvwdFJaeTF09L4G2EeRDUpDVa_m7bzNOhD2dOi50s9dlfo7pg-7xodga7x-UE0Uwk2ofdY4KFhY9I74okh2PcyBxClAbn1bK5362-S1zCo4hWwi3DYP"/>
+<div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+<!-- Image 2 -->
+<div class="aspect-[4/3] rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-700 group relative cursor-pointer">
+<img alt="Montañas reflejadas en agua clara y tranquila" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Mountains reflected in clear calm water" data-location="Nordelta" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8V3baHJGh2v-PY8pysURNBMNKbm8Kvq5-1IQTyuf9PIsWfIOYic2kcY5PB2nVu-Ga6mFEX-PQX3egl7WPFntlvM7Fqr0I28FV4F24EiWmZonAg_MlgDvXFdJ20Dxpl0Lb8sphtQY82KDN7Nc9LrQe47BrZccJpdlFV6sHsQUUGZo5mKo6GVtPk7wBqeb9z_R-vCFWsgtQq6FjQPCzDSBHUp7KNJSefS9FeJ0O4wUPk0qJXrdI7rl14zAMvmXVWU2bFLV2XH_zNV3l"/>
+<div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+<!-- Image 3 -->
+<div class="aspect-[4/3] rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-700 group relative cursor-pointer">
+<img alt="Primer plano de agua azul cristalina" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Close up detail of crystalline blue water" data-location="Nordelta" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-AgDrjzSiLkbzts1fqAtFrxIjz2BiMZB1pq6EosQ4i73yiXNbzRS0AFSL5FfBoCAyqCiceH68LBtGUswc5b4VWkTaANQFjX79k6CB4BVIM8caimDm7r6Wq3jMhtskBxdqzaLszVAVW-RpUYd8-oFBkMntGD7GkhcK_uNTGGUJt7vzNLQ35U3VYu_OwQseSQj1Cd7XUbYdJigu7sxQpIJsQBMruAyARCu3_NqThEDNeYplKh8TTzsuC4QWy1yQurFmXcXprUakMX8H"/>
+<div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+<!-- Image 4 -->
+<div class="aspect-[4/3] rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-700 group relative cursor-pointer">
+<img alt="Técnico tomando muestras de agua en el lago" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Technician taking water samples at lake" data-location="Nordelta" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmuXK9TnDGMni1_vRe3d6sFRS1k0aEDvyb5PLes0f7V60HEPz0l8WACn5tttclal5Jrxlk8eNpe5KkC2YoUqXBsu8P_wtfTMjuIchiTBA29JIZQ-3WxRzI50YsMEzTegS5mtCTGY9nuIZ6snNpi-zKvNBcRznU624z5NgZ28fYAxJ9Vt6zvckPpcCobtTc7opw2CcDcy8cTTHFNkm-Rpc2gBRqpBfmMugvU6ZpKjcVDy86Mkf6JhU0zC7PAh-Byh2t7UaJ59VJAoqT"/>
+<div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+<!-- Image 5 -->
+<div class="aspect-[4/3] rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-700 group relative cursor-pointer">
+<img alt="Patos nadando en un estanque limpio" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Ducks swimming in clean pond water" data-location="Nordelta" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjmbU56V8sRcXcx4hufUlO9pQGFAzoSbxuuH9jJDvNX3-bS-Yyy1LqE9FYA3sQiLWoxMbdQ9J089QTlMnLuYLTUeXEBV5JHd9VRrDTljnG6oWyJLEyrCxnEz3H9UeOb4CywbAO0w0u15Bn1o7QcuGVZCMUC2lKal5iN_KPLu2ILLNrwI73KgK_19BeDNF3MoIXOH7DwnlvS17fhXNS-2cQT770OPA_GGl7J8QwK399Sy1RvJw3zx_bKjo_aJOHznq9ii-_chRCLs50"/>
+<div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+<!-- Image 6 -->
+<div class="aspect-[4/3] rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-700 group relative cursor-pointer">
+<img alt="Atardecer sobre un lago sereno" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Sunset over serene lake landscape" data-location="Nordelta" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOR72PZ4enwRgq3fhT0JgLS-_etipZ0rgZV7sGyB0wbAQz17rLcli0syC5Slbu-gupzoxUBl7Xag3PeeFfFVGU0IMEQpTK-DhDBNZIP89-RikRpegqoqIUy_SuTS4mq74fXggNwt-H7wgsXiyRi3YNjS3KB4mlm0Rpz5CsqjgFzN2AaAPSR-fwrgMaYMIis5nGaCdqw9YkoE8gtvJ2VnB_Tqwkb7bSDdGG4P95Ibu9_GXuz636uE4B8gwlXGpJgBU3cHrplRmQn-6G"/>
+<div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="bg-pale-blue dark:bg-slate-900/50 py-16 md:py-24">
+<div class="max-w-4xl mx-auto px-6 text-center">
+<h3 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-6">
+                    ¿Busca una solución técnica para su laguna?
+                </h3>
+<p class="text-slate-500 dark:text-gray-400 mb-10 max-w-xl mx-auto">
+                    Nuestros especialistas realizan un diagnóstico preliminar sin cargo para evaluar el estado de su cuerpo de agua.
+                </p>
+<button class="bg-primary hover:bg-primary-dark text-white font-medium py-4 px-8 rounded-lg transition-all duration-200 transform hover:translate-y-[-2px] shadow-sm">
+                    Contactar con un Especialista
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer Simple -->
+<footer class="bg-white dark:bg-background-dark py-8 border-t border-gray-100 dark:border-gray-800">
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-sm text-slate-400">
+<p>© 2023 Lagunas Claras. Todos los derechos reservados.</p>
+<div class="flex gap-4 mt-4 md:mt-0">
+<a class="hover:text-primary" href="#">Privacidad</a>
+<a class="hover:text-primary" href="#">Términos</a>
+</div>
+</div>
+</footer>
+</body></html>

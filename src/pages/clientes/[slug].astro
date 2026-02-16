@@ -1,0 +1,313 @@
+---
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Button from '@/components/Button.astro';
+import SeoHead from '@/components/SeoHead.astro';
+import Layout from '@/layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const clients = await getCollection('clientes');
+  return clients.map((client) => ({
+    params: {
+      slug: client.data.title.toLowerCase().replace(/\s+/g, '-'),
+    },
+    props: { client },
+  }));
+}
+
+const { client } = Astro.props;
+const { title, logo, description, type, location, status, stats, services, gallery } = client.data;
+const { Content } = await client.render();
+
+const seoDescription = description || 'Detalle de cliente de Lagunas Claras';
+
+// Fallback images from the repo since we can't create new ones
+import fondo2 from '@/assets/fondo2.jpg';
+import fondo3 from '@/assets/fondo3.jpg';
+import fondo4 from '@/assets/fondo4.jpg';
+const fallbackGallery = [fondo2, fondo3, fondo4];
+const displayGallery = gallery && gallery.length > 0 ? gallery : fallbackGallery;
+---
+
+<Layout>
+  <SeoHead title={`${title} | Casos de Éxito | Lagunas Claras`} description={seoDescription} />
+  <Fragment slot="main">
+    <main class="bg-white">
+      <div class="mx-auto mb-8 w-[80%] pt-24">
+        <Breadcrumb items={[{ label: 'Clientes', href: '/clientes' }, { label: title }]} />
+      </div>
+      <!-- Institutional Header -->
+      <header class="border-b border-slate-100 bg-white pb-16 md:pb-24">
+        <div class="mx-auto max-w-7xl px-6">
+          <div class="flex flex-col items-start justify-between gap-8 md:flex-row">
+            <div class="max-w-4xl">
+              <div class="mb-8 flex items-center gap-4 opacity-80">
+                <div
+                  class="flex h-12 w-12 items-center justify-center rounded-lg border border-slate-100 bg-slate-50 p-2"
+                >
+                  <Image src={logo} alt={`Logo ${title}`} class="h-full w-full object-contain" />
+                </div>
+                <span class="text-xs font-bold tracking-widest text-slate-400 uppercase"
+                  >{title}</span
+                >
+              </div>
+
+              <h1 class="mb-6 text-4xl font-bold tracking-tight text-slate-900 md:text-6xl">
+                {title}
+              </h1>
+
+              <p class="text-lg font-light text-slate-500 md:text-xl">
+                {description}
+                {
+                  location && (
+                    <>
+                      <span class="mx-3 text-slate-200">|</span>
+                      {location}
+                    </>
+                  )
+                }
+              </p>
+            </div>
+
+            {
+              status && (
+                <div class="shrink-0">
+                  <span class="inline-flex items-center rounded-full border border-emerald-100 bg-emerald-50 px-4 py-1.5 text-xs font-bold tracking-wide text-emerald-700">
+                    <span class="mr-2 h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
+                    {status}
+                  </span>
+                </div>
+              )
+            }
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content Grid -->
+      <section class="bg-slate-50/30 py-16 md:py-24">
+        <div class="mx-auto max-w-7xl px-6">
+          <div class="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-24">
+            <!-- Left: Description -->
+            <div class="lg:col-span-7">
+              <article
+                class="prose prose-slate prose-lg prose-headings:text-slate-900 prose-headings:font-bold prose-p:text-slate-600 prose-p:leading-relaxed max-w-none"
+              >
+                <Content />
+              </article>
+            </div>
+
+            <!-- Right: Technical Sheet -->
+            <div class="lg:col-span-5">
+              <aside
+                class="sticky top-28 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm"
+              >
+                <h3 class="mb-8 border-b border-slate-100 pb-4 text-xl font-bold text-slate-900">
+                  Ficha Técnica
+                </h3>
+
+                <div class="space-y-6">
+                  {
+                    stats?.surface && (
+                      <div class="group flex items-center justify-between">
+                        <div class="flex items-center gap-3 text-slate-500">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="text-primary/70"
+                          >
+                            <>
+                              <path d="M3 3v18h18" />
+                              <path d="M7 12V7h5v5H7Z" />
+                              <path d="M7 17v-5h5v5H7Z" />
+                              <path d="M12 17v-5h5v5h-5Z" />
+                            </>
+                          </svg>
+                          <span class="text-sm font-medium">Superficie Total</span>
+                        </div>
+                        <span class="font-bold text-slate-900">{stats.surface}</span>
+                      </div>
+                    )
+                  }
+
+                  {
+                    stats?.frequency && (
+                      <div class="group flex items-center justify-between">
+                        <div class="flex items-center gap-3 text-slate-500">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="text-primary/70"
+                          >
+                            <>
+                              <circle cx="12" cy="12" r="10" />
+                              <polyline points="12 6 12 12 16 14" />
+                            </>
+                          </svg>
+                          <span class="text-sm font-medium">Frecuencia</span>
+                        </div>
+                        <span class="font-bold text-slate-900">{stats.frequency}</span>
+                      </div>
+                    )
+                  }
+
+                  {
+                    stats?.team && (
+                      <div class="group flex items-center justify-between">
+                        <div class="flex items-center gap-3 text-slate-500">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="text-primary/70"
+                          >
+                            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                          </svg>
+                          <span class="text-sm font-medium">Equipo Asignado</span>
+                        </div>
+                        <span class="text-right font-bold text-slate-900">{stats.team}</span>
+                      </div>
+                    )
+                  }
+
+                  {
+                    stats?.start && (
+                      <div class="group flex items-center justify-between">
+                        <div class="flex items-center gap-3 text-slate-500">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="text-primary/70"
+                          >
+                            <>
+                              <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+                              <line x1="16" x2="16" y1="2" y2="6" />
+                              <line x1="8" x2="8" y1="2" y2="6" />
+                              <line x1="3" x2="21" y1="10" y2="10" />
+                            </>
+                          </svg>
+                          <span class="text-sm font-medium">Inicio Contrato</span>
+                        </div>
+                        <span class="font-bold text-slate-900">{stats.start}</span>
+                      </div>
+                    )
+                  }
+                </div>
+
+                <div class="mt-8 border-t border-slate-100 pt-6">
+                  <p class="text-[11px] leading-relaxed text-slate-400">
+                    * Los parámetros técnicos y de calidad se monitorean semanalmente bajo normas
+                    internacionales de sostenibilidad.
+                  </p>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Realized Services -->
+      {
+        services && services.length > 0 && (
+          <section class="border-t border-slate-100 bg-white py-16 md:py-24">
+            <div class="mx-auto max-w-7xl px-6">
+              <h2 class="mb-12 text-3xl font-bold text-slate-900">Servicios Realizados</h2>
+              <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                {services.map((service) => (
+                  <div class="group flex items-start gap-4 rounded-xl p-6 transition-colors hover:bg-slate-50">
+                    <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="3"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 class="mb-2 text-lg font-bold text-slate-900">{service.title}</h4>
+                      <p class="text-sm leading-relaxed text-slate-500">{service.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )
+      }
+
+      <!-- Gallery -->
+      <section class="bg-slate-50/30 py-16 md:py-24">
+        <div class="mx-auto max-w-7xl px-6">
+          <div class="mb-12 flex items-end justify-between">
+            <h2 class="text-3xl font-bold text-slate-900">Galería del Proyecto</h2>
+            <span class="hidden text-sm font-medium text-slate-400 md:block">
+              {displayGallery.length} imágenes seleccionadas
+            </span>
+          </div>
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {
+              displayGallery.map((img, idx) => (
+                <div class="group relative aspect-video overflow-hidden rounded-2xl bg-slate-200">
+                  <Image
+                    src={img}
+                    alt={`Imagen ${idx + 1} de ${title}`}
+                    class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div class="absolute inset-0 bg-slate-900/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- Final CTA -->
+      <section class="bg-white py-24 md:py-32">
+        <div class="mx-auto max-w-4xl px-6 text-center">
+          <h2 class="mb-6 text-3xl font-bold tracking-tight text-slate-900 md:text-5xl">
+            ¿Busca una solución técnica para su laguna?
+          </h2>
+          <p class="mx-auto mb-10 max-w-2xl text-lg text-slate-500">
+            Nuestros especialistas realizan un diagnóstico preliminar sin cargo para evaluar el
+            estado y necesidades específicas de su cuerpo de agua.
+          </p>
+          <Button href="/contacto" size="lg" icon> Contactar con un Especialista </Button>
+        </div>
+      </section>
+    </main>
+  </Fragment>
+</Layout>
