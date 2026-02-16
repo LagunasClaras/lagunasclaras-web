@@ -1,18 +1,27 @@
 ---
 import Breadcrumb from '@/components/Breadcrumb.astro';
+import Button from '@/components/Button.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import SeoHead from '@/components/SeoHead.astro';
-import { clientsMock } from '@/content/clientsMock';
 import Layout from '@/layouts/Layout.astro';
 import ClientsCards from '@/sections/home/components/ClientsCards.astro';
+import { getCollection } from 'astro:content';
+
+const clients = await getCollection('clientes');
+
 const SeoContent = {
   title: 'Clientes que confían en nosotros | Lagunas Claras',
   description:
     'Empresas, municipios e instituciones de todo el país que confían en nuestros servicios de mantenimiento de lagos y espejos de agua.',
 };
 const content = {
-  title: 'Clientes',
-  subtitle: 'Instituciones que confían en nuestros servicios',
+  title: 'Nuestros clientes',
+  subtitle:
+    'Trabajamos junto a los desarrollos mas prestigiosos de Argentina, brindando soluciones integrales de mantenimiento de cuerpos de agua con estándares internacionales de calidad y sostenibilidad.',
+  ctaTitle: '¿Querés trabajar con nosotros?',
+  ctaDescription:
+    'Solicitá tu presupuesto personalizado y descubrí cómo podemos mejorar la calidad de tu espejo de agua.',
+  ctaButton: 'Solicitar presupuesto',
 };
 ---
 
@@ -23,7 +32,17 @@ const content = {
       <Breadcrumb items={[{ label: 'Clientes' }]} />
       <PageHeader title={content.title} subtitle={content.subtitle} />
 
-      <ClientsCards services={clientsMock} />
+      <ClientsCards clients={clients} />
+
+      <section class="border-t border-slate-100 pt-16 text-center">
+        <h3 class="mb-2 text-2xl font-bold text-slate-900 md:text-3xl">
+          {content.ctaTitle}
+        </h3>
+        <p class="text-muted-foreground mx-auto mb-8 max-w-xl text-lg">
+          {content.ctaDescription}
+        </p>
+        <Button href="/contacto" variant="primary" icon> {content.ctaButton} </Button>
+      </section>
     </main>
   </Fragment>
 </Layout>
