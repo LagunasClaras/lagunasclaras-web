@@ -1,0 +1,226 @@
+---
+import { Image } from 'astro:assets';
+import Button from './Button.astro';
+import ScrollIndicator from './ScrollIndicator.astro';
+
+interface CTA {
+  text: string;
+  href: string;
+  variant?: 'primary' | 'secondary' | 'underline' | 'outline' | 'ghost' | 'link';
+  icon?: boolean;
+}
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  badge?: {
+    text: string;
+    Icon?: any;
+  };
+  image: ImageMetadata;
+  imageAlt?: string;
+  cta?: CTA[];
+  variant?: 'home' | 'service' | 'about';
+  showScrollIndicator?: boolean;
+  scrollIndicatorHref?: string;
+  scrollIndicatorText?: string;
+}
+
+const {
+  title,
+  subtitle,
+  badge,
+  image,
+  imageAlt = '',
+  cta = [],
+  variant = 'home',
+  showScrollIndicator = false,
+  scrollIndicatorHref = '#next',
+  scrollIndicatorText = 'Descubrir',
+} = Astro.props;
+
+const overlayClasses = {
+  home: 'bg-linear-to-b from-black/65 via-black/30 to-transparent',
+  about: 'bg-linear-to-b from-black/65 via-black/30 to-transparent',
+  service:
+    'from-navy-900/90 via-navy-900/50 absolute inset-0 bg-linear-to-br to-teal-900/30 mix-blend-multiply',
+};
+
+const sectionClasses = {
+  home: 'relative flex min-h-screen flex-col items-center justify-between overflow-hidden pb-8',
+  about:
+    'relative flex min-h-[60vh] flex-col items-center justify-center overflow-hidden py-8 text-center',
+  service:
+    'bg-navy-900 relative flex min-h-[80vh] w-full items-center justify-center overflow-hidden',
+};
+
+const contentContainerClasses = {
+  home: 'relative z-10 container mx-auto flex h-full max-w-4xl flex-1 flex-col justify-center px-4 pt-20 text-left lg:px-8',
+  about: 'relative z-20 container mx-auto px-4',
+  service:
+    'relative z-20 container mx-auto flex max-w-5xl flex-col items-start px-6 pt-20 md:px-12',
+};
+
+const titleClasses = {
+  home: 'font-heading text-primary-foreground animate-fade-up fade-up-title text-4xl leading-tight font-bold md:text-5xl lg:text-6xl xl:text-7xl',
+  about:
+    'text-primary-foreground font-heading mx-auto mb-6 max-w-4xl text-4xl font-bold md:text-5xl lg:text-6xl',
+  service:
+    'animate-fade-up text-background mb-6 max-w-4xl text-4xl leading-[1.1] font-bold opacity-0 md:text-6xl lg:text-7xl service-title',
+};
+
+const subtitleClasses = {
+  home: 'text-primary-foreground/90 animate-fade-up fade-up-subtitle mt-8 max-w-2xl text-lg md:text-xl lg:text-2xl',
+  about: 'text-primary-foreground/90 mx-auto mb-10 max-w-2xl text-xl md:text-2xl',
+  service:
+    'animate-fade-up mb-10 max-w-2xl text-lg leading-relaxed text-gray-200 opacity-0 md:text-xl service-subtitle',
+};
+---
+
+<section id="hero" class={sectionClasses[variant]}>
+  <!-- Background image -->
+  <div class="absolute inset-0">
+    <Image
+      src={image}
+      alt={imageAlt}
+      class="h-full w-full object-cover"
+      loading="eager"
+      fetchpriority="high"
+    />
+    {variant === 'service' && <div class="absolute inset-0 bg-black/10" />}
+  </div>
+
+  <!-- Overlay -->
+  <div class={`absolute inset-0 ${overlayClasses[variant]}`}></div>
+
+  {
+    variant === 'service' && (
+      <div class="pointer-events-none absolute top-0 left-0 h-full w-full overflow-hidden">
+        <div class="animate-pulse-slow bg-accent-500/20 absolute -top-20 -right-20 h-96 w-96 rounded-full blur-3xl" />
+        <div class="from-background absolute bottom-0 left-0 h-32 w-full bg-linear-to-t to-transparent" />
+      </div>
+    )
+  }
+
+  <!-- Content -->
+  <div class={contentContainerClasses[variant]}>
+    {
+      variant === 'service' && badge && (
+        <div class="animate-fade-up service-badge mb-6 opacity-0">
+          <span class="text-background inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium tracking-wide uppercase backdrop-blur-md">
+            {badge.Icon && <badge.Icon class="text-accent-400 h-3.5 w-3.5" />}
+            {badge.text}
+          </span>
+        </div>
+      )
+    }
+
+    <h1 class={titleClasses[variant]}>
+      {title}
+    </h1>
+
+    {subtitle && <p class={subtitleClasses[variant]}>{subtitle}</p>}
+
+    {
+      cta.length > 0 && (
+        <div
+          class={`flex flex-col gap-4 sm:flex-row ${
+            variant === 'home'
+              ? 'animate-fade-up fade-up-cta mt-48 lg:mt-24'
+              : variant === 'about'
+                ? 'items-center justify-center'
+                : 'animate-fade-up service-cta opacity-0'
+          }`}
+        >
+          {cta.map((item) => (
+            <Button
+              href={item.href}
+              variant={item.variant ?? 'primary'}
+              icon={item.icon}
+              class={
+                item.variant === 'underline' && (variant === 'home' || variant === 'about')
+                  ? 'text-primary-foreground hover:text-white'
+                  : variant === 'service' && item.variant === 'primary'
+                    ? 'bg-accent! text-background hover:bg-accent-600! border-none shadow-lg! shadow-teal-500/30!'
+                    : ''
+              }
+            >
+              {item.text}
+            </Button>
+          ))}
+        </div>
+      )
+    }
+  </div>
+
+  <!-- Scroll indicator -->
+  {
+    showScrollIndicator && (
+      <ScrollIndicator
+        href={scrollIndicatorHref}
+        text={scrollIndicatorText}
+        position="relative mb-0 md:mb-4"
+      />
+    )
+  }
+</section>
+
+<style>
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(var(--offset, 20px));
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-up {
+    animation: fade-up var(--dur, 0.8s) cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0s) forwards;
+  }
+
+  /* Home Animations */
+  .fade-up-title {
+    --dur: 0.7s;
+    --delay: 0.15s;
+    --offset: 24px;
+  }
+  .fade-up-subtitle {
+    --dur: 1s;
+    --delay: 0.35s;
+    --offset: 16px;
+  }
+  .fade-up-cta {
+    --dur: 1.05s;
+    --delay: 0.55s;
+    --offset: 10px;
+  }
+
+  /* Service Animations */
+  .service-badge {
+    --delay: 100ms;
+  }
+  .service-title {
+    --delay: 200ms;
+  }
+  .service-subtitle {
+    --delay: 300ms;
+  }
+  .service-cta {
+    --delay: 400ms;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-up {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>

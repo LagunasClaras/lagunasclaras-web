@@ -1,7 +1,6 @@
-// @ts-check
-import { defineConfig, envField } from 'astro/config';
-
+import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
+import { defineConfig, envField } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
@@ -24,9 +23,13 @@ export default defineConfig({
       noExternal: ['@lucide/astro'],
     },
   },
+  site: 'https://lagunasclaras.com.ar',
+  integrations: [sitemap()],
   env: {
     schema: {
+      // Remove optional props when
       FORM_POST_URL: envField.string({ context: 'client', access: 'public', optional: true }),
+      PUBLIC_GA_ID: envField.string({ context: 'client', access: 'public', optional: true }),
     },
   },
 });

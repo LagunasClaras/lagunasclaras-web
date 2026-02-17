@@ -1,5 +1,6 @@
 ---
-import { Facebook, Instagram, LinkedIn, LogoMono, Mail, Phone, Pin } from './icons';
+import { Mail, MapPin, Phone } from '@lucide/astro';
+import { Facebook, Instagram, LinkedIn, LogoMono } from './icons';
 
 const FooterContent = {
   Title: 'Lagunas Claras',
@@ -17,7 +18,7 @@ const FooterContent = {
   cta: [
     { text: '@lagunasclaras', href: '/', Icon: Mail },
     { text: '11 5045-1158', href: 'tel:+5491150451158', Icon: Phone },
-    { text: 'Ubicacion', href: '#ubicacion', Icon: Pin },
+    { text: 'Ubicacion', href: '#ubicacion', Icon: MapPin },
   ],
   copyright: `© ${new Date().getFullYear()} Lagunas Claras. All rights reserved.`,
 };

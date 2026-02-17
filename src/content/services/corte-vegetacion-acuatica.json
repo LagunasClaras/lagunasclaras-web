@@ -5,7 +5,7 @@
   "badge": "Especialidad 02",
   "shortDescription": "Eliminación controlada de algas, juncos, totoras y camalotes con maquinaria especializada.",
   "hero": {
-    "src": "../../assets/fondo2.jpg",
+    "image": "../../assets/fondo2.jpg",
     "alt": "Corte de vegetación acuática"
   },
   "problem": {

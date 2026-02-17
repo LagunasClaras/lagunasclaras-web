@@ -1,6 +1,8 @@
+import type { ImageMetadata } from 'astro';
+
 export interface ClientLogo {
   name: string;
-  imageUrl: string;
+  image: ImageMetadata;
   alt: string;
 }
 

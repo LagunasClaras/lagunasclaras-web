@@ -20,57 +20,57 @@ export const clientsContent: ClientsProps = {
   clients: [
     {
       name: 'Abril (Hudson)',
-      imageUrl: logoAbril.src,
+      image: logoAbril,
       alt: 'Logo de Abril (Hudson)',
     },
     {
       name: 'San Agustín (Tigre)',
-      imageUrl: logoSanAgustin.src,
+      image: logoSanAgustin,
       alt: 'Logo de San Agustín (Tigre)',
     },
     {
       name: 'Municipalidad de Alberti (Alberti)',
-      imageUrl: logoAlberti.src,
+      image: logoAlberti,
       alt: 'Logo de Municipalidad de Alberti (Alberti)',
     },
     {
       name: 'Nordelta / Puertos del Lago (Escobar)',
-      imageUrl: logoPuertos.src,
+      image: logoPuertos,
       alt: 'Logo de Nordelta / Puertos del Lago (Escobar)',
     },
     {
       name: 'San Rafael (Tigre)',
-      imageUrl: logoSanRafael.src,
+      image: logoSanRafael,
       alt: 'Logo de San Rafael (Tigre)',
     },
     {
       name: 'Central Nuclear Embalse Río Tercero (Córdoba)',
-      imageUrl: logoCNE.src,
+      image: logoCNE,
       alt: 'Logo de Central Nuclear Embalse Río Tercero (Córdoba)',
     },
     {
       name: 'Barrancas de Santa María (Tigre)',
-      imageUrl: logoBarrancasSM.src,
+      image: logoBarrancasSM,
       alt: 'Logo de Barrancas de Santa María (Tigre)',
     },
     {
       name: 'San Matías (Escobar)',
-      imageUrl: logoSanMatias.src,
+      image: logoSanMatias,
       alt: 'Logo de San Matías (Escobar)',
     },
     {
       name: 'El Cantón (Escobar)',
-      imageUrl: logoElCanton.src,
+      image: logoElCanton,
       alt: 'Logo de El Cantón (Escobar)',
     },
     {
       name: 'Náutico de Escobar',
-      imageUrl: logoNauticoEscobar.src,
+      image: logoNauticoEscobar,
       alt: 'Logo de Náutico de Escobar',
     },
     {
       name: 'Termas de Villa Elisa (Entre Ríos)',
-      imageUrl: logoTermasVillaElisa.src,
+      image: logoTermasVillaElisa,
       alt: 'Logo de Termas de Villa Elisa (Entre Ríos)',
     },
   ],

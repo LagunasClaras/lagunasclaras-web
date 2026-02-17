@@ -5,7 +5,7 @@
   "badge": "Especialidad 01",
   "shortDescription": "Limpieza y recuperación integral de lagos, lagunas y canales sin uso de químicos.",
   "hero": {
-    "src": "../../assets/fondo3.jpg",
+    "image": "../../assets/fondo3.jpg",
     "alt": "Mantenimiento de espejos de agua"
   },
   "problem": {

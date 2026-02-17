@@ -1,5 +1,6 @@
 ---
-import { Mail, Pin, WhatsApp } from './icons';
+import { Mail, MapPin } from '@lucide/astro';
+import { WhatsApp } from './icons';
 
 export interface ContactCard {
   title: string;
@@ -37,7 +38,7 @@ const cards: ContactCard[] = [
   {
     title: 'Ubicación',
     description: 'Aristóbulo del Valle 4591, Tigre, Buenos Aires, Argentina',
-    icon: Pin,
+    icon: MapPin,
     colorScheme: 'slate',
   },
 ];

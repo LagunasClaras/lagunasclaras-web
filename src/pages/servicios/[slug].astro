@@ -1,4 +1,5 @@
 ---
+import SeoHead from '@/components/SeoHead.astro';
 import Layout from '@/layouts/Layout.astro';
 import ServiceCTA from '@/sections/services/ServiceCTA.astro';
 import ServiceGallery from '@/sections/services/ServiceGallery.astro';
@@ -26,12 +27,17 @@ const { data } = service;
 ---
 
 <Layout title={`${data.title} | Lagunas Claras`} description={data.shortDescription}>
+  <SeoHead
+    title={`${data.title} | Lagunas Claras`}
+    description={data.shortDescription}
+    ogImage={data.hero.image.src}
+  />
   <div slot="main">
     <ServiceHero
       title={data.title}
       subtitle={data.subtitle || data.shortDescription}
       badge={data.badge || 'Servicio'}
-      heroImage={data.hero.src}
+      heroImage={data.hero.image}
       heroAlt={data.hero.alt}
       ctaHref="/contacto"
     />

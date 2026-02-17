@@ -10,7 +10,7 @@ const services = defineCollection({
       badge: z.string().optional(),
       shortDescription: z.string(),
       hero: z.object({
-        src: image(),
+        image: image(),
         alt: z.string().optional(),
       }),
       problem: z.object({

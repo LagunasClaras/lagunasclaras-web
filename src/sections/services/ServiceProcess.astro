@@ -1,6 +1,7 @@
 ---
 import { Settings, CircleCheck, Truck } from '@lucide/astro';
 import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 
 interface ProcessStep {
   title: string;
@@ -37,7 +38,7 @@ const icons = [Settings, CircleCheck, Truck];
               <div
                 class={`process-reveal w-full lg:w-1/2 ${isEven ? 'translate-x-[-50px]' : 'translate-x-[50px]'} opacity-0 transition-all duration-700`}
               >
-                <div class="group relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 shadow-lg">
+                <div class="group relative flex aspect-4/3 items-center justify-center overflow-hidden rounded-2xl bg-linear-to-br from-gray-100 to-gray-200 shadow-lg">
                   {step.image ? (
                     <Image
                       src={step.image}

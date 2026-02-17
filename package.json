@@ -11,6 +11,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.0",
     "@lucide/astro": "^0.564.0",
     "astro": "^5.16.15",
     "class-variance-authority": "^0.7.1",
