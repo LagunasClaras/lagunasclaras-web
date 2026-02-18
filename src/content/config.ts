@@ -6,6 +6,7 @@ const services = defineCollection({
     z.object({
       slug: z.string().optional(), // In case it's needed explicitly, but usually file-based
       title: z.string(),
+      shortTitle: z.string().optional(),
       subtitle: z.string().optional(), // For the hero text
       badge: z.string().optional(),
       shortDescription: z.string(),

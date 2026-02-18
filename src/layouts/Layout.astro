@@ -2,6 +2,7 @@
 import Footer from '@/components/Footer.astro';
 import Navbar from '@/components/navbar/Navbar.astro';
 import WhatsAppButton from '@/components/WhatsAppButton.astro';
+import Toast from '@/components/Toast.astro';
 import '@/styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import { PUBLIC_GA_ID } from 'astro:env/client';
@@ -87,6 +88,7 @@ const {
 
     <Footer />
     <WhatsAppButton />
+    <Toast />
   </body>
 </html>
 <style is:global>

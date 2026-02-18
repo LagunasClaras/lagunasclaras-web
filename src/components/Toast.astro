@@ -1,0 +1,125 @@
+---
+import { X } from '@lucide/astro';
+---
+
+<div
+  id="toast-container"
+  class="pointer-events-none fixed top-24 right-4 z-9999 flex flex-col gap-3"
+>
+  <!-- Toasts will be injected here -->
+</div>
+
+<template id="toast-template">
+  <div
+    class="toast dark:bg-card border-primary pointer-events-auto flex min-w-[300px] translate-x-[calc(100%+16px)] items-center gap-3 rounded-lg border-l-4 bg-white px-4 py-3 shadow-2xl transition-all duration-300"
+  >
+    <div class="toast-icon shrink-0">
+      <!-- Icon will be injected here -->
+    </div>
+    <div class="grow">
+      <p class="toast-message text-foreground text-sm font-medium"></p>
+    </div>
+    <button
+      class="toast-close text-muted-foreground hover:text-foreground cursor-pointer p-1 transition-colors"
+      aria-label="Cerrar"
+    >
+      <X size={18} />
+    </button>
+  </div>
+</template>
+
+<style>
+  @reference "../styles/global.css";
+
+  .toast.show {
+    @apply translate-x-0;
+  }
+
+  .toast.success {
+    @apply border-accent;
+  }
+  .toast.error {
+    @apply border-error;
+  }
+  .toast.info {
+    @apply border-primary;
+  }
+</style>
+
+<script>
+  interface ToastDetail {
+    message: string;
+    type?: 'success' | 'error' | 'info';
+    duration?: number;
+  }
+
+  let container: HTMLElement | null = null;
+  let template: HTMLTemplateElement | null = null;
+
+  function createToast({ message, type = 'info', duration = 5000 }: ToastDetail) {
+    if (!container || !template) {
+      container = document.getElementById('toast-container');
+      template = document.getElementById('toast-template') as HTMLTemplateElement;
+      if (!container || !template) return;
+    }
+
+    const clone = template.content.cloneNode(true) as DocumentFragment;
+    const toast = clone.querySelector('.toast') as HTMLDivElement;
+    const messageEl = clone.querySelector('.toast-message') as HTMLParagraphElement;
+    const closeBtn = clone.querySelector('.toast-close') as HTMLButtonElement;
+    const iconContainer = clone.querySelector('.toast-icon') as HTMLDivElement;
+
+    // Set content and type
+    messageEl.textContent = message;
+    toast.classList.add(type);
+
+    // Set Icon
+    if (type === 'success') {
+      iconContainer.innerHTML =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+    } else if (type === 'error') {
+      iconContainer.innerHTML =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--error)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
+    } else {
+      iconContainer.innerHTML =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
+    }
+
+    container.appendChild(toast);
+
+    // Trigger animation
+    requestAnimationFrame(() => {
+      toast.classList.add('show');
+    });
+
+    const removeToast = () => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 300);
+    };
+
+    closeBtn.onclick = removeToast;
+
+    if (duration > 0) {
+      setTimeout(removeToast, duration);
+    }
+  }
+
+  function initToast() {
+    container = document.getElementById('toast-container');
+    template = document.getElementById('toast-template') as HTMLTemplateElement;
+  }
+
+  // Listen for global toast events - registered only once
+  if (!(window as any).toastListenerSet) {
+    window.addEventListener('toast', (event: any) => {
+      createToast(event.detail);
+    });
+    (window as any).toastListenerSet = true;
+  }
+
+  // Initial load
+  initToast();
+
+  // Re-initialize after view transitions
+  document.addEventListener('astro:page-load', initToast);
+</script>

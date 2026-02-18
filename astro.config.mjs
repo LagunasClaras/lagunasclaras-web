@@ -29,6 +29,7 @@ export default defineConfig({
     schema: {
       // Remove optional props when
       FORM_POST_URL: envField.string({ context: 'client', access: 'public', optional: true }),
+      N8N_WEBHOOK_URL: envField.string({ context: 'server', access: 'secret', optional: true }),
       PUBLIC_GA_ID: envField.string({ context: 'client', access: 'public', optional: true }),
     },
   },
