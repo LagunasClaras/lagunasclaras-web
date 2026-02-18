@@ -1,0 +1,49 @@
+---
+import { WhatsApp } from './icons';
+
+interface Props {
+  phone?: string;
+  message?: string;
+  class?: string;
+}
+
+//TODO: Edit the message
+const {
+  phone = '5491150451158',
+  message = 'Hola, vengo de la web y me gustaria hacerles una consulta sobre los servicios de Lagunas Claras.',
+  class: className = '',
+} = Astro.props;
+
+const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+---
+
+<a
+  href={whatsappUrl}
+  target="_blank"
+  rel="noopener noreferrer"
+  class:list={[
+    'group align-center fixed right-6 bottom-6 z-50 flex h-14 w-14 justify-center overflow-hidden rounded-full transition-all hover:scale-110 active:scale-95',
+    className,
+  ]}
+  aria-label="Contactar por WhatsApp"
+>
+  <WhatsApp class="relative z-10 h-12 w-12 drop-shadow-sm" />
+</a>
+
+<style>
+  a {
+    /* Ensure it doesn't overlap with other fixed elements if any */
+    animation: slide-in 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes slide-in {
+    from {
+      transform: translateY(100px) scale(0);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+  }
+</style>
