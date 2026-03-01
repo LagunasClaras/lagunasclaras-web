@@ -18,14 +18,16 @@ const services = defineCollection({
         title: z.string(),
         description: z.string(),
         bullets: z.array(z.string()),
-      }),
+      }).optional(),
+      explanation: z.string().optional(),
+      howWeDoIt: z.array(z.string()).optional(),
       process: z.array(
         z.object({
           title: z.string(),
           description: z.string(),
           image: image().optional(), // Image for the step
         })
-      ),
+      ).optional(),
       beforeAfter: z
         .object({
           before: image(), // Image path
