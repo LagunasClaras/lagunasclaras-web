@@ -3,6 +3,8 @@ import tailwindcss from '@tailwindcss/vite';
 import { defineConfig, envField } from 'astro/config';
 import mdx from '@astrojs/mdx';
 
+import vercel from '@astrojs/vercel';
+
 // https://astro.build/config
 export default defineConfig({
   vite: {
@@ -24,8 +26,10 @@ export default defineConfig({
       noExternal: ['@lucide/astro'],
     },
   },
+
   site: 'https://lagunasclaras.com.ar',
   integrations: [sitemap(), mdx()],
+
   env: {
     schema: {
       // Remove optional props when
@@ -34,4 +38,6 @@ export default defineConfig({
       PUBLIC_GA_ID: envField.string({ context: 'client', access: 'public', optional: true }),
     },
   },
+
+  adapter: vercel(),
 });
