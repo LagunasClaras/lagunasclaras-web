@@ -53,9 +53,7 @@ const gradientClass = reverse
         {title}
       </h3>
 
-      <p class="text-muted-foreground leading-relaxed">
-        {description}
-      </p>
+      <p class="text-muted-foreground leading-relaxed" set:html={description} />
       <Button href={buttonRoute} variant="primary" class="mt-4 w-fit text-lg"
         >Más información</Button
       >

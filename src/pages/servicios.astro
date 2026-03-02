@@ -5,6 +5,7 @@ import SeoHead from '@/components/SeoHead.astro';
 import Layout from '@/layouts/Layout.astro';
 import ServiceBlock from '@/sections/services/ServiceBlock.astro';
 import { getCollection } from 'astro:content';
+import { marked } from 'marked';
 
 const services = await getCollection('services');
 
@@ -35,10 +36,10 @@ const content = {
             return (
               <ServiceBlock
                 title={service.data.title}
-                description={service.data.shortDescription}
+                description={marked.parseInline(service.data.shortDescription) as string}
                 image={service.data.hero.image}
                 reverse={isEven}
-                buttonRoute={`/servicios/${service.id}`}
+                buttonRoute={`/servicios/${service.data.slug || service.id.replace(/\.mdx?$/, '')}`}
               />
             );
           })

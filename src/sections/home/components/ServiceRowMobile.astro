@@ -14,8 +14,6 @@ const { title, Icon, shortDescription } = Astro.props as ServiceRowMobileProps;
     <h4 class="text-primary leading-tight font-bold">
       {title}
     </h4>
-    <p class="line-clamp-2 text-xs text-slate-600">
-      {shortDescription}
-    </p>
+    <p class="line-clamp-2 text-xs text-slate-600" set:html={shortDescription} />
   </div>
 </div>
