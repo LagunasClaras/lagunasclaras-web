@@ -1,6 +1,6 @@
 import type { fieldProps } from '../types/Contact.types';
 
-export const fields: fieldProps[] = [
+export const getFields = (serviceOptions: { value: string; label: string }[]): fieldProps[] => [
   {
     name: 'name',
     label: 'Nombre completo',
@@ -62,35 +62,14 @@ export const fields: fieldProps[] = [
         label: 'Otro',
       },
     ],
-    required: false,
+    required: true,
   },
   {
     name: 'services',
     label: 'Selecciona los servicios que te interesan',
     type: 'checkbox',
-    options: [
-      {
-        value: 'service1',
-        label: 'Servicio 1',
-      },
-      {
-        value: 'service2',
-        label: 'Servicio 2',
-      },
-      {
-        value: 'service3',
-        label: 'Servicio 3',
-      },
-      {
-        value: 'service4',
-        label: 'Servicio 4',
-      },
-      {
-        value: 'service5',
-        label: 'Servicio 5',
-      },
-    ],
-    required: false,
+    options: serviceOptions,
+    required: true,
   },
   {
     name: 'contactMethod',

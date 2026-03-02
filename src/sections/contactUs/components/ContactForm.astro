@@ -1,23 +1,39 @@
 ---
+import { getCollection } from 'astro:content';
 import FormField from '@/components/FormField.astro';
-import { fields } from './contactForm.content';
+import { getFields } from './contactForm.content';
+import { actions } from 'astro:actions';
+
+const result = Astro.getActionResult(actions.sendContact);
+const inputData = result?.data && !result.error ? null : (result as any)?.input;
+
+const services = await getCollection('services');
+const serviceOptions = services.map((s) => ({
+  value: s.data.slug || s.id,
+  label: s.data.shortTitle || s.data.title,
+}));
+
+const fields = getFields(serviceOptions);
 ---
 
-<!-- TODO: Add real services
-  TODO: Add real referral sources
-  TODO: Add real contact methods
-  TODO: Add real notes
-  TODO: Feature: Add reCAPTCHA
-  TODO: Feature: Add honeypot
-  TODO: Add service and api integration (maybe prepare for the n8n flow)
-  -->
+<!-- TODO: feature: Add reCAPTCHA -->
 <form
   id="contact-form"
   class="contact-form bg-card border-border w-full rounded-2xl border p-6 shadow-xl"
   method="POST"
 >
+  <!-- Honeypot field - Invisible to humans, trap for bots -->
+  <div class="sr-only absolute -z-10 h-0 overflow-hidden opacity-0" aria-hidden="true">
+    <label for="website">Si eres humano, deja este campo vacío</label>
+    <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+  </div>
+
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-    {fields.map((field) => <FormField field={field} />)}
+    {
+      fields.map((field) => (
+        <FormField field={field} value={inputData?.[field.name as keyof typeof inputData]} />
+      ))
+    }
   </div>
   <button
     id="submit-button"
@@ -44,14 +60,12 @@ import { fields } from './contactForm.content';
 </form>
 
 <script>
-  import { FORM_POST_URL } from 'astro:env/client';
-  import { ContactSchema } from '../schemas/contact.schema';
-  import type { ContactFormSchema, fieldOptionsProps, fieldProps } from '../types/Contact.types';
-  import { fields } from './contactForm.content';
+  import { actions, isInputError } from 'astro:actions';
 
   const form = document.getElementById('contact-form') as HTMLFormElement;
   const submitButton = document.getElementById('submit-button') as HTMLButtonElement;
   const buttonText = document.getElementById('button-text') as HTMLSpanElement;
+
   // Function to clear all error states and messages
   const clearErrors = () => {
     const inputs = form.querySelectorAll('input, textarea, select');
@@ -67,11 +81,9 @@ import { fields } from './contactForm.content';
     });
   };
 
-  // Function to apply error states and messages to specific fields
-  const applyErrors = (errors: Record<string, any>) => {
-    Object.keys(errors).forEach((fieldName) => {
-      if (fieldName === '_errors') return; // Skip root-level errors
-
+  // Function to apply error states and messages from Astro Actions
+  const applyErrors = (fields: Record<string, string[] | undefined>) => {
+    Object.entries(fields).forEach(([fieldName, messages]) => {
       // Find the input element by name
       const input = form.querySelector(`[name="${fieldName}"]`) as HTMLElement;
       if (input) {
@@ -80,8 +92,8 @@ import { fields } from './contactForm.content';
 
       // Find and populate the error message
       const errorMsg = form.querySelector(`[data-error-for="${fieldName}"]`) as HTMLElement;
-      if (errorMsg && errors[fieldName]._errors && errors[fieldName]._errors.length > 0) {
-        errorMsg.textContent = errors[fieldName]._errors[0];
+      if (errorMsg && messages && messages.length > 0) {
+        errorMsg.textContent = messages[0];
         errorMsg.classList.remove('hidden');
       }
     });
@@ -105,79 +117,78 @@ import { fields } from './contactForm.content';
   if (form && submitButton && buttonText) {
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
+      clearErrors();
 
       const formData = new FormData(event.currentTarget as HTMLFormElement);
-      const data: Partial<ContactFormSchema> = Object.fromEntries(formData.entries()) as any;
+      const data: any = Object.fromEntries(formData.entries());
 
-      // Handle checkboxes (services field) - collect all checked values
-      const services = formData.getAll('services') as string[];
+      // Handle checkboxes (services field)
+      const services = formData.getAll('services');
       if (services.length > 0) {
         data.services = services;
       }
 
-      const result = ContactSchema.safeParse(data);
+      setLoading(true);
 
-      if (result.success) {
-        // Set loading state
-        setLoading(true);
-        const referredOption = fields
-          .find((field: fieldProps) => field.name === 'referralSource')
-          ?.options?.find(
-            (option: fieldOptionsProps) => option.value === result.data.referralSource
-          );
-        const body = {
-          ...result.data,
-          referralSource: referredOption,
-          timestamp: new Date().toISOString(),
-        };
-        try {
-          // If the URL is not defined (temporary case), just log it and simulate success
-          if (!FORM_POST_URL) {
-            console.log('Form data ready to send (FORM_POST_URL is missing):', body);
-            // Simulate success for testing UI
-            buttonText.textContent = '✓ Enviado (Simulado)';
-            setTimeout(() => {
-              form.reset();
-              setLoading(false);
-            }, 2000);
-            return;
-          }
+      try {
+        console.log('Submitting form with data:', data);
+        const { data: responseData, error } = await actions.sendContact(data);
 
-          // Send the data to your backend
-          const response = await fetch(FORM_POST_URL, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(body),
-          });
+        if (error) {
+          console.error('Form submission error object:', error);
+          setLoading(false); // Reset immediately on error
 
-          if (response.ok) {
-            console.log('Form submitted successfully!');
-            buttonText.textContent = '✓ Enviado';
-            // Reset after 2 seconds
-            setTimeout(() => {
-              form.reset();
-              setLoading(false);
-            }, 2000);
+          if (isInputError(error)) {
+            applyErrors(error.fields);
+            window.dispatchEvent(
+              new CustomEvent('toast', {
+                detail: {
+                  message: 'Revisa los campos marcados en rojo',
+                  type: 'error',
+                  duration: 5000,
+                },
+              })
+            );
           } else {
-            throw new Error('Failed to submit form');
+            window.dispatchEvent(
+              new CustomEvent('toast', {
+                detail: {
+                  message: error.message || 'Error del servidor, inténtalo más tarde',
+                  type: 'error',
+                },
+              })
+            );
+            buttonText.textContent = '❌ Error';
+            setTimeout(() => {
+              buttonText.textContent = 'Enviar';
+            }, 3000);
           }
-        } catch (error) {
-          console.error('Error submitting form:', error);
-
-          // Re-enable after 2 seconds
-          setTimeout(() => {
-            setLoading(false);
-          }, 2000);
+          return;
         }
-      } else {
-        console.error('Validation errors:', result.error.format());
 
-        // Apply errors to show which fields are invalid
-        clearErrors();
-        const errors = result.error.format();
-        applyErrors(errors);
+        console.log('Success:', responseData);
+        buttonText.textContent = responseData?.simulated ? '✓ Enviado (Simulado)' : '✓ Enviado';
+        form.reset();
+
+        // Success experience: keep "Enviado" for a moment
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
+      } catch (err) {
+        console.error('Unexpected fatal error:', err);
+        setLoading(false);
+        window.dispatchEvent(
+          new CustomEvent('toast', {
+            detail: {
+              message: 'Ocurrió un error inesperado al enviar el formulario',
+              type: 'error',
+            },
+          })
+        );
+        buttonText.textContent = '❌ Error fatal';
+        setTimeout(() => {
+          buttonText.textContent = 'Enviar';
+        }, 3000);
       }
     });
   }

@@ -1,30 +1,43 @@
 import { defineCollection, z } from 'astro:content';
 
 const services = defineCollection({
-  type: 'data',
+  type: 'content',
   schema: ({ image }) =>
     z.object({
       slug: z.string().optional(), // In case it's needed explicitly, but usually file-based
       title: z.string(),
+      shortTitle: z.string().optional(),
       subtitle: z.string().optional(), // For the hero text
       badge: z.string().optional(),
       shortDescription: z.string(),
       hero: z.object({
-        src: image(),
+        image: image(),
         alt: z.string().optional(),
       }),
-      problem: z.object({
-        title: z.string(),
-        description: z.string(),
-        bullets: z.array(z.string()),
-      }),
-      process: z.array(
-        z.object({
+      problem: z
+        .object({
           title: z.string(),
           description: z.string(),
-          image: image().optional(), // Image for the step
+          bullets: z.array(z.string()),
         })
-      ),
+        .optional(),
+
+      howWeDoIt: z
+        .object({
+          title: z.string(),
+          steps: z.array(z.string()),
+          image: image().optional(),
+        })
+        .optional(),
+      process: z
+        .array(
+          z.object({
+            title: z.string(),
+            description: z.string(),
+            image: image().optional(), // Image for the step
+          })
+        )
+        .optional(),
       beforeAfter: z
         .object({
           before: image(), // Image path
@@ -88,7 +101,19 @@ const clientes = defineCollection({
     }),
 });
 
+const faqs = defineCollection({
+  type: 'content',
+  schema: z.object({
+    question: z.string(),
+    category: z.string(),
+    order: z.number(),
+    published: z.boolean().default(true),
+    pinned: z.boolean().default(false),
+  }),
+});
+
 export const collections = {
   services,
   clientes,
+  faqs,
 };

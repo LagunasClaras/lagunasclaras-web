@@ -1,5 +1,6 @@
 ---
 import Button from '@/components/Button.astro';
+import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
 import clsx from 'clsx';
 
@@ -27,22 +28,22 @@ const gradientClass = reverse
     <!-- Imagen -->
     <div
       class={clsx(
-        'justify-self-center',
+        'justify-self-center ',
         reverse ? 'md:order-2 md:justify-self-end' : 'md:justify-self-start'
       )}
     >
       <div
         class={clsx(
-          'aspect-square overflow-hidden bg-background shadow-md',
+          'aspect-square w-full max-w-72 mx-auto overflow-hidden bg-slate-100 shadow-md',
           // Mobile shape
           'rounded-2xl',
           // Desktop blob
           'md:rounded-[48%]',
-          // Tamaño controlado
-          'max-w-[280px] sm:max-w-sm lg:max-w-[420px]'
+          // Tamaño controlado - Mobile FIRST
+          'sm:max-w-sm md:w-72 md:max-w-none'
         )}
       >
-        <Image src={image} alt={title} class="h-full max-h-72 w-full max-w-72 object-cover" />
+        <Image src={image} alt={title} class="h-full w-full object-cover" />
       </div>
     </div>
 
@@ -52,9 +53,7 @@ const gradientClass = reverse
         {title}
       </h3>
 
-      <p class="text-muted-foreground leading-relaxed">
-        {description}
-      </p>
+      <p class="text-muted-foreground leading-relaxed" set:html={description} />
       <Button href={buttonRoute} variant="primary" class="mt-4 w-fit text-lg"
         >Más información</Button
       >

@@ -1,8 +1,11 @@
 ---
+import SeoHead from '@/components/SeoHead.astro';
 import Layout from '@/layouts/Layout.astro';
 import ServiceCTA from '@/sections/services/ServiceCTA.astro';
+import ServiceExplanation from '@/sections/services/ServiceExplanation.astro';
 import ServiceGallery from '@/sections/services/ServiceGallery.astro';
 import ServiceHero from '@/sections/services/ServiceHero.astro';
+import ServiceHowWeDoIt from '@/sections/services/ServiceHowWeDoIt.astro';
 import ServiceProblem from '@/sections/services/ServiceProblem.astro';
 import ServiceProcess from '@/sections/services/ServiceProcess.astro';
 import { getCollection } from 'astro:content';
@@ -12,7 +15,7 @@ import type { CollectionEntry } from 'astro:content';
 export async function getStaticPaths() {
   const services = await getCollection('services');
   return services.map((service) => ({
-    params: { slug: service.id },
+    params: { slug: service.data.slug || service.id.replace(/\.mdx?$/, '') },
     props: { service },
   }));
 }
@@ -23,26 +26,50 @@ interface Props {
 
 const { service } = Astro.props;
 const { data } = service;
+const { Content } = await service.render();
 ---
 
 <Layout title={`${data.title} | Lagunas Claras`} description={data.shortDescription}>
-  <div slot="main">
-    <ServiceHero
-      title={data.title}
-      subtitle={data.subtitle || data.shortDescription}
-      badge={data.badge || 'Servicio'}
-      heroImage={data.hero.src}
-      heroAlt={data.hero.alt}
-      ctaHref="/contacto"
-    />
+  <SeoHead
+    title={`${data.title} | Lagunas Claras`}
+    description={data.shortDescription}
+    ogImage={data.hero.image.src}
+  />
+  <ServiceHero
+    title={data.title}
+    subtitle={data.subtitle || data.shortDescription}
+    badge={data.badge || 'Servicio'}
+    heroImage={data.hero.image}
+    heroAlt={data.hero.alt}
+    ctaHref="/contacto"
+  />
 
-    <ServiceProblem
-      title={data.problem.title}
-      description={data.problem.description}
-      bullets={data.problem.bullets}
-    />
+  <div class="from-background via-primary-soft/10 to-primary-light/10 bg-linear-to-b">
+    {
+      data.problem && (
+        <ServiceProblem
+          title={data.problem.title}
+          description={data.problem.description}
+          bullets={data.problem.bullets}
+        />
+      )
+    }
 
-    <ServiceProcess steps={data.process} />
+    <ServiceExplanation>
+      <Content />
+    </ServiceExplanation>
+
+    {data.process && <ServiceProcess steps={data.process} />}
+
+    {
+      data.howWeDoIt && (
+        <ServiceHowWeDoIt
+          title={data.howWeDoIt.title}
+          steps={data.howWeDoIt.steps}
+          image={data.howWeDoIt.image}
+        />
+      )
+    }
 
     {/* Gallery & Results */}
     <ServiceGallery beforeAfter={data.beforeAfter} gallery={data.gallery} />

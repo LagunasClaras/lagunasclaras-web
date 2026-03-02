@@ -1,6 +1,6 @@
 ---
-import Button from '@/components/Button.astro';
-import desktopImage from '@assets/fondo4.jpg'; // Using fondo4.jpg as a clean nature background
+import Hero from '@/components/Hero.astro';
+import desktopImage from '@assets/hero-1920.webp';
 
 const HeroContent = {
   title: 'Más de 10 años manteniendo y recuperando espejos de agua',
@@ -10,42 +10,18 @@ const HeroContent = {
 };
 ---
 
-<section
-  class="relative flex min-h-[60vh] flex-col items-center justify-center overflow-hidden py-8 text-center"
->
-  <!-- Background Image with Overlay -->
-  <div class="absolute inset-0 -z-10">
-    <div class="absolute inset-0 z-10 bg-linear-to-b from-black/65 via-black/30 to-transparent">
-    </div>
-    <img
-      src={desktopImage.src}
-      alt="Laguna limpia y mantenida"
-      class="h-full w-full object-cover"
-    />
-  </div>
-
-  <!-- Content -->
-  <div class="relative z-20 container mx-auto px-4">
-    <h1
-      class="text-primary-foreground font-heading mx-auto mb-6 max-w-4xl text-4xl font-bold md:text-5xl lg:text-6xl"
-    >
-      {HeroContent.title}
-    </h1>
-    <p class="text-primary-foreground/90 mx-auto mb-10 max-w-2xl text-xl md:text-2xl">
-      {HeroContent.subtitle}
-    </p>
-
-    <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
-      <Button href={HeroContent.primaryCTA.href} variant="primary">
-        {HeroContent.primaryCTA.text}
-      </Button>
-      <Button
-        href={HeroContent.secondaryCTA.href}
-        variant="underline"
-        class="text-primary-foreground hover:text-white"
-      >
-        {HeroContent.secondaryCTA.text}
-      </Button>
-    </div>
-  </div>
-</section>
+<Hero
+  variant="about"
+  title={HeroContent.title}
+  subtitle={HeroContent.subtitle}
+  image={desktopImage}
+  imageAlt="Laguna limpia y mantenida"
+  cta={[
+    { text: HeroContent.primaryCTA.text, href: HeroContent.primaryCTA.href, variant: 'primary' },
+    {
+      text: HeroContent.secondaryCTA.text,
+      href: HeroContent.secondaryCTA.href,
+      variant: 'underline',
+    },
+  ]}
+/>

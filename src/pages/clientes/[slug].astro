@@ -31,7 +31,11 @@ const displayGallery = gallery && gallery.length > 0 ? gallery : fallbackGallery
 ---
 
 <Layout>
-  <SeoHead title={`${title} | Casos de Éxito | Lagunas Claras`} description={seoDescription} />
+  <SeoHead
+    title={`${title} - ${location} | Lagunas Claras`}
+    description={seoDescription}
+    ogImage={logo.src}
+  />
   <Fragment slot="main">
     <main class="bg-white">
       <div class="mx-auto mb-8 w-[80%] pt-24">

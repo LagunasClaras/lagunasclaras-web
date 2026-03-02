@@ -1,7 +1,7 @@
 ---
 import type { fieldOptionsProps, fieldProps } from '@/sections/contactUs/types/Contact.types';
 
-const { field } = Astro.props as { field: fieldProps };
+const { field, value } = Astro.props as { field: fieldProps; value?: any };
 ---
 
 <div class="flex flex-col gap-1">
@@ -23,6 +23,7 @@ const { field } = Astro.props as { field: fieldProps };
         name={field.name}
         class="form-input"
         placeholder={field.placeholder}
+        value={value || ''}
       />
     )
   }
@@ -34,7 +35,9 @@ const { field } = Astro.props as { field: fieldProps };
         rows="3"
         class="form-input"
         placeholder={field.placeholder}
-      />
+      >
+        {value || ''}
+      </textarea>
     )
   }
 
@@ -43,7 +46,9 @@ const { field } = Astro.props as { field: fieldProps };
       <select id={field.name} name={field.name} class="form-input">
         <option value="">Seleccionar</option>
         {field.options?.map((option: fieldOptionsProps) => (
-          <option value={option.value}>{option.label}</option>
+          <option value={option.value} selected={value === option.value}>
+            {option.label}
+          </option>
         ))}
       </select>
     )
@@ -54,7 +59,13 @@ const { field } = Astro.props as { field: fieldProps };
       <div class="flex flex-wrap gap-3">
         {field.options?.map((option) => (
           <label class="radio-pill-label">
-            <input type="radio" name={field.name} value={option.value} class="radio-pill-input" />
+            <input
+              type="radio"
+              name={field.name}
+              value={option.value}
+              class="radio-pill-input"
+              checked={value === option.value}
+            />
             <span class="radio-pill-text">{option.label}</span>
           </label>
         ))}
@@ -72,6 +83,7 @@ const { field } = Astro.props as { field: fieldProps };
               name={field.name}
               value={option.value}
               class="checkbox-pill-input"
+              checked={Array.isArray(value) ? value.includes(option.value) : value === option.value}
             />
             <span class="checkbox-pill-text">{option.label}</span>
           </label>

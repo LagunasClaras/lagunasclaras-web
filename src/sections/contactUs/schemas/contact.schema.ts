@@ -5,21 +5,14 @@ export const ContactSchema = z.object({
   email: z
     .string()
     .trim()
-    .min(5, 'Email muy corto')
-    .max(254, 'Email demasiado largo')
-    .email('Email inválido')
-    .refine(
-      (email) => {
-        const [_, domain] = email.split('@');
-        return domain && domain.includes('.');
-      },
-      { message: 'Dominio de email inválido' }
-    ),
+    .min(6, 'El email ingresado no es válido')
+    .max(254, 'El email ingresado no es válido')
+    .email('El email ingresado no es válido'),
   phone: z.string().min(8, 'El teléfono debe tener al menos 8 caracteres'),
   organization: z.string().min(3, 'La organización debe tener al menos 3 caracteres'),
   location: z.string().min(3, 'La ubicación debe tener al menos 3 caracteres'),
-  referralSource: z.string().optional(),
-  services: z.array(z.string()).optional(),
-  contactMethod: z.string().optional(),
-  notes: z.string().optional(),
+  referralSource: z.string().min(1, 'Selecciona una opción'),
+  services: z.array(z.string()).min(1, 'Selecciona al menos un servicio'),
+  notes: z.string().min(10, 'El mensaje debe tener al menos 10 caracteres'),
+  website: z.string().optional(), // Honeypot
 });

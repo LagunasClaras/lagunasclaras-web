@@ -1,22 +1,23 @@
 ---
+import ScrollIndicator from '@/components/ScrollIndicator.astro';
 import { clientsContent } from '@/content/clients';
-import { DropMagnifying, ShieldEngine, WaterReclying } from '@icons';
+import { WaterReclying } from '@icons';
+import { Leaf } from '@lucide/astro';
+import { marked } from 'marked';
 import AboutUsSection from './components/AboutUsSection.astro';
 import ClientsSection from './components/ClientsSection.astro';
+import ContactSection from './components/ContactSection.astro';
 import HeroSection from './components/HeroSection.astro';
 import type { AboutUsProps } from './types/AboutUs.types';
 import type { ContactSectionProps } from './types/Contact.types';
 import type { HeroProps } from './types/Hero.types';
 import type { ServiceCardBase } from './types/ServiceCard.types';
-// Import client logos
-import ScrollIndicator from '@/components/ScrollIndicator.astro';
-import ContactSection from './components/ContactSection.astro';
 
 // Hero Content
 const heroContent: HeroProps = {
-  HeroTitle: 'Mantenimiento y recuperación de lagos y ecosistemas acuáticos',
+  HeroTitle: 'Mantenimiento y recuperación de lagunas y ecosistemas acuáticos',
   HeroSubtitle:
-    'Tecnología sustentable y enfoque biológico integral para preservar la belleza natural de sus espejos de agua',
+    'Servicio profesional de corte y extracción de vegetación acuática, con maquinaria especializada y sin productos químicos.',
   CTA: [
     { text: 'Contactanos', href: '/contacto', style: 'primary' },
     { text: 'Ver servicios', href: '/servicios', style: 'underline' },
@@ -28,27 +29,26 @@ const heroContent: HeroProps = {
 const aboutUsContent: Omit<AboutUsProps, 'serviceCards'> = {
   sectionHeader: 'Quienes Somos?',
   title: 'Especialistas en el cuidado de ecosistemas acuáticos',
-  body: 'Hace más de una década trabajamos en la limpieza y recuperación de lagos y espejos de agua en todo el país. Diseñamos y operamos maquinaria especializada que permite eliminar vegetación acuática y residuos flotantes de forma eficiente, sustentable y sin químicos, cuidando la salud del ecosistema en cada intervención.',
-  viewMore: 'Ver más',
+  body: 'Desde 2012 ayudamos a barrios privados, countries e instituciones de toda Argentina a mantener sus espejos de agua limpios y equilibrados mediante técnicas mecánicas sin químicos y de bajo impacto ambiental.',
+  viewMore: 'Conocé más',
   viewMoreText: 'Ver detalle',
 };
 
 // Service Cards Data
 const serviceCards: ServiceCardBase[] = [
   {
-    title: 'Diagnóstico y Evaluación',
-    shortDescription: 'dolor sit amet consectetur',
-    Icon: DropMagnifying,
-  },
-  {
-    title: 'Limpieza y Recuperación',
-    shortDescription: 'Lorem ipsum dolor sit amet consectetur',
+    title: 'Limpieza y recuperación de espejos de agua',
+    shortDescription: marked.parseInline(
+      'Controlamos el exceso de vegetación acuática y residuos mediante maquinaria especializada, recuperando la claridad del agua **sin utilizar productos químicos**.'
+    ) as string,
     Icon: WaterReclying,
   },
   {
-    title: 'Mantenimiento Integral',
-    shortDescription: 'dolor sit amet consectetur',
-    Icon: ShieldEngine,
+    title: 'Plantación y restauración de costas',
+    shortDescription: marked.parseInline(
+      'Reforzamos los bordes de la laguna mediante plantación de especies acuáticas que ayudan a equilibrar el ecosistema y mejorar el entorno.'
+    ) as string,
+    Icon: Leaf,
   },
 ];
 
