@@ -2,51 +2,13 @@
 import Chevron from './Chevron.astro';
 
 // FAQ Data Structure
-interface FAQ {
-  id: string | number;
-  question: string;
-  answer: string;
-  label?: string;
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  faqs: CollectionEntry<'faqs'>[];
 }
 
-// FAQ Data - easily maintainable array
-const faqs: FAQ[] = [
-  {
-    id: 1,
-    question: '¿Qué servicios ofrece Lagunas Claras?',
-    answer:
-      'Ofrecemos servicios integrales de mantenimiento de espacios verdes, incluyendo paisajismo, diseño de jardines, mantenimiento de áreas comunes, y gestión de espacios recreativos para municipalidades, barrios privados y complejos residenciales.',
-    label: 'Servicios',
-  },
-  {
-    id: 2,
-    question: '¿Cómo puedo solicitar un presupuesto?',
-    answer:
-      'Podés solicitar un presupuesto completando nuestro formulario de contacto o comunicándote directamente con nosotros por teléfono o WhatsApp. Nos pondremos en contacto a la brevedad para coordinar una visita y evaluación del proyecto.',
-    label: 'Presupuesto',
-  },
-  {
-    id: 3,
-    question: '¿Trabajan con municipalidades y organizaciones?',
-    answer:
-      'Sí, trabajamos con todo tipo de organizaciones incluyendo municipalidades, barrios privados, complejos habitacionales, y empresas. Adaptamos nuestros servicios a las necesidades específicas de cada cliente.',
-    label: 'Clientes',
-  },
-  {
-    id: 4,
-    question: '¿Ofrecen mantenimiento periódico?',
-    answer:
-      'Absolutamente. Ofrecemos planes de mantenimiento periódico personalizados según las necesidades de cada espacio. Estos pueden ser semanales, quincenales o mensuales, garantizando que tus espacios verdes se mantengan en óptimas condiciones durante todo el año.',
-    label: 'Mantenimiento',
-  },
-  {
-    id: 5,
-    question: '¿Cuál es la zona de cobertura?',
-    answer:
-      'Actualmente prestamos servicios en toda la provincia de Buenos Aires y zonas aledañas. Para consultas sobre áreas específicas, no dudes en contactarnos para confirmar la disponibilidad en tu zona.',
-    label: 'Cobertura',
-  },
-];
+const { faqs } = Astro.props;
 // TODO maybe hidrate with js to avoid seo issues
 // TODO: add acceptance to have url like /faq?id=1 and open the faq item
 // Prepare the component to be able to have anidate faq items
@@ -56,51 +18,53 @@ const faqs: FAQ[] = [
   <!-- FAQ Accordion -->
   <div class="space-y-3">
     {
-      faqs.map((faq) => (
-        <div
-          class="group/faq border-border bg-card overflow-hidden rounded-lg border shadow-sm transition-all duration-300 hover:shadow-md"
-          data-faq-item
-        >
-          {/* Question Header - Clickable  */}
-          <button
-            class="faq-trigger hover:bg-muted/30 flex w-full cursor-pointer items-center justify-between gap-4 p-4 text-left transition-colors duration-200"
-            aria-expanded="false"
-            aria-controls={`faq-answer-${faq.id}`}
-            data-faq-trigger
-          >
-            <div class="flex-1">
-              {faq.label && (
-                <span class="text-primary mb-1 inline-block text-xs font-medium tracking-wide uppercase">
-                  {faq.label}
-                </span>
-              )}
-              <h3 class="text-card-foreground text-base font-semibold md:text-lg">
-                {faq.question}
-              </h3>
-            </div>
+      faqs.map(async (faq) => {
+        const { Content } = await faq.render();
+        const { question, category } = faq.data;
+        const id = faq.id.replace(/\W/g, '-');
 
-            {/* Chevron Icon */}
-            <div class="faq-chevron transition-transform duration-300 ease-out">
-              <Chevron direction="down" class="text-primary" />
-            </div>
-          </button>
-
-          {/* Answer Content - Expandable */}
+        return (
           <div
-            id={`faq-answer-${faq.id}`}
-            class="faq-content grid grid-rows-[0fr] transition-all duration-300 ease-out"
-            data-faq-content
+            class="group/faq border-border bg-card overflow-hidden rounded-lg border shadow-sm transition-all duration-300 hover:shadow-md"
+            data-faq-item
           >
-            <div class="overflow-hidden">
-              <div class="faq-inner px-5 pt-0 pb-5">
-                <p class="text-card-foreground/80 text-sm leading-relaxed md:text-base">
-                  {faq.answer}
-                </p>
+            {/* Question Header - Clickable  */}
+            <button
+              class="faq-trigger hover:bg-muted/30 flex w-full cursor-pointer items-center justify-between gap-4 p-4 text-left transition-colors duration-200"
+              aria-expanded="false"
+              aria-controls={`faq-answer-${id}`}
+              data-faq-trigger
+            >
+              <div class="flex-1">
+                {category && (
+                  <span class="text-primary mb-1 inline-block text-xs font-medium tracking-wide uppercase">
+                    {category}
+                  </span>
+                )}
+                <h3 class="text-card-foreground text-base font-semibold md:text-lg">{question}</h3>
+              </div>
+
+              {/* Chevron Icon */}
+              <div class="faq-chevron transition-transform duration-300 ease-out">
+                <Chevron direction="down" class="text-primary" />
+              </div>
+            </button>
+
+            {/* Answer Content - Expandable */}
+            <div
+              id={`faq-answer-${id}`}
+              class="faq-content grid grid-rows-[0fr] transition-all duration-300 ease-out"
+              data-faq-content
+            >
+              <div class="overflow-hidden">
+                <div class="faq-inner prose prose-slate max-w-none px-5 pt-0 pb-5 text-sm md:text-base">
+                  <Content />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ))
+        );
+      })
     }
   </div>
 </section>

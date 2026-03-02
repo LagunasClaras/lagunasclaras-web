@@ -16,10 +16,7 @@
 
 ## Content / Data
 
-- [ ] Add real services (`src/sections/contactUs/components/ContactForm.astro`)
 - [ ] Add real referral sources (`src/sections/contactUs/components/ContactForm.astro`)
-- [ ] Add real contact methods (`src/sections/contactUs/components/ContactForm.astro`)
-- [ ] Add real notes (`src/sections/contactUs/components/ContactForm.astro`)
 - [ ] Add real links, logo (`src/components/Footer.astro`)
 
 ## Bugs

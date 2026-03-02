@@ -101,7 +101,19 @@ const clientes = defineCollection({
     }),
 });
 
+const faqs = defineCollection({
+  type: 'content',
+  schema: z.object({
+    question: z.string(),
+    category: z.string(),
+    order: z.number(),
+    published: z.boolean().default(true),
+    pinned: z.boolean().default(false),
+  }),
+});
+
 export const collections = {
   services,
   clientes,
+  faqs,
 };

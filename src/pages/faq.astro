@@ -2,8 +2,36 @@
 import Breadcrumb from '@/components/Breadcrumb.astro';
 import FAQAccordion from '@/components/FAQAccordion.astro';
 import PageHeader from '@/components/PageHeader.astro';
+import { getCollection } from 'astro:content';
 import SeoHead from '../components/SeoHead.astro';
 import Layout from '../layouts/Layout.astro';
+
+const faqs = await getCollection('faqs', ({ data }) => {
+  return data.published !== false;
+});
+
+// Category sort order
+const categoryOrder = [
+  'Servicios y Operación',
+  'Presupuesto y Evaluación',
+  'Clientes y Cobertura',
+  'Impacto Ambiental',
+];
+
+const sortedFaqs = faqs.sort((a, b) => {
+  // 1. Sort by category order
+  const catA = categoryOrder.indexOf(a.data.category);
+  const catB = categoryOrder.indexOf(b.data.category);
+  if (catA !== catB) return catA - catB;
+
+  // 2. Sort by pinned (pinned first)
+  if (a.data.pinned !== b.data.pinned) {
+    return a.data.pinned ? -1 : 1;
+  }
+
+  // 3. Sort by order field
+  return a.data.order - b.data.order;
+});
 
 const SeoContent = {
   title: 'Preguntas Frecuentes | Lagunas Claras',
@@ -23,7 +51,7 @@ const content = {
     <main class="bg-background mx-auto mt-24 min-h-screen w-[80%] pb-20">
       <Breadcrumb items={[{ label: 'FAQ', href: pathName }]} />
       <PageHeader title={content.title} subtitle={content.subtitle} />
-      <FAQAccordion />
+      <FAQAccordion faqs={sortedFaqs} />
     </main>
   </Fragment>
 </Layout>
