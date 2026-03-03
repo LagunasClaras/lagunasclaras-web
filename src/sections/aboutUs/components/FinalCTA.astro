@@ -3,13 +3,13 @@ import Button from '@/components/Button.astro';
 import { Mail, MapPin, User } from '@lucide/astro';
 
 const Content = {
-  title: 'Presupuestos sin cargo',
+  title: 'Consultá a nuestros especialistas en lagunas',
   description: 'Presupuestos sin cargo. Atendemos en todo el país.',
-  buttonText: 'Contactanos',
+  buttonText: 'Solicitar presupuesto',
   buttonHref: '/contacto',
   contacts: [
     { name: 'Gustavo Frumboli', phone: '11-5045-1158', href: 'tel:+5491150451158' },
-    { name: 'Santiago Frumboli', phone: '11-387-0205', href: 'tel:+549113870205' },
+    { name: 'Santiago Frumboli', phone: '11-3877-0205', href: 'tel:+5491138770205' },
   ],
   email: 'lagunasclaras@gmail.com',
   address: 'Santa Cruz 419, Benavidez, Provincia de Buenos Aires',
@@ -26,7 +26,7 @@ const Content = {
       <p class="text-foreground/80 mb-8 text-xl md:text-2xl">
         {Content.description}
       </p>
-      <Button href={Content.buttonHref} class="px-8 py-6 text-lg shadow-lg">
+      <Button href={Content.buttonHref} class="px-6 py-4 text-lg shadow-lg">
         {Content.buttonText}
       </Button>
     </div>
