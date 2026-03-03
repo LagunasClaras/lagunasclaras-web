@@ -42,7 +42,7 @@ const isTransparentPage =
       id="nav-logo"
       class="relative z-10 flex items-center gap-2 text-lg font-bold transition-opacity duration-300 group-data-[menu-open=true]:pointer-events-none group-data-[menu-open=true]:opacity-0"
     >
-      <img src="/logo.svg" alt="Lagunas Claras" class="h-12 w-12 min-w-6" />
+      <img src="/logo.svg" alt="Lagunas Claras" width="48" height="48" class="h-12 w-12 min-w-6" />
       <span
         id="nav-title"
         class="text-primary-foreground group-data-[scrolled=true]:text-primary group-data-[transparent-page=false]:text-primary font-semibold transition-colors duration-300"
@@ -81,7 +81,7 @@ const isTransparentPage =
     <!-- Mobile Menu Button -->
     <HamburgerButton
       id="menu-toggle"
-      class="text-primary-foreground group-data-[scrolled=true]:text-primary group-data-[transparent-page=false]:text-primary group-data-[menu-open=true]:!text-primary z-60 transition-colors duration-300 md:hidden"
+      class="text-primary-foreground group-data-[scrolled=true]:text-primary group-data-[transparent-page=false]:text-primary group-data-[menu-open=true]:text-primary! z-60 transition-colors duration-300 md:hidden"
     />
   </div>
   <MobileMenu links={links} brandTitle={brandTitle} />
