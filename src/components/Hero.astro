@@ -18,6 +18,7 @@ interface Props {
     Icon?: any;
   };
   image: ImageMetadata;
+  imageMobile?: ImageMetadata;
   imageAlt?: string;
   cta?: CTA[];
   variant?: 'home' | 'service' | 'about';
@@ -31,6 +32,7 @@ const {
   subtitle,
   badge,
   image,
+  imageMobile,
   imageAlt = '',
   cta = [],
   variant = 'home',
@@ -49,7 +51,7 @@ const overlayClasses = {
 const sectionClasses = {
   home: 'relative flex min-h-screen flex-col items-center justify-between overflow-hidden pb-8',
   about:
-    'relative flex min-h-[60vh] flex-col items-center justify-center overflow-hidden py-8 text-center',
+    'relative flex min-h-[80vh] flex-col items-center justify-center overflow-hidden py-8 text-center',
   service:
     'bg-navy-900 relative flex min-h-[80vh] w-full items-center justify-center overflow-hidden',
 };
@@ -80,27 +82,52 @@ const subtitleClasses = {
 <section id="hero" class={sectionClasses[variant]}>
   <!-- Background image -->
   <div class="absolute inset-0">
-    <Image
-      src={image}
-      alt={imageAlt}
-      class="h-full w-full object-cover"
-      loading="eager"
-      fetchpriority="high"
-    />
+    {
+      imageMobile ? (
+        <>
+          <Image
+            src={image}
+            alt={imageAlt}
+            class="hidden h-full w-full object-cover md:block"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <Image
+            src={imageMobile}
+            alt={imageAlt}
+            class="h-full w-full object-cover md:hidden"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </>
+      ) : (
+        <Image
+          src={image}
+          alt={imageAlt}
+          class="h-full w-full object-cover"
+          loading="eager"
+          fetchpriority="high"
+        />
+      )
+    }
     {variant === 'service' && <div class="absolute inset-0 bg-black/10" />}
   </div>
 
   <!-- Overlay -->
   <div class={`absolute inset-0 ${overlayClasses[variant]}`}></div>
 
-  {
-    variant === 'service' && (
-      <div class="pointer-events-none absolute top-0 left-0 h-full w-full overflow-hidden">
+  <div class="pointer-events-none absolute top-0 left-0 h-full w-full overflow-hidden">
+    {
+      variant === 'service' && (
         <div class="animate-pulse-slow bg-accent-500/20 absolute -top-20 -right-20 h-96 w-96 rounded-full blur-3xl" />
+      )
+    }
+    {
+      (variant === 'service' || variant === 'about') && (
         <div class="from-background absolute bottom-0 left-0 h-32 w-full bg-linear-to-t to-transparent" />
-      </div>
-    )
-  }
+      )
+    }
+  </div>
 
   <!-- Content -->
   <div class={contentContainerClasses[variant]}>

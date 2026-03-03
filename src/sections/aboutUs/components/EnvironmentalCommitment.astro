@@ -25,7 +25,7 @@ const Content = {
 };
 ---
 
-<section class="from-accent/10 to-primary-soft bg-linear-to-b py-16 md:py-24">
+<section class="from-accent/10 to-primary-soft bg-linear-to-b py-16 md:py-20">
   <div class="container mx-auto px-4 text-center">
     <div class="mx-auto mb-12 max-w-3xl">
       <h2 class="text-primary mb-6 text-3xl font-bold md:text-4xl">
@@ -39,8 +39,8 @@ const Content = {
     <div class="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-3 md:gap-12">
       {
         Content.benefits.map((benefit) => (
-          <div class="flex flex-col items-center">
-            <div class="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 shadow-sm">
+          <div class="group flex flex-col items-center rounded-2xl p-6 transition-all hover:-translate-y-1 hover:bg-white/40 hover:shadow-sm">
+            <div class="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 shadow-sm transition-transform duration-300 group-hover:scale-110 group-hover:shadow-md">
               <benefit.Icon class="h-10 w-10" />
             </div>
             <h3 class="text-foreground mb-3 text-xl font-bold">{benefit.title}</h3>

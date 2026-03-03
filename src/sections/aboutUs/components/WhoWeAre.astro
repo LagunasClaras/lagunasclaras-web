@@ -1,37 +1,130 @@
 ---
+import teamImage from '@/assets/team.webp';
+import { CalendarDays, Leaf, MapPin, Settings, Users } from '@lucide/astro';
+import { Image } from 'astro:assets';
+
 const Content = {
-  title: 'Quiénes somos',
-  description1:
-    'Somos una empresa argentina dedicada a la limpieza y mantenimiento de lagos, lagunas y todo tipo de espejos de agua.',
-  description2: 'Tenemos más de 10 años de experiencia en el mercado.',
-  highlights: [
-    { text: 'Empresa argentina', icon: '🇦🇷' },
-    { text: 'Más de 10 años de experiencia', icon: '⭐' },
-    { text: 'Atendemos en todo el país', icon: '🗺️' },
+  title: 'Más de 10 años cuidando lagunas y ecosistemas acuáticos en Argentina',
+  blocks: [
+    {
+      title: 'Desde 2012',
+      text: 'Nos dedicamos a la limpieza, recuperación y mantenimiento de lagos, lagunas y espejos de agua en barrios privados, countries, municipios e instituciones de toda Argentina.',
+      Icon: CalendarDays,
+    },
+    {
+      title: 'Empresa familiar',
+      text: 'Con más de una década de experiencia, nos comprometemos a brindar soluciones eficientes y responsables para conservar la belleza y la salud ambiental de cada laguna.',
+      Icon: Users,
+    },
+    {
+      title: 'Capacidad técnica',
+      text: 'Contamos con máquinas especializadas diseñadas para remover algas, vegetación y residuos de forma segura, permitiendo intervenir cada espejo de agua sin alterar su equilibrio natural.',
+      Icon: Settings,
+    },
+    {
+      title: 'Diferencial sin químicos',
+      text: 'Nuestro principal diferencial es trabajar 100% sin productos químicos, utilizando técnicas mecánicas de bajo impacto que protegen la flora y fauna del ecosistema.',
+      Icon: Leaf,
+    },
+    {
+      title: 'Validación y alcance',
+      text: 'Hemos trabajado junto a más de 20 clientes en distintos puntos del país, brindando un servicio profesional, cercano y adaptado a las necesidades de cada laguna.',
+      Icon: MapPin,
+    },
+  ],
+  commitmentTitle: 'Nuestro compromiso',
+  commitments: [
+    { text: 'Preservar el ecosistema acuático en cada intervención', icon: '🌱' },
+    { text: 'Ofrecer soluciones eficientes y sustentables', icon: '♻️' },
+    { text: 'Trabajar con profesionalismo y responsabilidad', icon: '🤝' },
+    { text: 'Brindar atención directa y asesoramiento personalizado', icon: '💬' },
   ],
 };
 ---
 
-<section class="from-primary/15 to-background bg-linear-to-b py-16 md:py-24">
-  <div class="container mx-auto px-4 text-center">
-    <h2 class="text-primary mb-8 text-3xl font-bold md:text-4xl">
-      {Content.title}
-    </h2>
-    <div class="mx-auto max-w-3xl space-y-6 text-lg leading-relaxed text-slate-700">
-      <p>{Content.description1}</p>
-      <p>{Content.description2}</p>
+<section class="from-background via-primary/15 to-accent/10 bg-linear-to-b py-16 md:py-20">
+  <div class="container mx-auto w-[90%] px-4">
+    <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+      <!-- Title Component (Centered above grid) -->
+      <div class="col-span-1 mb-8 text-center lg:col-span-2">
+        <h2
+          class="text-primary mx-auto max-w-4xl text-3xl leading-tight font-bold md:text-5xl lg:text-5xl"
+        >
+          {Content.title}
+        </h2>
+      </div>
+
+      <!-- Image Section -->
+      <div class="order-1 lg:order-1">
+        <div class="relative overflow-hidden rounded-2xl shadow-xl">
+          <Image
+            src={teamImage}
+            alt="Equipo de Lagunas Claras realizando mantenimiento de lagunas en Argentina"
+            class="h-auto w-full object-cover"
+          />
+        </div>
+      </div>
+
+      <!-- Text Section (Icon + text blocks) -->
+      <div class="order-2 flex flex-col gap-8 lg:order-2">
+        <div class="flex flex-col gap-8">
+          {
+            Content.blocks.map((block, i) => (
+              <div
+                class="animate-fade-up flex gap-4 opacity-0"
+                style={`animation-delay: ${i * 150}ms; animation-fill-mode: forwards;`}
+              >
+                <div class="bg-accent/10 text-accent mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
+                  <block.Icon class="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold text-slate-800">{block.title}</h3>
+                  <p class="mt-1 text-base leading-relaxed text-slate-600">{block.text}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
     </div>
 
-    <!-- Highlights Grid -->
-    <div class="mx-auto mt-12 grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-3 md:gap-8">
-      {
-        Content.highlights.map((item) => (
-          <div class="bg-card rounded-2xl border border-slate-100 p-6 shadow-sm transition-shadow hover:shadow-md">
-            <div class="mb-4 text-4xl">{item.icon}</div>
-            <h3 class="text-foreground text-lg font-semibold">{item.text}</h3>
-          </div>
-        ))
-      }
+    <!-- Commitments Grid -->
+    <div class="mx-auto mt-24 max-w-5xl">
+      <h3 class="mb-10 text-center text-3xl font-bold text-slate-800">
+        {Content.commitmentTitle}
+      </h3>
+      <div class="grid grid-cols-1 gap-6 gap-y-8 sm:grid-cols-2 md:gap-8 lg:grid-cols-4">
+        {
+          Content.commitments.map((item, i) => (
+            <div
+              class="bg-card group animate-fade-up flex flex-col items-center rounded-2xl border border-slate-100 p-6 text-center opacity-0 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+              style={`animation-delay: ${300 + i * 100}ms; animation-fill-mode: forwards;`}
+            >
+              <div class="mb-4 text-5xl transition-transform duration-300 group-hover:scale-110">
+                {item.icon}
+              </div>
+              <h4 class="text-foreground leading-snug font-semibold">{item.text}</h4>
+            </div>
+          ))
+        }
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-up {
+    animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+</style>
