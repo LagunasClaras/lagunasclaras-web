@@ -1,6 +1,7 @@
 ---
 import Hero from '@/components/Hero.astro';
-import fondoHero from '@assets/fondo4.jpg';
+import fondoHero from '@assets/fondo4-D.webp';
+import fondoHeroMobile from '@assets/fondo4-M.webp';
 import type { HeroProps } from '../types/Hero.types';
 
 const { HeroTitle, HeroSubtitle, CTA, Discover } = Astro.props as HeroProps;
@@ -11,6 +12,7 @@ const { HeroTitle, HeroSubtitle, CTA, Discover } = Astro.props as HeroProps;
   title={HeroTitle}
   subtitle={HeroSubtitle}
   image={fondoHero}
+  imageMobile={fondoHeroMobile}
   cta={CTA.map((c: any) => ({
     text: c.text,
     href: c.href,
