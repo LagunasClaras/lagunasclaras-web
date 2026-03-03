@@ -1,8 +1,15 @@
 ---
-const { class: className = '' } = Astro.props;
+const { class: className = '', ...rest } = Astro.props;
 ---
 
-<svg class={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 175.216 175.552">
+<svg
+  class={className}
+  width="24"
+  height="24"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 175.216 175.552"
+  {...rest}
+>
   <defs>
     <linearGradient
       id="whatsapp-gradient"
