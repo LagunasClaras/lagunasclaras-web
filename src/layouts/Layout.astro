@@ -4,7 +4,6 @@ import Navbar from '@/components/navbar/Navbar.astro';
 import Toast from '@/components/Toast.astro';
 import WhatsAppButton from '@/components/WhatsAppButton.astro';
 import '@/styles/global.css';
-import Analytics from '@vercel/analytics/astro';
 import { ClientRouter } from 'astro:transitions';
 
 interface Props {
@@ -49,14 +48,14 @@ const {
       {
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
-        "name": "Lagunas Claras",
+        "name": "${LAGUNAS_INFO.companyName}",
         "url": "https://lagunasclaras.com.ar",
         "image": "https://lagunasclaras.com.ar/og/lagunas-claras-og.webp",
-        "telephone": "+54 11 5045 1158",
-        "email": "lagunasclaras@gmail.com",
+        "telephone": "${LAGUNAS_INFO.contacts.gustavo.phoneE164}",
+        "email": "${LAGUNAS_INFO.email}",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "Aristóbulo del Valle 4591",
+          "streetAddress": "${LAGUNAS_INFO.location.address}",
           "addressLocality": "Tigre",
           "addressRegion": "Buenos Aires",
           "addressCountry": "AR"

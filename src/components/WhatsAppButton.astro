@@ -1,4 +1,5 @@
 ---
+import { LAGUNAS_INFO } from '@/config/lagunasInfo';
 import { WhatsApp } from './icons';
 
 interface Props {
@@ -9,7 +10,7 @@ interface Props {
 
 //TODO: Edit the message
 const {
-  phone = '5491150451158',
+  phone = LAGUNAS_INFO.contacts.gustavo.phoneE164.replace(/\D/g, ''),
   message = 'Hola, vengo de la web y me gustaria hacerles una consulta sobre los servicios de Lagunas Claras.',
   class: className = '',
 } = Astro.props;

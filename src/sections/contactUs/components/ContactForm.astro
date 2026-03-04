@@ -167,7 +167,9 @@ const fields = getFields(serviceOptions);
         }
 
         console.log('Success:', responseData);
-        buttonText.textContent = responseData?.simulated ? '✓ Enviado (Simulado)' : '✓ Enviado';
+        buttonText.textContent = (responseData as any)?.simulated
+          ? '✓ Enviado (Simulado)'
+          : '✓ Enviado';
         form.reset();
 
         // Success experience: keep "Enviado" for a moment

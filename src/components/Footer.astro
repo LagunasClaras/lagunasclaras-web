@@ -2,8 +2,10 @@
 import { Mail, MapPin, Phone } from '@lucide/astro';
 import { Facebook, Instagram, LinkedIn, LogoMono } from './icons';
 
+import { LAGUNAS_INFO } from '@/config/lagunasInfo';
+
 const FooterContent = {
-  Title: 'Lagunas Claras',
+  Title: LAGUNAS_INFO.companyName,
   links: [
     { text: 'Home', href: '/' },
     { text: 'About', href: '/about' },
@@ -11,16 +13,20 @@ const FooterContent = {
     { text: 'Clients', href: '/clients' },
   ],
   networks: [
-    { text: 'Instagram', href: 'https://instagram.com/yourprofile', Icon: Instagram },
-    { text: 'LinkedIn', href: 'https://linkedin.com/in/yourprofile', Icon: LinkedIn },
-    { text: 'Facebook', href: 'https://facebook.com/yourprofile', Icon: Facebook },
+    { text: 'Instagram', href: LAGUNAS_INFO.social.instagram, Icon: Instagram },
+    { text: 'LinkedIn', href: LAGUNAS_INFO.social.linkedin, Icon: LinkedIn },
+    { text: 'Facebook', href: LAGUNAS_INFO.social.facebook, Icon: Facebook },
   ],
   cta: [
-    { text: '@lagunasclaras', href: '/', Icon: Mail },
-    { text: '11-3877-0205', href: 'tel:+5491138770205', Icon: Phone },
-    { text: 'Ubicación', href: 'https://maps.app.goo.gl/rPkX2yuDpUcGkXZYA', Icon: MapPin },
+    { text: '@lagunasclaras', href: `mailto:${LAGUNAS_INFO.email}`, Icon: Mail },
+    {
+      text: LAGUNAS_INFO.contacts.santiago.phone,
+      href: `tel:${LAGUNAS_INFO.contacts.santiago.phoneE164}`,
+      Icon: Phone,
+    },
+    { text: 'Ubicación', href: LAGUNAS_INFO.location.mapsUrl, Icon: MapPin },
   ],
-  copyright: `© ${new Date().getFullYear()} Lagunas Claras. All rights reserved.`,
+  copyright: `© ${new Date().getFullYear()} ${LAGUNAS_INFO.companyName}. All rights reserved.`,
 };
 ---
 

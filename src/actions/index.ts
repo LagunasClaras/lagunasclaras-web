@@ -1,3 +1,4 @@
+import { LAGUNAS_INFO } from '@/config/lagunasInfo';
 import { ActionError, defineAction } from 'astro:actions';
 import { getCollection } from 'astro:content';
 import { renderTemplate } from '../lib/email/renderTemplate';
@@ -52,9 +53,10 @@ export const server = {
 
       const baseVars = {
         LOGO_URL: 'https://lagunasclaras.com/logo.png', // Fallback URL
-        COMPANY_MAIL: 'contacto@lagunasclaras.com',
-        GUSTAVO_PHONE_E164: '+5491100000000', // Needs to be configured correctly in the templates if dynamic but we mock for now or use generic constants based on site
-        GUSTAVO_PHONE_DISPLAY: '+54 9 11 0000 0000',
+        COMPANY_MAIL: LAGUNAS_INFO.email,
+        GUSTAVO_PHONE_E164: LAGUNAS_INFO.contacts.gustavo.phoneE164,
+        GUSTAVO_PHONE_DISPLAY:
+          LAGUNAS_INFO.contacts.gustavo.phoneDisplayArea || LAGUNAS_INFO.contacts.gustavo.phone,
         FULL_NAME: cleanInput.name,
         FIRST_NAME: firstName,
         EMAIL: cleanInput.email,
