@@ -1,8 +1,10 @@
 import { ActionError, defineAction } from 'astro:actions';
 import { getCollection } from 'astro:content';
-import { N8N_WEBHOOK_URL } from 'astro:env/server';
+import { renderTemplate } from '../lib/email/renderTemplate';
+import { sendEmail } from '../lib/email/sendEmail';
 import { ContactSchema } from '../sections/contactUs/schemas/contact.schema';
-
+import clientHtmlRaw from '../templates/ClientConfirmation.html?raw';
+import notifHtmlRaw from '../templates/ContactNotification.html?raw';
 export const server = {
   sendContact: defineAction({
     accept: 'json',
@@ -33,40 +35,63 @@ export const server = {
         return service ? service.data.shortTitle || service.data.title : val;
       });
 
-      const payload = {
-        leadId: crypto.randomUUID(),
-        ...cleanInput,
-        referralSource: referredOption?.label || cleanInput.referralSource,
-        services: selectedServiceLabels || cleanInput.services,
-        timestamp: new Date().toISOString(),
+      const dateStr = new Date().toLocaleString('es-AR', { dateStyle: 'long', timeStyle: 'short' });
+      const firstName = cleanInput.name.split(' ')[0];
+      const servicesHtmlObj =
+        selectedServiceLabels
+          ?.map(
+            (s) => `
+              <li
+                class="field-value"
+                style="margin: 4px 0 0 0; padding-left: 4px; list-style-type: disc"
+              >
+                ${s}
+              </li>`
+          )
+          .join('') || '';
+
+      const baseVars = {
+        LOGO_URL: 'https://lagunasclaras.com/logo.png', // Fallback URL
+        COMPANY_MAIL: 'contacto@lagunasclaras.com',
+        GUSTAVO_PHONE_E164: '+5491100000000', // Needs to be configured correctly in the templates if dynamic but we mock for now or use generic constants based on site
+        GUSTAVO_PHONE_DISPLAY: '+54 9 11 0000 0000',
+        FULL_NAME: cleanInput.name,
+        FIRST_NAME: firstName,
+        EMAIL: cleanInput.email,
+        PHONE: cleanInput.phone,
+        PHONE_DISPLAY: cleanInput.phone,
+        PHONE_E164: cleanInput.phone,
+        ORG: cleanInput.organization,
+        LOCATION: cleanInput.location,
+        REFERRAL: referredOption?.label || cleanInput.referralSource,
+        CONTACT_METHOD: 'Email', // Fallback since it's not in schema
+        DATE: dateStr,
+        SERVICES_LIST_ITEMS: servicesHtmlObj,
+        NOTES: cleanInput.notes,
       };
 
-      if (!N8N_WEBHOOK_URL) {
-        console.warn(
-          'N8N_WEBHOOK_URL is not defined in server environment. Logging payload:',
-          payload
-        );
-        return { success: true, simulated: true };
-      }
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 5000);
       try {
-        const response = await fetch(N8N_WEBHOOK_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
-          signal: controller.signal,
-        });
-        clearTimeout(timeout);
+        const clientHtml = renderTemplate(clientHtmlRaw, baseVars);
+        const notifHtml = renderTemplate(notifHtmlRaw, baseVars);
 
-        if (!response.ok) {
-          console.error('n8n error:', response.statusText);
-          throw new ActionError({
-            code: 'INTERNAL_SERVER_ERROR',
-            message: 'Se ha producido un error, vuelva a intentarlo en unos instantes',
-          });
+        // Run both emails concurrently
+        try {
+          await Promise.all([
+            sendEmail({
+              to: cleanInput.email,
+              subject: 'Recibimos tu consulta - Lagunas Claras',
+              html: clientHtml,
+            }),
+            sendEmail({
+              to: cleanInput.email, // Test: Send the "internal" email to the user as well
+              replyTo: cleanInput.email,
+              subject: 'Nueva Consulta Web - Lagunas Claras',
+              html: notifHtml,
+            }),
+          ]);
+        } catch (innerError) {
+          console.error('Promise.all sendEmail failed:', innerError);
+          throw innerError;
         }
 
         return { success: true };
@@ -76,7 +101,7 @@ export const server = {
         console.error('Action error:', error);
         throw new ActionError({
           code: 'INTERNAL_SERVER_ERROR',
-          message: 'Se ha producido un error, vuelva a intentarlo en unos instantes',
+          message: 'Se ha producido un error al enviar el mensaje. Vuelve a intentarlo.',
         });
       }
     },

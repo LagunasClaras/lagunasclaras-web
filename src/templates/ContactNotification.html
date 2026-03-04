@@ -117,11 +117,11 @@
           <tr>
             <td class="col-left">
               <span class="field-label">👤 Nombre completo</span>
-              <span class="field-value">{{$json.Nombre}}</span>
+              <span class="field-value">{{FULL_NAME}}</span>
             </td>
             <td class="col-right">
               <span class="field-label">📅 Fecha de contacto</span>
-              <span class="field-value">{{$('LeadObj').item.json.date}}</span>
+              <span class="field-value">{{DATE}}</span>
             </td>
           </tr>
 
@@ -129,11 +129,11 @@
           <tr>
             <td class="col-left">
               <span class="field-label">📧 Email</span>
-              <span class="field-value">{{$json.email}}</span>
+              <span class="field-value">{{EMAIL}}</span>
             </td>
             <td class="col-right">
               <span class="field-label">📞 Teléfono</span>
-              <span class="field-value">{{$json.Telefono}}</span>
+              <span class="field-value">{{PHONE}}</span>
             </td>
           </tr>
 
@@ -141,11 +141,11 @@
           <tr>
             <td class="col-left">
               <span class="field-label">🏢 Organización</span>
-              <span class="field-value">{{$json.Organizacion}}</span>
+              <span class="field-value">{{ORG}}</span>
             </td>
             <td class="col-right">
               <span class="field-label">📍 Ubicación</span>
-              <span class="field-value">{{$json.Ubicacion}}</span>
+              <span class="field-value">{{LOCATION}}</span>
             </td>
           </tr>
 
@@ -153,13 +153,11 @@
           <tr>
             <td class="col-left">
               <span class="field-label">🗣️ ¿Cómo nos conoció?</span>
-              <span class="field-value">{{$json['Referido por']}}</span>
+              <span class="field-value">{{REFERRAL}}</span>
             </td>
             <td class="col-right">
               <span class="field-label">� Prefiere contacto por</span>
-              <span class="field-value" style="text-transform: capitalize"
-                >{{$json['Metodo de contacto']}}</span
-              >
+              <span class="field-value" style="text-transform: capitalize">Email</span>
             </td>
           </tr>
 
@@ -167,14 +165,7 @@
           <tr>
             <td colspan="2" style="padding-bottom: 16px">
               <span class="field-label">🛠️ Servicios de interés</span>
-              {{ $('LeadObj').item.json.services.map(s => `
-              <li
-                class="field-value"
-                style="margin: 4px 0 0 0; padding-left: 4px; list-style-type: disc"
-              >
-                ${s}
-              </li>
-              `).join('') }}
+              {{SERVICES_LIST_ITEMS}}
             </td>
           </tr>
 
@@ -191,7 +182,7 @@
                   margin-top: 4px;
                 "
               >
-                {{$json.notas}}
+                {{NOTES}}
               </div>
             </td>
           </tr>
