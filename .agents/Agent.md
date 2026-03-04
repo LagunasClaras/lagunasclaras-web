@@ -1,172 +1,133 @@
 # AGENTS.md
 
-## Astro Architecture & Development Guide
+## Lagunas Claras - Guía de arquitectura y desarrollo
 
-This project is built with Astro.
-It follows a feature-based, scalable architecture focused on clarity, performance, and long-term maintainability.
+Este proyecto es la web institucional de **Lagunas Claras**.
+Está construido con **Astro 5 + Tailwind CSS 4** y orientado a contenido estático con interactividad puntual.
 
-This document defines **how the project is structured and how code should be written**.
+Este documento define cómo mantener el código de forma consistente con la implementación actual.
 
-All visual and design decisions are defined separately in:
-→ `.agents/skills/design/SKILL.md`
+Las decisiones visuales viven en:
+`/.agents/skills/design/SKILL.md`
 
-Do NOT redefine visual rules here.
+## Objetivos técnicos
 
----
+1. Priorizar rendimiento (HTML estático + JS mínimo).
+2. Mantener rutas y contenido fáciles de editar por equipo no técnico.
+3. Preservar SEO técnico en todas las páginas.
+4. Evitar lógica de negocio duplicada entre páginas.
 
-## Core Principles
+## Stack y convenciones
 
-1. Astro is content-first and filesystem-driven
-2. Pages define routes
-3. Features group domain logic and UI
-4. Components are mostly static
-5. Interactivity is isolated using Islands
-6. Minimal JavaScript by default
-7. Design tokens are mandatory (see .agents/skills/design/SKILL.md)
-8. Use semantic Tailwind tokens
-9. Always first check global.css for styles
+- Framework: Astro 5 (`astro.config.mjs`).
+- Estilos: Tailwind CSS 4 + utilidades globales en `src/styles/global.css`.
+- Contenido: `astro:content` con colecciones tipadas (`services`, `clientes`, `faqs`).
+- Formularios: `astro:actions` (acción `sendContact`) + webhook n8n.
+- Deploy: Vercel Adapter (`@astrojs/vercel`).
 
-Astro is NOT React.  
-Do not force React patterns unless strictly required.
+## Estructura real del proyecto
 
----
-
-## Mental Model
-
-Think in layers, not frameworks:
-
-- Pages → routing & orquestation (thin wrappers)
-- Layouts → structure & SEO
-- Sections → domain features (Home, Services, etc.)
-- Components → reusable UI
-- Islands → client-side interactivity
-- Lib → shared logic
-- Styles → global theming
-
----
-
-## Project Structure
-
-```
+```txt
 src/
-├── pages/       # Next.js-like routing
-├── layouts/     # Base wrappers
-├── components/  # Atomic/Shared UI
-├── sections/    # Feature-based domain logic (previously /features)
-├── islands/     # Interactive components (React/Preact)
-├── lib/         # Helpers
-├── styles/      # CSS
-├── assets/      # Media
+├── pages/            # Rutas públicas
+├── layouts/          # Estructura base del sitio
+├── components/       # UI reutilizable transversal
+├── sections/         # UI por dominio (home, aboutUs, services, contactUs)
+├── content/          # Colecciones MDX (services, clientes, faqs)
+├── actions/          # Server actions (contacto)
+├── templates/        # Plantillas HTML para notificaciones
+├── styles/           # CSS global y animaciones
+├── lib/              # Utilidades compartidas
+└── assets/           # Imágenes y logos
 ```
 
----
+Nota: hoy no existe `src/islands/`. La interactividad actual está resuelta con scripts inline en componentes `.astro`.
 
-## Folder Responsibilities
+## Mapa de rutas (institucional)
 
-### `/pages`
+- `/` Home.
+- `/quienes-somos` Institucional.
+- `/servicios` listado de servicios.
+- `/servicios/[slug]` detalle de servicio desde colección `services`.
+- `/clientes` listado de clientes.
+- `/clientes/[slug]` caso/cliente desde colección `clientes`.
+- `/faq` preguntas frecuentes desde colección `faqs`.
+- `/contacto` formulario y datos de contacto.
 
-- Public routes.
-- One file = one route.
-- **Rules**: Must remain extremely thin. Import a "Section Page" directly.
-- No UI logic here.
+## Reglas por capa
 
-Example:
+### `src/pages`
 
-```astro
----
-import Layout from '@/layouts/Layout.astro';
-import HomePage from '@sections/home/HomePage.astro';
----
+- Deben orquestar SEO + layout + composición de secciones.
+- Evitar lógica compleja de UI dentro de la página.
+- En rutas dinámicas, el `slug` debe salir de `astro:content` (`slug` explícito o `id` de archivo).
 
-<Layout>
-  <HomePage />
-</Layout>
-```
+### `src/sections`
 
----
+- Cada dominio mantiene sus componentes, tipos y schemas propios.
+- Si un componente solo se usa en una sección, debe vivir dentro de esa sección.
 
-### `/sections` (Feature-based)
+### `src/components`
 
-Main architectural unit. Represents a domain section (Home, Services, Contact, etc.).
+- Solo componentes transversales/reutilizables.
+- Aceptar props tipadas y evitar acoplarse a contenido específico.
 
-Each section:
+### `src/content`
 
-- Owns its UI, local data, and types.
-- Is independently composable.
+- Fuente de verdad editorial.
+- `services`: define hero, problema, proceso, galería y CTA.
+- `clientes`: define ficha técnica, servicios realizados y galería.
+- `faqs`: define categoría, orden, pinned y published.
 
-Example:
+## SEO y metadatos
 
-```
-sections/home/
-  HomePage.astro       # Entry point
-  components/          # Local components
-    Hero.astro
-  types/               # Local types
-    Hero.types.ts
-  data/                # Local mock data or constants
-```
+- Todas las páginas públicas deben usar `Layout.astro` + `SeoHead.astro`.
+- `Layout.astro` contiene metadatos globales, `ClientRouter`, JSON-LD y analítica opcional.
+- `SeoHead.astro` completa title, description, canonical y Open Graph por página.
+- Mantener consistencia entre `Astro.site` y enlaces canónicos/OG.
 
----
+## Formulario de contacto (crítico)
 
-### `/components`
+- El formulario usa `actions.sendContact` (`src/actions/index.ts`).
+- Incluye honeypot (`website`) para bots.
+- Si `N8N_WEBHOOK_URL` no está definido, la acción responde en modo simulado (no romper UX).
+- Los labels de servicios se resuelven dinámicamente desde colección `services`.
 
-Reusable, feature-agnostic UI components.
+## Variables de entorno
 
-- **Styling Pattern**: Use `clsx` for dynamic classes.
-- **Variants**: Define styles in objects/mappings (see `Button.astro`).
+Definidas en `astro.config.mjs`:
 
-Example:
+- `FORM_POST_URL` (client/public, opcional).
+- `N8N_WEBHOOK_URL` (server/secret, opcional).
+- `PUBLIC_GA_ID` (client/public, opcional).
 
-```typescript
-const variantStyles = {
-  primary: 'bg-primary text-white',
-  secondary: 'bg-secondary text-primary',
-};
-```
+## Aliases
 
----
+Mantener coherencia entre `astro.config.mjs` y `tsconfig.json`.
 
-### `/assets`
+Aliases activos:
+- `@` -> `src`
+- `@componentes` -> `src/components`
+- `@layout` -> `src/layouts`
+- `@pages` -> `src/pages`
+- `@assets` -> `src/assets`
+- `@lib` -> `src/lib`
+- `@icons` -> `src/components/icons`
+- `@sections` -> `src/sections`
+- `@content` -> `src/content` (configurado en Vite)
 
-- **Images**: Use `<picture>` with `webp` formats for LCP optimization.
-- **Logos**: Centralized exports in `@assets/Logos` components.
+## Reglas de implementación
 
----
+1. Preferir `.astro` por defecto.
+2. Usar JavaScript solo cuando CSS/HTML no alcance.
+3. Si agregás scripts que viven entre páginas con `ClientRouter`, agregar cleanup en `astro:before-swap`.
+4. No hardcodear contenido que pertenece a colecciones en componentes reutilizables.
+5. Antes de crear estilos nuevos, revisar `src/styles/global.css`.
+6. Mantener clases semánticas de tokens (`bg-background`, `text-foreground`, etc.).
 
-## Technical Standards
+## Anti-patrones
 
-### Strict Typing
-
-- Every component must have a `Props` interface defined in a `.types.ts` file within its folder or parent feature folder.
-- Use `@/` and `@sections/` aliases.
-
-### Interactivity Rules
-
-- Default to static HTML.
-- Use Islands only when strictly necessary.
-- Written in `.tsx`.
-
----
-
-## Styling Rules
-
-- **Source of truth**: `.agents/skills/design/SKILL.md`.
-- **Global Utilities**: Use custom utilities defined in `global.css` (e.g., `.service-card`, `.nav-link`).
-- **Semantic Tokens**: No hardcoded HEX.
-
----
-
-## Anti-Patterns (Do NOT)
-
-- Treat Astro as React.
-- Mix sections (Cross-section imports of local components).
-- Add JavaScript "blindly".
-- Duplicate logic in `/pages`.
-
----
-
-## Final Rule
-
-- Prefer `.astro`.
-- Prefer simplicity.
-- If it can be done with CSS/HTML/Tailwind, don't use JS.
+- Tratar Astro como SPA React.
+- Duplicar contenido editorial en más de una fuente.
+- Romper la separación entre componentes globales y componentes de sección.
+- Introducir dependencias JS para efectos que se pueden resolver con CSS.

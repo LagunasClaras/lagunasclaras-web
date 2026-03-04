@@ -5,6 +5,8 @@ import Toast from '@/components/Toast.astro';
 import WhatsAppButton from '@/components/WhatsAppButton.astro';
 import '@/styles/global.css';
 import { ClientRouter } from 'astro:transitions';
+import { PUBLIC_GA_ID } from 'astro:env/client';
+import Analytics from '@vercel/analytics/astro';
 
 interface Props {
   title?: string;
@@ -79,6 +81,7 @@ const {
     <Footer />
     <WhatsAppButton />
     <Toast />
+    <Analytics />
   </body>
 </html>
 <style is:global>
