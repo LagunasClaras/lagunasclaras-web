@@ -83,7 +83,7 @@ export const server = {
               html: clientHtml,
             }),
             sendEmail({
-              to: cleanInput.email, // Test: Send the "internal" email to the user as well
+              to: 'nachho.losa@gmail.com', // lagunasclaras@gmail.com
               replyTo: cleanInput.email,
               subject: 'Nueva Consulta Web - Lagunas Claras',
               html: notifHtml,

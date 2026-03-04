@@ -14,7 +14,8 @@ export interface SendEmailOptions {
   replyTo?: string;
 }
 
-export const MAIL_FROM = 'contacto@lagunasclaras.com';
+// Para probar Resend sin un dominio verificado, DEBE ser onboarding@resend.dev
+export const MAIL_FROM = 'onboarding@resend.dev';
 
 export async function sendEmail(options: SendEmailOptions) {
   if (!resend) {
