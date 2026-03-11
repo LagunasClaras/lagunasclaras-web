@@ -52,7 +52,7 @@ export const server = {
           .join('') || '';
 
       const baseVars = {
-        LOGO_URL: 'https://lagunasclaras.com/logo.png', // Fallback URL
+        LOGO_URL: '/logo.png', // Fallback URL
         COMPANY_MAIL: LAGUNAS_INFO.email,
         GUSTAVO_PHONE_E164: LAGUNAS_INFO.contacts.gustavo.phoneE164,
         GUSTAVO_PHONE_DISPLAY:
@@ -85,7 +85,7 @@ export const server = {
               html: clientHtml,
             }),
             sendEmail({
-              to: 'nachho.losa@gmail.com', // lagunasclaras@gmail.com
+              to: 'lagunasclaras@gmail.com',
               replyTo: cleanInput.email,
               subject: 'Nueva Consulta Web - Lagunas Claras',
               html: notifHtml,
@@ -100,7 +100,7 @@ export const server = {
       } catch (error) {
         if (error instanceof ActionError) throw error;
 
-        console.error('Action error:', error);
+        // console.error('Action error:', error);
         throw new ActionError({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'Se ha producido un error al enviar el mensaje. Vuelve a intentarlo.',

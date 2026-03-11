@@ -146,11 +146,11 @@ const fields = getFields(serviceOptions);
       setLoading(true);
 
       try {
-        console.log('Submitting form with data:', data);
+        // console.log('Submitting form with data:', data);
         const { data: responseData, error } = await actions.sendContact(data);
 
         if (error) {
-          console.error('Form submission error object:', error);
+          // console.error('Form submission error object:', error);
           setLoading(false); // Reset immediately on error
 
           if (isInputError(error)) {
@@ -184,7 +184,6 @@ const fields = getFields(serviceOptions);
           return;
         }
 
-        console.log('Success:', responseData);
         buttonText.textContent = (responseData as any)?.simulated
           ? 'Enviado (Simulado)'
           : 'Enviado';
@@ -200,7 +199,7 @@ const fields = getFields(serviceOptions);
           successIcon.classList.add('hidden');
         }, 2000);
       } catch (err) {
-        console.error('Unexpected fatal error:', err);
+        //console.error('Unexpected fatal error:', err);
         setLoading(false);
         window.dispatchEvent(
           new CustomEvent('toast', {
