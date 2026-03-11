@@ -5,12 +5,13 @@ export const LAGUNAS_INFO = {
       name: 'Gustavo Frumboli',
       phone: '11-5045-1158',
       phoneE164: '+5491150451158',
-      phoneDisplayArea: '11 5045 1158', // Optional if you want custom formatting
+      phoneDisplayArea: '11 5045 1158',
     },
     santiago: {
       name: 'Santiago Frumboli',
       phone: '11-3877-0205',
       phoneE164: '+5491138770205',
+      phoneDisplayArea: '11 3877 0205',
     },
   },
   email: 'lagunasclaras@gmail.com',
