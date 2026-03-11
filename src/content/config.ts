@@ -4,6 +4,7 @@ const services = defineCollection({
   type: 'content',
   schema: ({ image }) =>
     z.object({
+      order: z.number().default(99),
       slug: z.string().optional(), // In case it's needed explicitly, but usually file-based
       title: z.string(),
       shortTitle: z.string().optional(),
@@ -14,6 +15,7 @@ const services = defineCollection({
         image: image(),
         alt: z.string().optional(),
       }),
+      thumbnail: image().optional(),
       problem: z
         .object({
           title: z.string(),
@@ -27,6 +29,7 @@ const services = defineCollection({
           title: z.string(),
           steps: z.array(z.string()),
           image: image().optional(),
+          video: z.string().optional(),
         })
         .optional(),
       process: z
@@ -58,6 +61,25 @@ const services = defineCollection({
             }),
           ])
         )
+        .optional(),
+      machinery: z
+        .object({
+          title: z.string().optional(),
+          subtitle: z.string().optional(),
+          gallery: z.array(
+            z.discriminatedUnion('type', [
+              z.object({
+                type: z.literal('image'),
+                src: image(),
+              }),
+              z.object({
+                type: z.literal('video'),
+                src: z.string(),
+                poster: image().optional(),
+              }),
+            ])
+          ),
+        })
         .optional(),
       cta: z
         .object({

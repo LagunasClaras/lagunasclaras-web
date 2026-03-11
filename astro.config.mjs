@@ -32,9 +32,7 @@ export default defineConfig({
 
   env: {
     schema: {
-      // Remove optional props when
-      FORM_POST_URL: envField.string({ context: 'client', access: 'public', optional: true }),
-      // RESEND_API_KEY: envField.string({ context: 'client', access: 'secret', optional: true }),
+      RESEND_API_KEY: envField.string({ context: 'server', access: 'secret' }),
     },
   },
 

@@ -19,8 +19,9 @@ export const LAGUNAS_INFO = {
     mapsUrl: 'https://maps.app.goo.gl/rPkX2yuDpUcGkXZYA',
   },
   social: {
-    instagram: 'https://instagram.com/lagunasclaras', // Placerholder
-    linkedin: 'https://linkedin.com/company/lagunasclaras', // Placerholder
-    facebook: 'https://facebook.com/lagunasclaras', // Placerholder
+    instagram:
+      'https://www.instagram.com/lagunasclaras?igsh=MTZjNjYxcGZnaDYxdA%3D%3D&utm_source=qr',
+    linkedin: 'https://www.linkedin.com/in/lagunasclaras',
+    facebook: 'https://www.facebook.com/share/18CDhoduWk/?mibextid=wwXIfr',
   },
 };

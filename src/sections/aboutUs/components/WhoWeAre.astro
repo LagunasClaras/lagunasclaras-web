@@ -1,6 +1,16 @@
 ---
 import teamImage from '@/assets/team.webp';
-import { CalendarDays, Leaf, MapPin, Settings, Users } from '@lucide/astro';
+import {
+  CalendarDays,
+  Handshake,
+  Leaf,
+  MapPin,
+  MessageCircleMore,
+  Recycle,
+  Settings,
+  Sprout,
+  Users,
+} from '@lucide/astro';
 import { Image } from 'astro:assets';
 
 const Content = {
@@ -34,10 +44,10 @@ const Content = {
   ],
   commitmentTitle: 'Nuestro compromiso',
   commitments: [
-    { text: 'Preservar el ecosistema acuático en cada intervención', icon: '🌱' },
-    { text: 'Ofrecer soluciones eficientes y sustentables', icon: '♻️' },
-    { text: 'Trabajar con profesionalismo y responsabilidad', icon: '🤝' },
-    { text: 'Brindar atención directa y asesoramiento personalizado', icon: '💬' },
+    { text: 'Preservar el ecosistema acuático en cada intervención', Icon: Sprout },
+    { text: 'Ofrecer soluciones eficientes y sustentables', Icon: Recycle },
+    { text: 'Trabajar con profesionalismo y responsabilidad', Icon: Handshake },
+    { text: 'Brindar atención directa y asesoramiento personalizado', Icon: MessageCircleMore },
   ],
 };
 ---
@@ -100,9 +110,7 @@ const Content = {
               class="bg-card group animate-fade-up flex flex-col items-center rounded-2xl border border-slate-100 p-6 text-center opacity-0 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
               style={`animation-delay: ${300 + i * 100}ms; animation-fill-mode: forwards;`}
             >
-              <div class="mb-4 text-5xl transition-transform duration-300 group-hover:scale-110">
-                {item.icon}
-              </div>
+              <item.Icon class="text-accent mb-4 h-12 w-12 transition-transform duration-300 group-hover:scale-110" />
               <h4 class="text-foreground leading-snug font-semibold">{item.text}</h4>
             </div>
           ))

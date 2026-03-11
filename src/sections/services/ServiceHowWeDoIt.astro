@@ -6,9 +6,17 @@ interface Props {
   title: string;
   steps: string[];
   image?: ImageMetadata;
+  video?: string;
 }
 
-const { title, steps, image } = Astro.props;
+const { title, steps, image, video } = Astro.props;
+
+const getYouTubeId = (url: string) => {
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/);
+  return match ? match[1] : null;
+};
+
+const videoId = video ? getYouTubeId(video) : null;
 ---
 
 <section class="py-16 md:py-24">
@@ -24,10 +32,20 @@ const { title, steps, image } = Astro.props;
         </div>
       </div>
 
-      <!-- Image or Diagram Placeholder -->
+      <!-- Image or Video Placeholder -->
       <div class="flex-1">
         {
-          image ? (
+          videoId ? (
+            <div class="relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-2xl shadow-xl">
+              <iframe
+                src={`https://www.youtube.com/embed/${videoId}?rel=0&mute=1`}
+                title={title}
+                class="absolute inset-0 h-full w-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
+          ) : image ? (
             <div class="relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-2xl shadow-xl">
               <Image src={image} alt={title} class="absolute inset-0 h-full w-full object-cover" />
             </div>

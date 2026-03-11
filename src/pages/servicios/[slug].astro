@@ -67,12 +67,23 @@ const { Content } = await service.render();
           title={data.howWeDoIt.title}
           steps={data.howWeDoIt.steps}
           image={data.howWeDoIt.image}
+          video={data.howWeDoIt.video}
         />
       )
     }
 
-    {/* Gallery & Results */}
-    <ServiceGallery beforeAfter={data.beforeAfter} gallery={data.gallery} />
+    {
+      data.machinery && (
+        <ServiceGallery
+          title={data.machinery.title}
+          subtitle={data.machinery.subtitle || ''}
+          gallery={data.machinery.gallery}
+        />
+      )
+    }
+
+    {/* Gallery */}
+    <ServiceGallery gallery={data.gallery} beforeAfter={data.beforeAfter} />
 
     <ServiceCTA
       title={data.cta ? data.cta.title : 'Solicitá tu cotización hoy mismo'}
