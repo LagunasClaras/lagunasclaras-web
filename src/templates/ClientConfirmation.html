@@ -26,9 +26,7 @@
             <tr>
               <td align="center" justify="center" style="padding-bottom: 25px">
                 <img
-                  src="{{"
-                  $json.LOGO
-                  }}
+                  src="{{LOGO_URL}}"
                   alt="Lagunas Claras"
                   width="120"
                   style="display: block; margin: 0 auto"
@@ -39,7 +37,7 @@
             <!-- Saludo -->
             <tr>
               <td style="font-size: 22px; font-weight: bold; padding-bottom: 10px">
-                ¡Hola {{$('LeadObj').item.json.name.split(' ')[0]}}!
+                ¡Hola {{FIRST_NAME}}!
               </td>
             </tr>
 
@@ -67,7 +65,7 @@
                 Uno de nuestros especialistas evaluará tu consulta y se pondrá en contacto contigo a
                 la brevedad, generalmente dentro de las próximas
                 <strong>24 horas hábiles</strong>.<br /><br />
-                Medio de contacto elegido: <strong>{{$('LeadObj').item.json.email}}</strong>
+                Medio de contacto elegido: <strong>{{EMAIL}}</strong>
               </td>
             </tr>
 
@@ -89,23 +87,22 @@
               <td style="padding-top: 10px; font-size: 14px; line-height: 1.8">
                 📞
                 <a
-                  href="tel:{{$json.GUSTAVO.phone.replace(/\D/g, '')}}"
+                  href="tel:{{GUSTAVO_PHONE_E164}}"
                   style="color: #2563eb; text-decoration: none; font-weight: bold"
                 >
-                  Gustavo Fruomboli: {{$json.GUSTAVO.phone.replace(/^\+54\s?9?/,
-                  '').replace(/(\d{2})(\d+)/, '$1 $2')}}
+                  Gustavo Fruomboli: {{GUSTAVO_PHONE_DISPLAY}}
                 </a>
 
                 <br /><br />
 
                 💬
                 <a
-                  href="https://wa.me/{{$json.GUSTAVO.phone.replace(/\D/g, '')}}"
+                  href="https://wa.me/{{GUSTAVO_PHONE_E164}}"
                   style="color: #25d366; text-decoration: none; font-weight: bold"
                 >
                   Escribir por WhatsApp </a
                 ><br />
-                ✉️ <strong>{{$json.MAIL}}</strong>
+                ✉️ <strong>{{COMPANY_MAIL}}</strong>
               </td>
             </tr>
 

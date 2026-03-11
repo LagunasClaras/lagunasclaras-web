@@ -1,8 +1,8 @@
 ---
 import Footer from '@/components/Footer.astro';
 import Navbar from '@/components/navbar/Navbar.astro';
-import WhatsAppButton from '@/components/WhatsAppButton.astro';
 import Toast from '@/components/Toast.astro';
+import WhatsAppButton from '@/components/WhatsAppButton.astro';
 import '@/styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import { PUBLIC_GA_ID } from 'astro:env/client';
@@ -25,12 +25,14 @@ const {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    {!Astro.slots.has('default') && (
-      <>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-      </>
-    )}
+    {
+      !Astro.slots.has('default') && (
+        <>
+          <title>{title}</title>
+          <meta name="description" content={description} />
+        </>
+      )
+    }
     <ClientRouter />
     <meta
       name="keywords"
@@ -43,37 +45,26 @@ const {
 
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <link rel="sitemap" href="/sitemap.xml" />
-    {PUBLIC_GA_ID && (
-      <>
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=${PUBLIC_GA_ID}`}></script>
-        <script is:inline define:vars={{ PUBLIC_GA_ID }}>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', PUBLIC_GA_ID);
-        </script>
-      </>
-    )}
     <!-- Schema JSON-LD for better google seo -->
     <script type="application/ld+json" is:inline>
       {
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
-        "name": "Lagunas Claras",
+        "name": "${LAGUNAS_INFO.companyName}",
         "url": "https://lagunasclaras.com.ar",
         "image": "https://lagunasclaras.com.ar/og/lagunas-claras-og.webp",
-        "telephone": "+54 11 5045 1158",
-        "email": "lagunasclaras@gmail.com",
+        "telephone": "${LAGUNAS_INFO.contacts.gustavo.phoneE164}",
+        "email": "${LAGUNAS_INFO.email}",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "Aristóbulo del Valle 4591",
+          "streetAddress": "${LAGUNAS_INFO.location.address}",
           "addressLocality": "Tigre",
-            "addressRegion": "Buenos Aires",
-            "addressCountry": "AR"
-          },
-          "areaServed": "Argentina",
-          "description": "Empresa especializada en mantenimiento de lagos, lagunas y espejos de agua sin uso de químicos."
-        }
+          "addressRegion": "Buenos Aires",
+          "addressCountry": "AR"
+        },
+        "areaServed": "Argentina",
+        "description": "Empresa especializada en mantenimiento de lagos, lagunas y espejos de agua sin uso de químicos."
+      }
     </script>
     <slot />
   </head>

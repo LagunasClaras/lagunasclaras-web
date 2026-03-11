@@ -69,7 +69,7 @@ import { X, ChevronLeft, ChevronRight } from '@lucide/astro';
     }
 
     function getYouTubeEmbedUrl(url: string): string | null {
-      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|&v=)([^#&?]*).*/;
       const match = url.match(regExp);
       if (match && match[2].length === 11) {
         return `https://www.youtube.com/embed/${match[2]}?autoplay=1`;
@@ -93,11 +93,20 @@ import { X, ChevronLeft, ChevronRight } from '@lucide/astro';
         } else if (item.type === 'video') {
           if (isYouTubeUrl(item.src)) {
             const embedUrl = getYouTubeEmbedUrl(item.src);
+            const isShort = item.src.includes('/shorts/');
             const iframe = document.createElement('iframe');
             iframe.src = embedUrl || '';
-            iframe.className = 'aspect-video w-full max-w-4xl rounded-lg shadow-2xl';
+
+            if (isShort) {
+              iframe.className =
+                'aspect-[9/16] h-[80vh] max-h-[800px] w-auto rounded-lg mx-auto !shadow-none !border-none !bg-transparent !outline-none !ring-0';
+            } else {
+              iframe.className = 'aspect-video w-full max-w-4xl rounded-lg shadow-2xl';
+            }
+
             iframe.setAttribute('allowfullscreen', '');
             iframe.setAttribute('allow', 'autoplay; encrypted-media');
+            iframe.setAttribute('allowtransparency', 'true');
             content.appendChild(iframe);
           } else {
             const video = document.createElement('video');

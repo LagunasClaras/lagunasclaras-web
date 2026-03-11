@@ -2,17 +2,28 @@
 import Button from '@/components/Button.astro';
 import { Mail, MapPin, User } from '@lucide/astro';
 
+import { LAGUNAS_INFO } from '@/config/lagunasInfo';
+
 const Content = {
   title: 'Consultá a nuestros especialistas en lagunas',
   description: 'Presupuestos sin cargo. Atendemos en todo el país.',
   buttonText: 'Solicitar presupuesto',
   buttonHref: '/contacto',
   contacts: [
-    { name: 'Gustavo Frumboli', phone: '11-5045-1158', href: 'tel:+5491150451158' },
-    { name: 'Santiago Frumboli', phone: '11-3877-0205', href: 'tel:+5491138770205' },
+    {
+      name: LAGUNAS_INFO.contacts.gustavo.name,
+      phone: LAGUNAS_INFO.contacts.gustavo.phone,
+      href: `tel:${LAGUNAS_INFO.contacts.gustavo.phoneE164}`,
+    },
+    {
+      name: LAGUNAS_INFO.contacts.santiago.name,
+      phone: LAGUNAS_INFO.contacts.santiago.phone,
+      href: `tel:${LAGUNAS_INFO.contacts.santiago.phoneE164}`,
+    },
   ],
-  email: 'lagunasclaras@gmail.com',
-  address: 'Santa Cruz 419, Benavidez, Provincia de Buenos Aires',
+  email: LAGUNAS_INFO.email,
+  address: LAGUNAS_INFO.location.address,
+  mapsUrl: LAGUNAS_INFO.location.mapsUrl,
 };
 ---
 
@@ -80,7 +91,7 @@ const Content = {
             <MapPin class="h-5 w-5" /> Ubicación
           </h3>
           <a
-            href="https://maps.app.goo.gl/rPkX2yuDpUcGkXZYA"
+            href={Content.mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
             class="text-foreground hover:text-primary mt-1 block text-base leading-relaxed transition-colors"

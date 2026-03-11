@@ -7,7 +7,10 @@ import ServiceBlock from '@/sections/services/ServiceBlock.astro';
 import { getCollection } from 'astro:content';
 import { marked } from 'marked';
 
-const services = await getCollection('services');
+const allServices = await getCollection('services');
+
+// Prioritize sorting by the order property
+const services = allServices.sort((a, b) => a.data.order - b.data.order);
 
 const SeoContent = {
   title: 'Nuestros Servicios | Lagunas Claras',
@@ -37,7 +40,7 @@ const content = {
               <ServiceBlock
                 title={service.data.title}
                 description={marked.parseInline(service.data.shortDescription) as string}
-                image={service.data.hero.image}
+                image={service.data.thumbnail || service.data.hero.image}
                 reverse={isEven}
                 buttonRoute={`/servicios/${service.data.slug || service.id.replace(/\.mdx?$/, '')}`}
               />
