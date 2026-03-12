@@ -1,6 +1,6 @@
 ---
 import { LAGUNAS_INFO } from '@/config/lagunasInfo';
-import { Facebook, Instagram, LinkedIn, LogoMono } from '@icons';
+import { Facebook, Instagram, LinkedIn, TikTok } from '@icons';
 import { Mail, Phone } from '@lucide/astro';
 
 interface Props {
@@ -46,9 +46,8 @@ const currentPath = Astro.url.pathname;
 
   <!-- Mobile Menu Footer -->
   <div class="border-t pt-8">
-    <div class="mb-6 flex flex-col items-center gap-2">
-      <LogoMono class="text-primary h-12 w-12" />
-      <span class="text-primary text-sm font-bold">{brandTitle}</span>
+    <div class="flex flex-col items-center gap-2">
+      <img src="/logo.png" alt={brandTitle} class="h-32 w-auto object-contain" />
     </div>
 
     <div class="mb-8 flex justify-center gap-8">
@@ -69,6 +68,9 @@ const currentPath = Astro.url.pathname;
         class="text-primary hover:text-accent transition-colors"
       >
         <Facebook class="h-6 w-6" />
+      </a>
+      <a href={LAGUNAS_INFO.social.tiktok} class="text-primary hover:text-accent transition-colors">
+        <TikTok class="h-6 w-6" />
       </a>
     </div>
 

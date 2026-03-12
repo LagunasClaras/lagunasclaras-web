@@ -24,5 +24,6 @@ export const LAGUNAS_INFO = {
       'https://www.instagram.com/lagunasclaras?igsh=MTZjNjYxcGZnaDYxdA%3D%3D&utm_source=qr',
     linkedin: 'https://www.linkedin.com/in/lagunasclaras',
     facebook: 'https://www.facebook.com/share/18CDhoduWk/?mibextid=wwXIfr',
+    tiktok: 'https://www.tiktok.com/@lagunasclaras',
   },
 };
