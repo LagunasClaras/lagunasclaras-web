@@ -14,43 +14,41 @@ const slug = title.toLowerCase().replace(/\s+/g, '-');
 const href = `/clientes/${slug}`;
 ---
 
-<a href={href} class="client-card group block w-full transition-all duration-300" role="listitem">
-  <!-- MOBILE LAYOUT (< md) -->
-  <div
-    class="active:bg-primary/5 flex items-center justify-between rounded-xl border border-slate-200 bg-white p-4 md:hidden"
-  >
-    <div class="flex flex-1 items-center gap-4">
-      <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-slate-50 p-2">
-        <Image src={logo} alt={`Logo de ${title}`} class="h-full w-full object-contain" />
-      </div>
-      <h3 class="line-clamp-2 text-base leading-tight font-bold text-slate-900">{title}</h3>
-    </div>
-    <span class="text-primary ml-4 shrink-0 text-sm font-semibold">Ver más →</span>
-  </div>
-
-  <!-- DESKTOP LAYOUT (>= md) -->
-  <div
-    class="hover:border-primary/50 relative hidden aspect-square items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white transition-all duration-500 ease-out md:flex"
-  >
-    <!-- Background Logo -->
-    <div
-      class="flex h-full w-full items-center justify-center p-8 transition-transform duration-700 group-hover:scale-90 group-hover:blur-sm"
-    >
+<!-- MOBILE LAYOUT (< md) -->
+<div
+  class="active:bg-primary/5 flex items-center justify-between rounded-xl border border-slate-200 bg-white p-4 md:hidden"
+>
+  <div class="flex flex-1 items-center gap-4">
+    <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-slate-50 p-2">
       <Image src={logo} alt={`Logo de ${title}`} class="h-full w-full object-contain" />
     </div>
+    <h3 class="line-clamp-2 text-base leading-tight font-bold text-slate-900">{title}</h3>
+  </div>
+  <span class="text-primary ml-4 shrink-0 text-sm font-semibold" hidden>Ver más →</span>
+</div>
 
-    <!-- Hover Overlay -->
-    <div
-      class="bg-primary/50 absolute inset-0 z-10 flex translate-x-full flex-col items-center justify-center backdrop-blur-xl transition-transform duration-500 ease-out group-hover:translate-x-0"
-    >
-      <div class="text-background p-6 text-center">
-        <h3 class="mb-4 text-3xl font-bold tracking-tight drop-shadow-lg">{title}</h3>
-        <div
-          class="bg-accent hidden items-center justify-center rounded-full px-6 py-2 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
-        >
-          Ver Más
-        </div>
+<!-- DESKTOP LAYOUT (>= md) -->
+<div
+  class="hover:border-primary/50 relative hidden aspect-square items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white transition-all duration-500 ease-out md:flex"
+>
+  <!-- Background Logo -->
+  <div
+    class="flex h-full w-full items-center justify-center p-8 transition-transform duration-700 group-hover:scale-90 group-hover:blur-sm"
+  >
+    <Image src={logo} alt={`Logo de ${title}`} class="h-full w-full object-contain" />
+  </div>
+
+  <!-- Hover Overlay -->
+  <div
+    class="bg-primary/50 absolute inset-0 z-10 flex translate-x-full flex-col items-center justify-center backdrop-blur-xl transition-transform duration-500 ease-out group-hover:translate-x-0"
+  >
+    <div class="text-background p-6 text-center">
+      <h3 class="mb-4 text-3xl font-bold tracking-tight drop-shadow-lg">{title}</h3>
+      <div
+        class="bg-accent hidden items-center justify-center rounded-full px-6 py-2 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
+      >
+        Ver Más
       </div>
     </div>
   </div>
-</a>
+</div>

@@ -1,5 +1,7 @@
 ---
 import { Mail, MapPin, Phone } from '@lucide/astro';
+import { Image } from 'astro:assets';
+import logoGS from '@/assets/logo-gs.png';
 import { Facebook, Instagram, LinkedIn, TikTok } from './icons';
 
 import { LAGUNAS_INFO } from '@/config/lagunasInfo';
@@ -40,8 +42,8 @@ const FooterContent = {
       <!-- Logo y Redes Sociales -->
       <div class="flex w-full flex-col items-center gap-6 md:w-auto md:items-start md:gap-4">
         <div class="text-primary-foreground flex flex-col items-center gap-2">
-          <img
-            src="/src/assets/logo-gs.png"
+          <Image
+            src={logoGS}
             alt={FooterContent.Title}
             class="h-20 w-72 object-contain md:h-24 md:w-48"
           />
