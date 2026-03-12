@@ -35,19 +35,25 @@ const isTransparentPage =
   >
   </div>
 
-  <div class="relative z-50 mx-auto flex h-20 w-[80%] items-center justify-between">
+  <div class="relative z-50 mx-auto flex h-20 w-[80%] items-center justify-end md:justify-between">
     <!-- Logo -->
     <a
       href="/"
       id="nav-logo"
-      class="relative z-10 flex items-center gap-2 text-lg font-bold transition-opacity duration-300 group-data-[menu-open=true]:pointer-events-none group-data-[menu-open=true]:opacity-0"
+      class="relative z-10 hidden max-h-[80px] items-center gap-2 text-lg font-bold transition-opacity duration-300 group-data-[menu-open=true]:pointer-events-none group-data-[menu-open=true]:opacity-0 md:flex"
     >
-      <img src="/logo.svg" alt="Lagunas Claras" width="48" height="48" class="h-12 w-12 min-w-6" />
-      <span
+      <img
+        src="/logo.png"
+        alt="Lagunas Claras"
+        width="128"
+        height="80"
+        class="max-h-[80px] w-40 min-w-6"
+      />
+      <!-- <span
         id="nav-title"
         class="text-primary-foreground group-data-[scrolled=true]:text-primary group-data-[transparent-page=false]:text-primary font-semibold transition-colors duration-300"
         >{brandTitle}</span
-      >
+      > -->
     </a>
 
     <!-- Desktop Navigation Links -->

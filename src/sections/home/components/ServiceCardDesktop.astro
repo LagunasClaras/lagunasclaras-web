@@ -1,7 +1,7 @@
 ---
 import type { ServiceCardDesktopProps } from '../types/ServiceCard.types';
 
-const { title, Icon, viewMoreText } = Astro.props as ServiceCardDesktopProps;
+const { title, Icon, viewMoreText, href } = Astro.props as ServiceCardDesktopProps;
 ---
 
 <div
@@ -25,7 +25,7 @@ const { title, Icon, viewMoreText } = Astro.props as ServiceCardDesktopProps;
       class="pointer-events-none absolute right-0 bottom-6 left-0 flex translate-y-10 justify-center px-6 opacity-0 transition-all delay-75 duration-500 ease-out group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100"
     >
       <a
-        href="/servicios"
+        href={href}
         role="button"
         class="text-primary border-primary hover:bg-primary cursor-pointer rounded-full border px-4 py-2 text-sm font-semibold transition-colors duration-300 hover:text-white"
       >

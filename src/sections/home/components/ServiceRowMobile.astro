@@ -1,10 +1,10 @@
 ---
 import type { ServiceRowMobileProps } from '@/sections/home/types/ServiceCard.types';
 
-const { title, Icon, shortDescription } = Astro.props as ServiceRowMobileProps;
+const { title, Icon, shortDescription, href } = Astro.props as ServiceRowMobileProps;
 ---
 
-<div class="flex w-full items-center gap-4 py-4 md:hidden">
+<a href={href} class="flex w-full items-center gap-4 py-4 md:hidden">
   <div
     class="text-primary flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-50 p-2"
   >
@@ -14,6 +14,16 @@ const { title, Icon, shortDescription } = Astro.props as ServiceRowMobileProps;
     <h4 class="text-primary leading-tight font-bold">
       {title}
     </h4>
-    <p class="line-clamp-2 text-xs text-slate-600" set:html={shortDescription} />
   </div>
-</div>
+  <div class="ml-auto text-slate-300">
+    <svg
+      class="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+    >
+      <path d="M9 5l7 7-7 7"></path>
+    </svg>
+  </div>
+</a>
