@@ -1,7 +1,10 @@
 ---
 import Breadcrumb from '@/components/Breadcrumb.astro';
 import FAQAccordion from '@/components/FAQAccordion.astro';
+import JsonLd from '@/components/JsonLd.astro';
 import PageHeader from '@/components/PageHeader.astro';
+import SeoLinksGrid from '@/components/SeoLinksGrid.astro';
+import { seoLinksGrid } from '@lib/seoLandings';
 import { getCollection } from 'astro:content';
 import SeoHead from '../components/SeoHead.astro';
 import Layout from '../layouts/Layout.astro';
@@ -36,22 +39,50 @@ const sortedFaqs = faqs.sort((a, b) => {
 const SeoContent = {
   title: 'Preguntas Frecuentes | Lagunas Claras',
   description:
-    'Respuestas a las preguntas más frecuentes sobre nuestros servicios de mantenimiento y recuperación de lagos y lagunas.',
+    'Respuestas a las preguntas más frecuentes sobre nuestros servicios de mantenimiento, limpieza y recuperación de lagunas.',
 };
 const pathName = Astro.url.pathname;
 const content = {
   title: 'Preguntas Frecuentes',
   subtitle: 'Algunas preguntas que nos hacen nuestros clientes',
 };
+
+const cleanMarkdown = (value: string) =>
+  value
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/\*(.*?)\*/g, '$1')
+    .replace(/\\/g, ' ')
+    .replace(/\[(.*?)\]\((.*?)\)/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: sortedFaqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.data.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: cleanMarkdown(faq.body),
+    },
+  })),
+};
 ---
 
 <Layout>
   <SeoHead title={SeoContent.title} description={SeoContent.description} />
+  <JsonLd data={faqSchema} />
   <Fragment slot="main">
     <main class="bg-background mx-auto mt-24 min-h-screen w-[80%] pb-20">
       <Breadcrumb items={[{ label: 'FAQ', href: pathName }]} />
       <PageHeader title={content.title} subtitle={content.subtitle} />
       <FAQAccordion faqs={sortedFaqs} />
+      <SeoLinksGrid
+        title="Consultas frecuentes que también buscan nuestros clientes"
+        subtitle="Además de las preguntas frecuentes, estas páginas responden búsquedas comerciales vinculadas a limpieza de lagunas, mantenimiento de lagos y mantenimiento de espejos de agua, con cobertura en Zona Norte, Buenos Aires y Argentina."
+        items={seoLinksGrid}
+      />
     </main>
   </Fragment>
 </Layout>

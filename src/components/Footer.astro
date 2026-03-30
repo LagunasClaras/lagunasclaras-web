@@ -1,7 +1,7 @@
 ---
+import logoGS from '@/assets/logo-gs.png';
 import { Mail, MapPin, Phone } from '@lucide/astro';
 import { Image } from 'astro:assets';
-import logoGS from '@/assets/logo-gs.png';
 import { Facebook, Instagram, LinkedIn, TikTok } from './icons';
 
 import { LAGUNAS_INFO } from '@/config/lagunasInfo';
@@ -9,10 +9,10 @@ import { LAGUNAS_INFO } from '@/config/lagunasInfo';
 const FooterContent = {
   Title: LAGUNAS_INFO.companyName,
   links: [
-    { text: 'Home', href: '/' },
-    { text: 'About', href: '/about' },
-    { text: 'Services', href: '/services' },
-    { text: 'Clients', href: '/clients' },
+    { text: 'Quienes Somos', href: '/quienes-somos' },
+    { text: 'Servicios', href: '/servicios' },
+    { text: 'Clientes', href: '/clientes' },
+    { text: 'Contacto', href: '/contacto' },
   ],
   networks: [
     { text: 'Instagram', href: LAGUNAS_INFO.social.instagram, Icon: Instagram },

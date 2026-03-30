@@ -1,0 +1,245 @@
+---
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Button from '@/components/Button.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import SeoHead from '@/components/SeoHead.astro';
+import Layout from '@/layouts/Layout.astro';
+
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+interface RelatedLink {
+  title: string;
+  description: string;
+  href: string;
+}
+
+interface ProofItem {
+  name: string;
+  detail: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  h1: string;
+  intro: string;
+  heroBullets: string[];
+  processTitle: string;
+  processBody: string[];
+  coverageTitle: string;
+  coverageBody: string;
+  coverageBullets: string[];
+  proofTitle: string;
+  proofItems: ProofItem[];
+  faqItems: FaqItem[];
+  relatedLinks: RelatedLink[];
+  serviceLabel: string;
+  breadcrumbLabel: string;
+  serviceUrl?: string;
+}
+
+const {
+  title,
+  description,
+  h1,
+  intro,
+  heroBullets,
+  processTitle,
+  processBody,
+  coverageTitle,
+  coverageBody,
+  coverageBullets,
+  proofTitle,
+  proofItems,
+  faqItems,
+  relatedLinks,
+  serviceLabel,
+  breadcrumbLabel,
+  serviceUrl = '/contacto',
+} = Astro.props as Props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Inicio',
+      item: new URL('/', Astro.site).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: breadcrumbLabel,
+      item: canonical,
+    },
+  ],
+};
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: serviceLabel,
+  serviceType: serviceLabel,
+  description,
+  areaServed: 'Buenos Aires, Zona Norte, Tigre y Argentina',
+  provider: {
+    '@type': 'LocalBusiness',
+    name: 'Lagunas Claras',
+    url: Astro.site,
+  },
+  url: canonical,
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
+};
+---
+
+<Layout>
+  <SeoHead title={title} description={description} canonical={canonical} />
+  <JsonLd data={breadcrumbSchema} />
+  <JsonLd data={serviceSchema} />
+  <JsonLd data={faqSchema} />
+
+  <Fragment slot="main">
+    <main class="bg-background">
+      <section class="mx-auto mt-24 w-[90%] max-w-6xl py-10 md:py-14">
+        <Breadcrumb items={[{ label: breadcrumbLabel, href: Astro.url.pathname }]} />
+
+        <div class="grid gap-10 lg:grid-cols-[1.3fr_0.7fr] lg:items-start">
+          <div>
+            <h1 class="text-primary mb-5 text-4xl leading-tight font-bold md:text-5xl">{h1}</h1>
+            <p class="text-muted-foreground mb-6 max-w-3xl text-lg leading-relaxed md:text-xl">
+              {intro}
+            </p>
+
+            <div class="flex flex-col gap-4 sm:flex-row">
+              <Button href="/contacto" icon> Solicitar presupuesto </Button>
+              <Button href="/servicios" variant="secondary"> Ver servicios </Button>
+            </div>
+          </div>
+
+          <aside class="bg-card rounded-2xl border border-slate-200 p-6 shadow-sm">
+            <h2 class="text-foreground mb-4 text-xl font-bold">¿Qué resolvemos?</h2>
+            <ul class="space-y-3">
+              {
+                heroBullets.map((bullet) => (
+                  <li class="text-muted-foreground flex gap-3 leading-relaxed">
+                    <span class="text-primary mt-1 font-bold">•</span>
+                    <span>{bullet}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section class="mx-auto grid w-[90%] max-w-6xl gap-8 py-8 md:grid-cols-2 md:py-12">
+        <article class="bg-card rounded-2xl border border-slate-200 p-8 shadow-sm">
+          <h2 class="text-primary mb-5 text-2xl font-bold md:text-3xl">{processTitle}</h2>
+          <div class="space-y-4">
+            {
+              processBody.map((paragraph) => (
+                <p class="text-muted-foreground leading-relaxed">{paragraph}</p>
+              ))
+            }
+          </div>
+        </article>
+
+        <article class="bg-card rounded-2xl border border-slate-200 p-8 shadow-sm">
+          <h2 class="text-primary mb-5 text-2xl font-bold md:text-3xl">{coverageTitle}</h2>
+          <p class="text-muted-foreground mb-5 leading-relaxed">{coverageBody}</p>
+          <ul class="space-y-3">
+            {
+              coverageBullets.map((bullet) => (
+                <li class="text-muted-foreground flex gap-3 leading-relaxed">
+                  <span class="text-primary mt-1 font-bold">•</span>
+                  <span>{bullet}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </article>
+      </section>
+
+      <section class="mx-auto w-[90%] max-w-6xl py-8 md:py-12">
+        <div class="bg-primary/5 border-primary/10 rounded-3xl border p-8 md:p-10">
+          <h2 class="text-primary mb-6 text-2xl font-bold md:text-3xl">{proofTitle}</h2>
+          <div class="grid gap-4 md:grid-cols-3">
+            {
+              proofItems.map((item) => (
+                <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                  <h3 class="text-foreground mb-2 font-bold">{item.name}</h3>
+                  <p class="text-muted-foreground text-sm leading-relaxed">{item.detail}</p>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="mx-auto grid w-[90%] max-w-6xl gap-8 py-8 md:grid-cols-[1fr_0.9fr] md:items-end md:py-12">
+        <article>
+          <h2 class="text-primary mb-6 text-2xl font-bold md:text-3xl">Preguntas frecuentes</h2>
+          <div class="space-y-4">
+            {
+              faqItems.map((faq) => (
+                <article class="bg-card rounded-2xl border border-slate-200 p-6 shadow-sm">
+                  <h3 class="text-foreground mb-2 text-lg font-bold">{faq.question}</h3>
+                  <p class="text-muted-foreground leading-relaxed">{faq.answer}</p>
+                </article>
+              ))
+            }
+          </div>
+        </article>
+
+        <aside class="md:self-end">
+          <div class="bg-card rounded-2xl border border-slate-200 p-6 shadow-sm">
+            <h2 class="text-primary mb-5 text-2xl font-bold">Búsquedas relacionadas</h2>
+            <div class="space-y-4">
+              {
+                relatedLinks.map((link) => (
+                  <a
+                    href={link.href}
+                    class="hover:border-primary/30 hover:bg-primary/5 block rounded-xl border border-slate-200 p-4 transition-colors"
+                  >
+                    <h3 class="text-foreground mb-1 font-bold">{link.title}</h3>
+                    <p class="text-muted-foreground text-sm leading-relaxed">{link.description}</p>
+                  </a>
+                ))
+              }
+            </div>
+
+            <div class="mt-6 rounded-xl bg-slate-50 p-5">
+              <h3 class="text-foreground mb-2 font-bold">¿Querés una evaluación técnica?</h3>
+              <p class="text-muted-foreground mb-4 text-sm leading-relaxed">
+                Coordinamos visitas y diagnósticos para definir la mejor solución según el tipo de
+                laguna, lago o espejo de agua.
+              </p>
+              <Button href={serviceUrl} variant="primary" size="sm" icon>
+                Hablar con el equipo
+              </Button>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </Fragment>
+</Layout>
