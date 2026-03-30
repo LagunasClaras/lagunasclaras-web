@@ -1,8 +1,15 @@
 ---
-const { title, subtitle } = Astro.props;
+interface Props {
+  title: string;
+  subtitle?: string;
+  level?: 'h1' | 'h2';
+}
+
+const { title, subtitle, level = 'h1' } = Astro.props as Props;
+const HeadingTag = level;
 ---
 
 <header class="mx-auto max-w-[80vw] pb-8 sm:w-full">
-  <h2 class="text-primary mb-3 text-3xl font-bold md:text-4xl">{title}</h2>
+  <HeadingTag class="text-primary mb-3 text-3xl font-bold md:text-4xl">{title}</HeadingTag>
   <p class="text-muted-foreground w-full sm:w-[full] md:w-[40vw]">{subtitle}</p>
 </header>

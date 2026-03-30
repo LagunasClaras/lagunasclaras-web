@@ -27,8 +27,13 @@ export default defineConfig({
     },
   },
 
-  site: 'https://lagunasclaras.com.ar',
-  integrations: [sitemap(), mdx()],
+  site: 'https://www.lagunasclaras.com',
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/404'),
+    }),
+    mdx(),
+  ],
 
   env: {
     schema: {

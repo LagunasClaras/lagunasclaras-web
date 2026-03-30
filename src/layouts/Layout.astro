@@ -1,5 +1,7 @@
 ---
 import Footer from '@/components/Footer.astro';
+import { LAGUNAS_INFO } from '@/config/lagunasInfo';
+import JsonLd from '@/components/JsonLd.astro';
 import Navbar from '@/components/navbar/Navbar.astro';
 import Toast from '@/components/Toast.astro';
 import WhatsAppButton from '@/components/WhatsAppButton.astro';
@@ -10,12 +12,37 @@ import { ClientRouter } from 'astro:transitions';
 interface Props {
   title?: string;
   description?: string;
+  robots?: string;
 }
 
 const {
   title = 'Lagunas Claras',
-  description = 'Mantenimiento y recuperación de lagos, lagunas y espejos de agua',
+  description = 'Mantenimiento, limpieza y recuperación de lagunas y espejos de agua',
+  robots = 'index, follow',
 } = Astro.props;
+
+const siteUrl = Astro.site?.toString() ?? 'https://www.lagunasclaras.com';
+const ogImageUrl = new URL('/og/lagunas-claras-og.webp', siteUrl).toString();
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: LAGUNAS_INFO.companyName,
+  url: siteUrl,
+  image: ogImageUrl,
+  telephone: LAGUNAS_INFO.contacts.gustavo.phoneE164,
+  email: LAGUNAS_INFO.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: LAGUNAS_INFO.location.address,
+    addressLocality: 'Benavídez',
+    addressRegion: 'Buenos Aires',
+    addressCountry: 'AR',
+  },
+  areaServed: 'Argentina',
+  description:
+    'Empresa especializada en mantenimiento, limpieza y recuperación de lagunas y espejos de agua sin productos químicos.',
+  sameAs: Object.values(LAGUNAS_INFO.social),
+};
 ---
 
 <!doctype html>
@@ -35,36 +62,16 @@ const {
     <ClientRouter />
     <meta
       name="keywords"
-      content="lagunas claras, mantenimiento lagunas, recuperación lagunas, mantenimiento lagos, recuperación lagos"
+      content="lagunas claras, mantenimiento de lagunas, limpieza de lagunas, recuperación de lagunas, mantenimiento de espejos de agua"
     />
-    <meta name="robots" content="index, follow" />
-    <meta name="googlebot" content="index, follow" />
-    <meta name="bingbot" content="index, follow" />
-    <meta name="yandex" content="index, follow" />
+    <meta name="robots" content={robots} />
+    <meta name="googlebot" content={robots} />
+    <meta name="bingbot" content={robots} />
+    <meta name="yandex" content={robots} />
 
     <link rel="icon" type="image/svg+xml" href="/logo.png" />
-    <link rel="sitemap" href="/sitemap.xml" />
-    <!-- Schema JSON-LD for better google seo -->
-    <script type="application/ld+json" is:inline>
-      {
-        "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "name": "${LAGUNAS_INFO.companyName}",
-        "url": "https://lagunasclaras.com.ar",
-        "image": "https://lagunasclaras.com.ar/og/lagunas-claras-og.webp",
-        "telephone": "${LAGUNAS_INFO.contacts.gustavo.phoneE164}",
-        "email": "${LAGUNAS_INFO.email}",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "${LAGUNAS_INFO.location.address}",
-          "addressLocality": "Tigre",
-          "addressRegion": "Buenos Aires",
-          "addressCountry": "AR"
-        },
-        "areaServed": "Argentina",
-        "description": "Empresa especializada en mantenimiento de lagos, lagunas y espejos de agua sin uso de químicos."
-      }
-    </script>
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <JsonLd data={localBusinessSchema} />
     <slot />
   </head>
 

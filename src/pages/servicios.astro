@@ -13,14 +13,15 @@ const allServices = await getCollection('services');
 const services = allServices.sort((a, b) => a.data.order - b.data.order);
 
 const SeoContent = {
-  title: 'Nuestros Servicios | Lagunas Claras',
-  description: 'Soluciones profesionales para el mantenimiento y recuperación de espejos de agua.',
+  title: 'Servicios de mantenimiento y limpieza de lagunas | Lagunas Claras',
+  description:
+    'Servicios profesionales de mantenimiento, limpieza y recuperación de lagunas y espejos de agua sin productos químicos.',
 };
 
 const content = {
-  title: 'Nuestros Servicios',
+  title: 'Servicios de mantenimiento y limpieza de lagunas',
   subtitle:
-    'Ofrecemos soluciones integrales para el mantenimiento y recuperación de espejos de agua',
+    'Ofrecemos soluciones integrales para la limpieza, el mantenimiento y la recuperación de lagunas y espejos de agua.',
 };
 ---
 
@@ -48,6 +49,7 @@ const content = {
           })
         }
       </div>
+
     </main>
   </Fragment>
 </Layout>
