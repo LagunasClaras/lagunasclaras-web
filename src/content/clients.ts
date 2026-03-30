@@ -16,7 +16,7 @@ import type { ClientsProps } from '@/sections/home/types/Clients.types';
 // Clients Content
 export const clientsContent: ClientsProps = {
   sectionTitle: 'Nuestros clientes',
-  sectionDescription: 'Empresas e instituciones que confían en nuestros servicios:',
+  sectionDescription: 'Empresas e instituciones que confían en nuestros servicios',
   clients: [
     {
       name: 'Abril (Hudson)',
