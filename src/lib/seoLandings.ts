@@ -55,22 +55,22 @@ export const seoLinksGrid: LandingLinkItem[] = [
 ];
 
 export const limpiezaDeLagunasPage: LandingPageContent = {
-  title: 'Limpieza de lagunas | Lagunas Claras',
+  title: 'Servicio puntual de limpieza y recuperación de lagunas | Lagunas Claras',
   description:
-    'Servicio profesional de limpieza de lagunas, corte de vegetación acuática y extracción de residuos con maquinaria especializada para proyectos en Zona Norte, Buenos Aires y Argentina.',
-  h1: 'Limpieza de lagunas con maquinaria especializada y sin químicos',
+    'Intervenciones puntuales para limpieza y recuperación de lagunas, corte de vegetación acuática y extracción de residuos con maquinaria especializada en Zona Norte, Buenos Aires y Argentina.',
+  h1: 'Servicio puntual para limpiar y recuperar lagunas con maquinaria especializada',
   intro:
-    'Realizamos limpieza de lagunas para barrios privados, countries, municipios e instituciones que necesitan recuperar claridad, controlar vegetación acuática y mantener el equilibrio del agua con un abordaje técnico en Zona Norte, Buenos Aires y distintos puntos de Argentina.',
+    'Esta página resume nuestro servicio específico para intervenciones puntuales en lagunas de barrios privados, countries, municipios e instituciones que necesitan recuperar claridad, controlar vegetación acuática y ordenar el cuerpo de agua con un abordaje técnico en Zona Norte, Buenos Aires y distintos puntos de Argentina.',
   heroBullets: [
     'Corte y extracción de vegetación acuática en distintos niveles de profundidad.',
-    'Retiro de residuos flotantes, camalotes y acumulaciones que afectan estética y operación.',
-    'Intervenciones mecánicas sin productos químicos para proteger el ecosistema.',
+    'Retiro de residuos flotantes, camalotes y acumulaciones en intervenciones puntuales o correctivas.',
+    'Ejecución mecánica sin productos químicos para proteger el ecosistema y preparar el mantenimiento posterior.',
   ],
-  processTitle: 'Cómo abordamos la limpieza de lagunas',
+  processTitle: 'Cómo abordamos una intervención de limpieza de lagunas',
   processBody: [
     'Primero evaluamos superficie, acceso, volumen de vegetación y estado general del cuerpo de agua para definir la estrategia de intervención.',
     'Luego trabajamos con maquinaria diseñada para corte, recolección y traslado del material extraído, reduciendo tiempos y evitando soluciones agresivas para el entorno.',
-    'El resultado es una laguna más limpia, con mejor lectura visual, mejor circulación y condiciones más favorables para sostener su mantenimiento posterior.',
+    'El resultado es una laguna más limpia, con mejor lectura visual, mejor circulación y condiciones más favorables para sostener su mantenimiento posterior. Si buscás una visión general del servicio y de la empresa, también podés visitar nuestra página principal sobre limpieza de lagunas.',
   ],
   coverageTitle: 'Cobertura y tipo de clientes',
   coverageBody:
@@ -116,6 +116,12 @@ export const limpiezaDeLagunasPage: LandingPageContent = {
     },
   ],
   relatedLinks: [
+    {
+      title: 'Página principal de limpieza de lagunas',
+      description:
+        'Conocé el enfoque general de Lagunas Claras para limpieza de lagunas, mantenimiento y recuperación de cuerpos de agua.',
+      href: '/',
+    },
     {
       title: 'Mantenimiento de lagos',
       description: 'Si además de una limpieza puntual necesitás continuidad y prevención.',

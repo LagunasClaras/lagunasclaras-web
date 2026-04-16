@@ -24,6 +24,7 @@ interface ProofItem {
 interface Props {
   title: string;
   description: string;
+  robots?: string;
   h1: string;
   intro: string;
   heroBullets: string[];
@@ -44,6 +45,7 @@ interface Props {
 const {
   title,
   description,
+  robots = 'index, follow',
   h1,
   intro,
   heroBullets,
@@ -111,7 +113,7 @@ const faqSchema = {
 };
 ---
 
-<Layout>
+<Layout robots={robots}>
   <SeoHead title={title} description={description} canonical={canonical} />
   <JsonLd data={breadcrumbSchema} />
   <JsonLd data={serviceSchema} />

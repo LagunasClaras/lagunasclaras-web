@@ -30,7 +30,7 @@ export default defineConfig({
   site: 'https://www.lagunasclaras.com',
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/404'),
+      filter: (page) => !page.includes('/404') && !page.includes('/limpieza-de-lagunas'),
     }),
     mdx(),
   ],
