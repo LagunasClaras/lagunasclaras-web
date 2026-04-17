@@ -4,9 +4,10 @@ export interface Props {
   description: string;
   canonical?: string;
   ogImage?: string;
+  noindex?: boolean;
 }
 
-const { title, description, canonical, ogImage = '/og-image.webp' } = Astro.props;
+const { title, description, canonical, ogImage = '/og-image.webp', noindex = false } = Astro.props;
 
 const cleanText = (value: string) =>
   value
@@ -29,6 +30,7 @@ const resolvedOgImage = new URL(ogImage, Astro.site).toString();
 
 <meta name="description" content={cleanDescription} />
 <link rel="canonical" href={resolvedCanonical} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
 
 <!-- Open Graph -->
 <meta property="og:title" content={title} />
