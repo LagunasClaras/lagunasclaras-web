@@ -40,7 +40,7 @@ export const seoLinksGrid: LandingLinkItem[] = [
     title: 'Limpieza de lagunas',
     description:
       'Página comercial enfocada en limpieza, recuperación y control de vegetación acuática.',
-    href: '/limpieza-de-lagunas',
+    href: '/',
   },
   {
     title: 'Mantenimiento de lagos',
@@ -206,7 +206,7 @@ export const mantenimientoDeLagosPage: LandingPageContent = {
       title: 'Limpieza de lagunas',
       description:
         'Si hoy el problema principal es recuperar una laguna ya afectada por vegetación y residuos.',
-      href: '/limpieza-de-lagunas',
+      href: '/',
     },
   ],
   serviceLabel: 'Mantenimiento de lagos',
@@ -284,7 +284,7 @@ export const mantenimientoDeEspejosPage: LandingPageContent = {
     {
       title: 'Limpieza de lagunas',
       description: 'Si hoy la prioridad es recuperar una laguna o espejo de agua ya afectado.',
-      href: '/limpieza-de-lagunas',
+      href: '/',
     },
   ],
   serviceLabel: 'Mantenimiento de espejos de agua',

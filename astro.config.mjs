@@ -7,6 +7,11 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
+  redirects: {
+    '/limpieza-de-lagunas': '/',
+    '/limpieza-de-lagunas/': '/',
+  },
+
   vite: {
     plugins: [tailwindcss()],
     resolve: {
