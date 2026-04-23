@@ -34,6 +34,39 @@ const aboutUsContent: Omit<AboutUsProps, 'serviceCards'> = {
   viewMoreText: 'Ver detalle',
 };
 
+const commercialSection = {
+  eyebrow: 'Servicio de limpieza de lagunas',
+  title: 'Trabajamos sobre lagunas, lagos y espejos de agua con una lógica técnica y realista',
+  paragraphs: [
+    'Atendemos barrios privados, countries, municipios e instituciones que necesitan recuperar la claridad del agua, controlar vegetación acuática y ordenar cuerpos de agua que ya muestran signos de deterioro visual u operativo.',
+    'Cada intervención se define según superficie, accesibilidad, nivel de avance del problema y objetivos del predio. Por eso combinamos limpieza de lagunas, mantenimiento de lagos y recuperación de espejos de agua con maquinaria especializada y sin productos químicos como solución automática para todo.',
+    'Si el cuerpo de agua necesita una acción puntual, diseñamos una intervención concreta. Si el problema requiere continuidad, armamos un esquema de mantenimiento para sostener resultados sin improvisar.',
+  ],
+  highlights: [
+    'Cobertura en Zona Norte, Buenos Aires y distintos puntos de Argentina.',
+    'Intervenciones mecánicas para control de vegetación, residuos y deterioro visible.',
+    'Diagnóstico técnico para definir si conviene limpieza puntual o mantenimiento continuo.',
+  ],
+};
+
+const homeFaqItems = [
+  {
+    question: '¿Qué incluye un servicio de limpieza de lagunas?',
+    answer:
+      'Depende del estado del cuerpo de agua, pero normalmente evaluamos vegetación acuática, residuos, accesos, escala de trabajo y necesidad de maquinaria para definir una intervención ordenada y técnicamente viable.',
+  },
+  {
+    question: '¿Trabajan con productos químicos?',
+    answer:
+      'No como punto de partida. Nuestro enfoque prioriza técnicas mecánicas y decisiones de manejo acordes al entorno para evitar soluciones agresivas que después generen problemas más grandes.',
+  },
+  {
+    question: '¿Hacen trabajos solo en Zona Norte?',
+    answer:
+      'No. Tenemos fuerte presencia en Zona Norte y Buenos Aires, pero también coordinamos proyectos en otros puntos del país cuando la escala y el tipo de intervención lo requieren.',
+  },
+];
+
 // Service Cards Data
 const serviceCards: ServiceCardBase[] = [
   {
@@ -67,7 +100,63 @@ const contactSectionContent: ContactSectionProps = {
 <HeroSection {...heroContent} />
 <div class="flex min-h-[calc(100vh-80px)] flex-col items-center justify-center gap-2 pt-16">
   <AboutUsSection {...aboutUsContent} serviceCards={serviceCards} />
+  <section class="bg-background w-full py-8 md:py-12">
+    <div class="mx-auto grid w-[80vw] max-w-6xl gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
+      <article class="bg-card rounded-3xl border border-slate-100 p-8 shadow-lg md:p-10">
+        <p class="text-primary mb-4 text-sm font-semibold tracking-[0.18em] uppercase">
+          {commercialSection.eyebrow}
+        </p>
+        <h2 class="text-foreground mb-6 text-3xl leading-tight font-bold md:text-4xl">
+          {commercialSection.title}
+        </h2>
+        <div class="space-y-4">
+          {
+            commercialSection.paragraphs.map((paragraph) => (
+              <p class="text-muted-foreground text-base leading-relaxed md:text-lg">{paragraph}</p>
+            ))
+          }
+        </div>
+      </article>
+
+      <aside class="bg-primary/5 rounded-3xl border border-primary/10 p-8 md:p-10">
+        <h3 class="text-primary mb-6 text-2xl font-bold">Qué resolvemos y cómo lo encaramos</h3>
+        <ul class="space-y-4">
+          {
+            commercialSection.highlights.map((item) => (
+              <li class="flex items-start gap-3">
+                <span class="bg-primary mt-2 h-2.5 w-2.5 shrink-0 rounded-full"></span>
+                <p class="text-foreground leading-relaxed">{item}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </aside>
+    </div>
+  </section>
   <ClientsSection {...clientsContent} />
+  <section class="bg-background w-full py-8 md:py-12">
+    <div class="mx-auto w-[80vw] max-w-6xl">
+      <div class="mb-8 max-w-3xl">
+        <p class="text-primary mb-4 text-sm font-semibold tracking-[0.18em] uppercase">
+          Preguntas frecuentes sobre limpieza de lagunas
+        </p>
+        <h2 class="text-foreground text-3xl font-bold md:text-4xl">
+          Algunas dudas habituales antes de intervenir un cuerpo de agua
+        </h2>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-3">
+        {
+          homeFaqItems.map((item) => (
+            <article class="bg-card rounded-2xl border border-slate-100 p-6 shadow-sm">
+              <h3 class="text-foreground mb-3 text-xl font-bold">{item.question}</h3>
+              <p class="text-muted-foreground leading-relaxed">{item.answer}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
   <ScrollIndicator
     href="#contact-us-section"
     text="Descubre más"
