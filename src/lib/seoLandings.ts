@@ -37,10 +37,11 @@ export interface LandingPageContent {
 
 export const seoLinksGrid: LandingLinkItem[] = [
   {
-    title: 'Limpieza de lagunas',
+    title: 'Página principal de Lagunas Claras',
     description:
-      'Página comercial enfocada en limpieza, recuperación y control de vegetación acuática.',
+      'Conocé la presentación general de Lagunas Claras y nuestro enfoque sobre limpieza, mantenimiento y recuperación de cuerpos de agua.',
     href: '/',
+    cta: 'Ver página',
   },
   {
     title: 'Mantenimiento de lagos',
