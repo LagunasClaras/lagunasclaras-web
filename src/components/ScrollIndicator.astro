@@ -44,9 +44,11 @@ const {
         e.preventDefault();
         const target = document.querySelector(href);
         if (target) {
-          const navbarHeight = 80; // Correspond to h-20 in navbar.astro
+          const navbar = document.getElementById('navbar');
+          const navbarHeight = navbar?.getBoundingClientRect().height ?? 80;
+          const extraOffset = 24;
           const targetPosition =
-            target.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+            target.getBoundingClientRect().top + window.pageYOffset - navbarHeight - extraOffset;
           window.scrollTo({
             top: targetPosition,
             behavior: 'smooth',

@@ -8,10 +8,6 @@ interface Props {
 
 const { client } = Astro.props;
 const { title, logo } = client.data;
-
-// Slug logic: based on title, lowercase, replace spaces with hyphens
-const slug = title.toLowerCase().replace(/\s+/g, '-');
-const href = `/clientes/${slug}`;
 ---
 
 <!-- MOBILE LAYOUT (< md) -->
